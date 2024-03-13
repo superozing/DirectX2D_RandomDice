@@ -396,3 +396,7 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+DirectX2D_RandomDice/External/Include/Engine/
+
+DirectX2D_RandomDice/OutputFile/content/shader/
