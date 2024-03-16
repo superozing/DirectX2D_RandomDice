@@ -17,6 +17,7 @@
 
 #include "CImGuiMgr.h"
 #include "Inspector.h"
+#include "Outliner.h"
 #include "CLevelSaveLoad.h"
 
 
@@ -201,6 +202,74 @@ void MenuUI::GameObject()
             ImGui::EndMenu();
         }
 
+        if (ImGui::BeginMenu("Add Component", ""))
+        {
+            Inspector* inspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");
+
+            if (nullptr != inspector->GetTargetObject())
+            {
+                if (inspector->GetTargetObject()->Transform() == nullptr)
+                    if (ImGui::MenuItem("Transform")) inspector->GetTargetObject()->AddComponent(new CTransform);
+
+                if (inspector->GetTargetObject()->Collider2D() == nullptr)
+                    if (ImGui::MenuItem("Collider2D")) inspector->GetTargetObject()->AddComponent(new CCollider2D);
+
+                if (inspector->GetTargetObject()->Animator2D() == nullptr)
+                    if (ImGui::MenuItem("Animator2D")) inspector->GetTargetObject()->AddComponent(new CAnimator2D);
+
+                if (inspector->GetTargetObject()->Light2D() == nullptr)
+                    if (ImGui::MenuItem("Light2D")) inspector->GetTargetObject()->AddComponent(new CLight2D);
+
+                if (inspector->GetTargetObject()->StateMachine() == nullptr)
+                    if (ImGui::MenuItem("StateMachine")) inspector->GetTargetObject()->AddComponent(new CStateMachine);
+            }
+
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Add Render Component", ""))
+        {
+            Inspector* inspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");
+
+            if (nullptr != inspector->GetTargetObject() && inspector->GetTargetObject()->GetRenderComopnent() == nullptr)
+            {
+                if (ImGui::MenuItem("MeshRender"))
+                    inspector->GetTargetObject()->AddComponent(new CMeshRender);
+
+                if (ImGui::MenuItem("TileMap"))
+                    inspector->GetTargetObject()->AddComponent(new CTileMap);
+
+                if (ImGui::MenuItem("ParticleSystem"))
+                    inspector->GetTargetObject()->AddComponent(new CParticleSystem);
+
+            }
+
+            ImGui::EndMenu();
+        }
+
+        if (ImGui::BeginMenu("Change Name", ""))
+        {
+            Inspector* inspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");
+
+            if (nullptr != inspector->GetTargetObject())
+            {
+                
+                wstring wstrObjName = inspector->GetTargetObject()->GetName();
+                string strObjName = ToString(wstrObjName);
+
+                ImGui::Text("Name ");
+                ImGui::SameLine();
+                if (ImGui::InputText("##ObjName", (char*)strObjName.c_str(), 100, ImGuiInputTextFlags_EnterReturnsTrue))
+                {
+                    inspector->GetTargetObject()->SetName(ToWString(strObjName));
+                    Outliner* outliner = (Outliner*)CImGuiMgr::GetInst()->FindUI("##Outliner");
+                    outliner->ResetCurrentLevel();
+                }
+            }
+
+            ImGui::EndMenu();
+        }
+
         if (ImGui::BeginMenu("Script", ""))
         {
             vector<wstring> vecScriptName;
@@ -247,6 +316,17 @@ void MenuUI::Asset()
             pMtrl->SetName(szPath);
             pMtrl->Save(szPath);
             GamePlayStatic::AddAsset(pMtrl);
+        }
+
+        Inspector* inspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");
+        CMaterial* target = dynamic_cast<CMaterial*>(inspector->GetTargetAsset().Get());
+        if (target != nullptr)
+        {
+            if (ImGui::MenuItem("Add Texture Param"))
+            {
+                if (target->GetTexParam(TEX_PARAM::TEX_0) == nullptr)
+                    target->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\Dice\\03_wind.png"));
+            }
         }
 
         ImGui::EndMenu();

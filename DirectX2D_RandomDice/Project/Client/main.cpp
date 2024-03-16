@@ -32,7 +32,7 @@
 #include "CEditorObjMgr.h"
 #include "CCreateTempLevel.h"
 
-#define _RELEASE_GAME
+// #define _RELEASE_GAME
 
 
 

@@ -7,6 +7,8 @@
 #include "CImGuiMgr.h"
 #include "ListUI.h"
 #include "Inspector.h"
+#include "ParamUI.h"
+#include "MaterialUI.h"
 
 
 MeshRenderUI::MeshRenderUI()
@@ -116,6 +118,29 @@ void MeshRenderUI::render_update()
 		pListUI->AddString(vecMtrlName);
 		pListUI->SetDbClickDelegate(this, (Delegate_1)&MeshRenderUI::MaterialSelect);
 		pListUI->Activate();
+	}
+
+	// 해당 텍스쳐 이미지 출력
+	if (pMtrl == nullptr)
+		return;
+
+	Ptr<CGraphicsShader> pShader = pMtrl->GetShader();
+
+	string strShaderName;
+	if (nullptr != pShader)
+	{
+		strShaderName = string(pShader->GetKey().begin(), pShader->GetKey().end());
+	}
+
+	ImGui::Text("Shader  ");
+	ImGui::SameLine();
+	ImGui::InputText("##ShaderName", (char*)strShaderName.c_str(), strShaderName.length(), ImGuiInputTextFlags_ReadOnly);
+
+	const vector<tTexParam>& vecTexParam = pShader->GetTexParam();
+	for (size_t i = 0; i < vecTexParam.size(); ++i)
+	{
+		Ptr<CTexture> pTex = pMtrl->GetTexParam(vecTexParam[i].Type);
+		ParamUI::Param_TEXTURE(pTex, vecTexParam[i].Desc, this);
 	}
 }
 

@@ -26,7 +26,7 @@ CLevelMgr::~CLevelMgr()
 
 void CLevelMgr::init()
 {
-
+	// 여기서 만들어진 레벨을 가져와요.
 }
 
 void CLevelMgr::tick()

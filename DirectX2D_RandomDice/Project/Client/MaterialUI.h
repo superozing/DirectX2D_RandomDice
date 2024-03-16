@@ -16,5 +16,6 @@ public:
 public:
     MaterialUI();
     ~MaterialUI();
+    friend class MeshRenderUI;
 };
 

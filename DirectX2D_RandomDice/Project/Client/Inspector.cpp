@@ -11,6 +11,8 @@
 #include "ScriptUI.h"
 
 #include "AssetUI.h"
+#include "ParamUI.h"
+#include "MaterialUI.h"
 
 
 Inspector::Inspector()

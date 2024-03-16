@@ -41,6 +41,22 @@ void MaterialUI::render_update()
     ImGui::SameLine();
     ImGui::InputText("##ShaderName", (char*)strShaderName.c_str(), strShaderName.length(), ImGuiInputTextFlags_ReadOnly);
     
+    // Shader Drop üũ
+    if (ImGui::BeginDragDropTarget())
+    {
+        const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("ContentTree");
+
+        if (payload)
+        {
+            DWORD_PTR data = *((DWORD_PTR*)payload->Data);
+            CAsset* pAsset = (CAsset*)data;
+            if (ASSET_TYPE::GRAPHICS_SHADER == pAsset->GetType())
+            {
+                pMtrl.Get()->SetShader((CGraphicsShader*)pAsset);
+            }
+        }
+        ImGui::EndDragDropTarget();
+    }
 
     ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing(); ImGui::Spacing();
     ImGui::Text("Material Parameter");

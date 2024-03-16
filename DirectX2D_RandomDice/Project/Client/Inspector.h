@@ -36,6 +36,7 @@ public:
     void SetTargetAsset(Ptr<CAsset> _Asset);
 
     CGameObject* GetTargetObject() { return m_TargetObject; }
+    Ptr<CAsset> GetTargetAsset() { return m_TargetAsset; }
 
 private:
     void CreateChildUI();
