@@ -122,6 +122,9 @@
     <Filter Include="02. UI\3. Inspector\AssetUI\FSMUI">
       <UniqueIdentifier>{47761983-a947-4c20-9926-ca87e22c583c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. UI\3. Inspector\ComponentUI\Script">
+      <UniqueIdentifier>{be25e58a-0a74-4344-8769-f0a1de4e97b0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -258,6 +261,9 @@
     </ClInclude>
     <ClInclude Include="FSMUI.h">
       <Filter>02. UI\3. Inspector\AssetUI\FSMUI</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptUI.h">
+      <Filter>02. UI\3. Inspector\ComponentUI\Script</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -397,6 +403,9 @@
     </ClCompile>
     <ClCompile Include="FSMUI.cpp">
       <Filter>02. UI\3. Inspector\AssetUI\FSMUI</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptUI.cpp">
+      <Filter>02. UI\3. Inspector\ComponentUI\Script</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -185,7 +185,7 @@ void CImGuiMgr::create_ui()
     pUI = new Outliner;
     AddUI(pUI->GetID(), pUI);
 
-    // MunuUI
+    // MenuUI
     pUI = new MenuUI;
     AddUI(pUI->GetID(), pUI);
 

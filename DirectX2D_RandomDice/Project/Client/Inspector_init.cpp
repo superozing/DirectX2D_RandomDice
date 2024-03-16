@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "Inspector.h"
 
+#include "ScriptUI.h"
+
 void Inspector::CreateChildUI()
 {
 	CreateComponentUI();
@@ -78,4 +80,16 @@ void Inspector::CreateAssetUI()
 
 	m_arrAssetUI[(UINT)ASSET_TYPE::FSM] = new FSMUI;
 	AddChildUI(m_arrAssetUI[(UINT)ASSET_TYPE::FSM]);
+}
+
+void Inspector::ResizeScriptUI(UINT _Size)
+{
+	int AddSize = _Size - m_vecScriptUI.size();
+
+	for (int i = 0; i < AddSize; ++i)
+	{
+		ScriptUI* pScriptUI = new ScriptUI;
+		AddChildUI(pScriptUI);
+		m_vecScriptUI.push_back(pScriptUI);
+	}
 }

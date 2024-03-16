@@ -33,13 +33,11 @@ CRenderMgr::~CRenderMgr()
 
 void CRenderMgr::tick()
 {
-
-
 	// ∑ª¥ı≈∏∞Ÿ π◊ ±Ì¿Ã ≈∏∞Ÿ º≥¡§
 	Ptr<CTexture> pRTTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"RenderTargetTex");
 	Ptr<CTexture> pDSTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"DepthStencilTex");
 	CONTEXT->OMSetRenderTargets(1, pRTTex->GetRTV().GetAddressOf(), pDSTex->GetDSV().Get());
-
+	
 	Vec4 vClearColor = Vec4(0.f, 0.f, 0.f, 1.f);
 	CDevice::GetInst()->ClearRenderTarget(vClearColor);
 

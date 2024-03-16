@@ -71,16 +71,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         MessageBox(nullptr, L"CEngine 초기화 실패", L"초기화 실패", MB_OK);
         return 0;
     }
-
-    // 임시 레벨 생성
+        
     CPrefab::GAMEOBJECT_SAVE = &CLevelSaveLoad::SaveGameObject;
     CPrefab::GAMEOBJECT_LOAD = &CLevelSaveLoad::LoadGameObject;    
-
+    
+#ifndef _RELEASE_GAME
+    // 임시 레벨 생성
     CCreateTempLevel::Init();
     CCreateTempLevel::CreateTempLevel();
 
-
-#ifndef _RELEASE_GAME
     // EditorObjectManager 초기화
     CEditorObjMgr::GetInst()->init();
 

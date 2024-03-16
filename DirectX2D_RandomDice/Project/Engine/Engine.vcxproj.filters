@@ -163,6 +163,9 @@
     <ClInclude Include="CBlackboard.h">
       <Filter>Module\Blackboard</Filter>
     </ClInclude>
+    <ClInclude Include="CFontMgr.h">
+      <Filter>04. Manager\FontMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -314,6 +317,9 @@
     </ClCompile>
     <ClCompile Include="CBlackboard.cpp">
       <Filter>Module\Blackboard</Filter>
+    </ClCompile>
+    <ClCompile Include="CFontMgr.cpp">
+      <Filter>04. Manager\FontMgr</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -472,6 +478,9 @@
     </Filter>
     <Filter Include="Module\Blackboard">
       <UniqueIdentifier>{a8cf233b-b2be-4b8e-89b9-8a537b1e34a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. Manager\FontMgr">
+      <UniqueIdentifier>{37be9843-c16a-4fff-8630-20aa99e316a9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -186,6 +186,18 @@ enum class TEX_PARAM
 	END,
 };
 
+enum class SCRIPT_PARAM
+{
+	INT,
+	FLOAT,
+	VEC2,
+	VEC3,
+	VEC4,
+	OBJECT,
+};
+
+
+
 enum class DEBUG_SHAPE
 {
 	RECT,
