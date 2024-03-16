@@ -32,7 +32,7 @@
 #include "CEditorObjMgr.h"
 #include "CCreateTempLevel.h"
 
-//#define _RELEASE_GAME
+#define _RELEASE_GAME
 
 
 
@@ -66,7 +66,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg;
 
     // CEngine 초기화 실패 -> 프로그램 종료
-    if (FAILED(CEngine::GetInst()->init(hWnd, Vec2(1280, 768))))
+    if (FAILED(CEngine::GetInst()->init(hWnd, Vec2(540, 960))))
     {
         MessageBox(nullptr, L"CEngine 초기화 실패", L"초기화 실패", MB_OK);
         return 0;
