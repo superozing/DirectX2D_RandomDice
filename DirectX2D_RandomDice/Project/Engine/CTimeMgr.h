@@ -15,8 +15,9 @@ private:
 
 	UINT			m_iCall;
 	double			m_Time;
-
 	bool			m_bLock;
+
+	wchar_t			m_szText[256];
 
 public:
 	float GetDeltaTime() { return (float)m_DeltaTime; }
@@ -30,5 +31,6 @@ public:
 public:
 	void init();
 	void tick();
+	void render();
 };
 
