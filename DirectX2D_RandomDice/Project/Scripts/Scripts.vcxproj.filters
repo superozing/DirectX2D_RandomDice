@@ -7,26 +7,29 @@
     <ClInclude Include="pch.h">
       <Filter>Default</Filter>
     </ClInclude>
-    <ClInclude Include="CBackgroundScript.h">
-      <Filter>Scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="CMissileScript.h">
-      <Filter>Scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="CPlayerScript.h">
-      <Filter>Scripts</Filter>
-    </ClInclude>
     <ClInclude Include="CScriptMgr.h">
       <Filter>ScriptMgr</Filter>
     </ClInclude>
-    <ClInclude Include="CMonsterScript.h">
-      <Filter>Scripts</Filter>
+    <ClInclude Include="CBackgroundScript.h">
+      <Filter>Scripts\Default</Filter>
     </ClInclude>
-    <ClInclude Include="CExternScript.h">
-      <Filter>Scripts</Filter>
+    <ClInclude Include="CMissileScript.h">
+      <Filter>Scripts\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="CMonsterScript.h">
+      <Filter>Scripts\Default</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerScript.h">
+      <Filter>Scripts\Default</Filter>
     </ClInclude>
     <ClInclude Include="CDiceScript.h">
-      <Filter>Scripts</Filter>
+      <Filter>Scripts\Field\Dice</Filter>
+    </ClInclude>
+    <ClInclude Include="CExternScript.h">
+      <Filter>Scripts\Extern</Filter>
+    </ClInclude>
+    <ClInclude Include="CFieldScript.h">
+      <Filter>Scripts\Field</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -36,26 +39,29 @@
     <ClCompile Include="Scripts.cpp">
       <Filter>Default</Filter>
     </ClCompile>
-    <ClCompile Include="CBackgroundScript.cpp">
-      <Filter>Scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="CMissileScript.cpp">
-      <Filter>Scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="CPlayerScript.cpp">
-      <Filter>Scripts</Filter>
-    </ClCompile>
     <ClCompile Include="CScriptMgr.cpp">
       <Filter>ScriptMgr</Filter>
     </ClCompile>
-    <ClCompile Include="CMonsterScript.cpp">
-      <Filter>Scripts</Filter>
+    <ClCompile Include="CBackgroundScript.cpp">
+      <Filter>Scripts\Default</Filter>
     </ClCompile>
-    <ClCompile Include="CExternScript.cpp">
-      <Filter>Scripts</Filter>
+    <ClCompile Include="CMissileScript.cpp">
+      <Filter>Scripts\Default</Filter>
+    </ClCompile>
+    <ClCompile Include="CMonsterScript.cpp">
+      <Filter>Scripts\Default</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerScript.cpp">
+      <Filter>Scripts\Default</Filter>
     </ClCompile>
     <ClCompile Include="CDiceScript.cpp">
-      <Filter>Scripts</Filter>
+      <Filter>Scripts\Field\Dice</Filter>
+    </ClCompile>
+    <ClCompile Include="CExternScript.cpp">
+      <Filter>Scripts\Extern</Filter>
+    </ClCompile>
+    <ClCompile Include="CFieldScript.cpp">
+      <Filter>Scripts\Field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -67,6 +73,18 @@
     </Filter>
     <Filter Include="ScriptMgr">
       <UniqueIdentifier>{b42de7fc-e585-40cf-9c65-79e91e2b59d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Default">
+      <UniqueIdentifier>{7ee2fd6b-ca30-4c1e-b99f-2ab32b92438c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Extern">
+      <UniqueIdentifier>{1f66e3fe-8295-4529-8f6e-192e00008f09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Field">
+      <UniqueIdentifier>{d0e1cfc7-6c7b-4561-878c-68e04070b794}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Field\Dice">
+      <UniqueIdentifier>{0504a554-b40a-4fec-bbc6-d8de26089e9f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

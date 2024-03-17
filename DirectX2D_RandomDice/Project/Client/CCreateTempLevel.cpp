@@ -84,6 +84,7 @@ void CCreateTempLevel::CreateTempLevel()
 	pTempLevel->GetLayer(4)->SetName(L"Monster");
 	pTempLevel->GetLayer(5)->SetName(L"Light");
 	pTempLevel->GetLayer(6)->SetName(L"Tile");
+	pTempLevel->GetLayer(7)->SetName(L"Dice");
 	pTempLevel->GetLayer(31)->SetName(L"UI");
 
 	// ComputeShader Å×½ºÆ®
