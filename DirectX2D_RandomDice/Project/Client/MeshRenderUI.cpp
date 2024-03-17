@@ -100,7 +100,10 @@ void MeshRenderUI::render_update()
 			CAsset* pAsset = (CAsset*)data;
 			if (ASSET_TYPE::MATERIAL == pAsset->GetType())
 			{
-				GetTargetObject()->MeshRender()->SetMaterial((CMaterial*)pAsset);
+				Ptr<CMaterial> pAssetMtrl = (CMaterial*)pAsset;
+
+				if (pAssetMtrl->GetShader() != nullptr)
+					GetTargetObject()->MeshRender()->SetMaterial(pAssetMtrl);
 			}
 		}
 		ImGui::EndDragDropTarget();
@@ -128,13 +131,14 @@ void MeshRenderUI::render_update()
 
 	string strShaderName;
 	if (nullptr != pShader)
-	{
 		strShaderName = string(pShader->GetKey().begin(), pShader->GetKey().end());
-	}
 
 	ImGui::Text("Shader  ");
 	ImGui::SameLine();
 	ImGui::InputText("##ShaderName", (char*)strShaderName.c_str(), strShaderName.length(), ImGuiInputTextFlags_ReadOnly);
+
+	if (pShader == nullptr)
+		return;
 
 	const vector<tTexParam>& vecTexParam = pShader->GetTexParam();
 	for (size_t i = 0; i < vecTexParam.size(); ++i)
@@ -161,5 +165,6 @@ void MeshRenderUI::MaterialSelect(DWORD_PTR _ptr)
 
 	Ptr<CMaterial> pMtrl = CAssetMgr::GetInst()->FindAsset<CMaterial>(strMtrlName);
 
-	GetTargetObject()->MeshRender()->SetMaterial(pMtrl);
+	if (pMtrl->GetShader() != nullptr)
+		GetTargetObject()->MeshRender()->SetMaterial(pMtrl);
 }
