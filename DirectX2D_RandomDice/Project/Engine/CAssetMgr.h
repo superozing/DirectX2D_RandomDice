@@ -147,7 +147,7 @@ Ptr<T> CAssetMgr::Load(const wstring& _strKey, const wstring& _strRelativePath)
     pAsset = new T;
     if (FAILED(pAsset->Load(strFilePath)))
     {
-        MessageBox(nullptr, L"에셋 로딩 실패", L"에셋 로딩 실패", MB_OK);
+        MessageBox(nullptr, strFilePath.c_str(), L"에셋 로딩 실패", MB_OK);
         pAsset = nullptr;
         return nullptr;
     }
