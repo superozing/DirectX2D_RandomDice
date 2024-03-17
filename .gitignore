@@ -398,6 +398,7 @@ FodyWeavers.xsd
 *.sln.iml
 
 DirectX2D_RandomDice/External/Include/Engine/
+DirectX2D_RandomDice/External/Include/Scripts/
 DirectX2D_RandomDice/External/library/Engine/
 DirectX2D_RandomDice/External/library/Script/
 DirectX2D_RandomDice/OutputFile/content/shader/
