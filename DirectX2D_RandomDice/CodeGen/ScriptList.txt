@@ -1,4 +1,6 @@
 CBackgroundScript
+CDiceScript
+CExternScript
 CMissileScript
 CMonsterScript
 CPlayerScript
