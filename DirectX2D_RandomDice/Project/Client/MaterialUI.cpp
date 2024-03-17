@@ -52,7 +52,8 @@ void MaterialUI::render_update()
             CAsset* pAsset = (CAsset*)data;
             if (ASSET_TYPE::GRAPHICS_SHADER == pAsset->GetType())
             {
-                pMtrl.Get()->SetShader((CGraphicsShader*)pAsset);
+                pMtrl->SetShader((CGraphicsShader*)pAsset);
+                pMtrl->Save(pMtrl->GetName());
             }
         }
         ImGui::EndDragDropTarget();
