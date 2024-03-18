@@ -30,29 +30,37 @@ enum class DICE
     END,
 };
 
-static const wstring DicePathArr[(UINT)DICE::END]
+enum class ATTACK_PRIORITY // 주사위의 공격 우선 순위
 {
-    L"NONE",
-
-    L"texture\\Dice\\01_fire.png",
-    L"texture\\Dice\\02_electric.png",
-    L"texture\\Dice\\03_wind.png",
-    L"texture\\Dice\\04_poison.png",
-    L"texture\\Dice\\05_ice.png",
-    L"texture\\Dice\\06_iron.png",
-    L"texture\\Dice\\07_broken.png",
-    L"texture\\Dice\\08_gamble.png",
-    L"texture\\Dice\\09_lock.png",
-    L"texture\\Dice\\10_mine.png",
-    L"texture\\Dice\\11_light.png",
-    L"texture\\Dice\\12_thorn.png",
-    L"texture\\Dice\\13_crack.png",
-    L"texture\\Dice\\14_critical.png",
-    L"texture\\Dice\\15_energy.png",
-    L"texture\\Dice\\16_sacrifice.png",
-    L"texture\\Dice\\17_arrow.png",
-    L"texture\\Dice\\18_mimic.png"
+    BUFF,		 // 버프 주사위 - 공격을 하지 않음
+    FRONT,		 // 앞 쪽 적 우선 공격
+    HIGH_HEALTH, // 높은 체력의 적 우선 공격
+    END,
 };
+
+enum class DICE_BUFF
+{
+    NONE,
+    CRITICAL,
+    ATTACK_SPEED,
+};
+
+
+struct DICE_INFO
+{
+    // 아냐. 이런 식으로 하면 안된다.
+    // 너무 종류가 많아진다. 절대 이런 식으로 구현하지 않았을꺼야.
+    // 공격 스크립트, 버프 스크립트, 합쳐질 때 스크립트 이렇게 세 개를 만들자.
+    // 그리고 파생시키는 것이 좋아보인다.
+    class CDiceAttackScript*    pAttack;
+    class CDiceBuffScript*      pBuff;
+    class CDiceMergeScript*     pMerge;
+};
+
+
+
+
+
 class CExternScript :
     public CScript
 {
@@ -60,6 +68,8 @@ private:
     vector<int>     m_diceDeck;
 
 public:
+    vector<wstring>     DicePath;
+    vector<DICE_INFO>   DiceInfo;
 
 public:
     virtual void begin() override;
@@ -75,7 +85,7 @@ public:
 
     wstring GetDicePathWString(DICE _diceType)
     {
-        return DicePathArr[(UINT)_diceType];
+        return DicePath[(UINT)_diceType];
     }
 
 

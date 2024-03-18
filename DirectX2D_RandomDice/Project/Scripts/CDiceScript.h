@@ -2,34 +2,6 @@
 #include <Engine/CScript.h>
 #include "CExternScript.h"
 
-enum class ATTACK_PRIORITY // 주사위의 공격 우선 순위
-{
-	BUFF,		 // 버프 주사위 - 공격을 하지 않음
-	FRONT,		 // 앞 쪽 적 우선 공격
-	HIGH_HEALTH, // 높은 체력의 적 우선 공격
-	END,
-};
-
-enum class DICE_BUFF
-{
-	NONE,
-	CRITICAL,
-	ATTACK_SPEED,
-};
-
-
-struct DICE_INFO
-{
-	ATTACK_PRIORITY AttackPriority; // 공격 우선 순위
-	DICE_BUFF		Buff;			// 몇 번째 인덱스에 버프를 주는 주사위 인가?
-
-	float			Damage;			// 종류에 따른 주사위의 공격력
-	float			AttackSpeed;	// 종류에 따른 주사위의 공격 속도
-
-	Vec3			DiceColor;		// 눈금 색상
-};
-
-
 // 필드 위에 존재할 주사위 게임 오브젝트에 부착될 스크립트.
 class CDiceScript
 	:public CScript

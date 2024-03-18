@@ -21,8 +21,13 @@ CFieldScript::~CFieldScript()
 
 void CFieldScript::begin()
 {
-	// 지금은 하드코딩으로 우겨넣지만
-// 나중에는 프리팹을 가져와서 간단하게 넣어주기만 해도 되도록 만들어보자...
+	
+	GetOwner()->GetRenderComponent()->GetDynamicMaterial();
+	GetOwner()->GetRenderComponent()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0
+					, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\BattleField\\battlefield_normal_bg_top.png", L"texture\\BattleField\\battlefield_normal_bg_top.png"));
+
+	GetOwner()->Transform()->SetRelativePos(Vec3(0, -380, 1));
+	GetOwner()->Transform()->SetRelativeScale(Vec3(540, 400, 1));
 
 	for (int i = 0; i < 5; ++i)
 	{
@@ -43,14 +48,16 @@ void CFieldScript::begin()
 
 			Ptr<CTexture> pTex = CAssetMgr::GetInst()->Load<CTexture>(CurDicePath, CurDicePath);
 			pDice->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
-
+			
+			pDice->Transform()->SetRelativePos(Vec3(-140 * (i * 70), -310 + (j * 70), 1));
+			
 			// 게임 오브젝트에 주사위 스크립트 추가
 			pDice->AddComponent(new CDiceScript);
 			CDiceScript* DiceScript = pDice->GetScript<CDiceScript>();
 
 			// 주사위 스크립트의 행렬 설정
-			DiceScript->SetDiceRow(i);
-			DiceScript->SetDiceCol(j);
+			DiceScript->SetDiceRow(i + 1);
+			DiceScript->SetDiceCol(j + 1);
 
 
 			// 주사위 종류과 정보 설정
