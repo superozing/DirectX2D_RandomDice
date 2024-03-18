@@ -320,7 +320,7 @@ void MenuUI::GameObject()
 
                     // 전체 null 제거
                     prefabName.erase(remove(prefabName.begin(), prefabName.end(), '\0'), prefabName.end());
-                    prefabName += L".prefab";
+                    prefabName += L".pref";
 
                     CAssetMgr::GetInst()->AddAsset<CPrefab>(prefabName, pNewPrefab);
                     pNewPrefab->Save(prefabName);
