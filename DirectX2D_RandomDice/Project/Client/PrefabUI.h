@@ -8,7 +8,7 @@ class PrefabUI :
 
 public:
     virtual void render_update() override;
-
+    virtual void Activate() override;
 public:
     PrefabUI();
     ~PrefabUI();

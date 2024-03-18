@@ -309,25 +309,30 @@ void MenuUI::GameObject()
 
                 if (ImGui::InputText("##MakePrefabObjectName", (char*)strObjName.c_str(), 100, ImGuiInputTextFlags_EnterReturnsTrue))
                 {
-                    CPrefab* pNewPrefab = new CPrefab;
-                    CGameObject* pCloneGameObject = inspector->GetTargetObject()->Clone();
-                    
-                    pNewPrefab->SetGameObject(pCloneGameObject);
-                    
-                    
-                    
                     wstring prefabName = L"prefab\\" + ToWString(strObjName);
 
                     // 전체 null 제거
                     prefabName.erase(remove(prefabName.begin(), prefabName.end(), '\0'), prefabName.end());
                     prefabName += L".pref";
 
-                    CAssetMgr::GetInst()->AddAsset<CPrefab>(prefabName, pNewPrefab);
+                    
+                    // 프리팹 생성
+                    CPrefab* pNewPrefab = new CPrefab;
+
+                    CGameObject* pCloneGameObject = inspector->GetTargetObject()->Clone();
+                    
+                    pNewPrefab->SetGameObject(pCloneGameObject);
+                    pNewPrefab->SetName(prefabName);
+
+                    // 파일에 저장
                     pNewPrefab->Save(prefabName);
 
-                    // 컨텐츠 재구성
+                    // 에셋 추가 후 컨텐츠 재구성
+                    CAssetMgr::GetInst()->AddAsset<CPrefab>(prefabName, pNewPrefab);
+                    
                     Content* content = (Content*)CImGuiMgr::GetInst()->FindUI("##Content");
                     content->ReloadContent();
+
                 }
             }
 
@@ -343,24 +348,41 @@ void MenuUI::Asset()
 {
     if (ImGui::BeginMenu("Asset"))
     {
-        if (ImGui::MenuItem("Create Empty Material"))
+        if (ImGui::BeginMenu("Create Empty Material"))
         {
-            wchar_t szPath[255] = {};            
-            wstring FilePath = CPathMgr::GetContentPath();
-            
-            int num = 0;
-            while (true)
-            {                
-                swprintf_s(szPath, L"Material//New Material_%d.mtrl", num);
-                if (!exists(FilePath + szPath))
-                    break;
-                ++num;
+            wstring wstrMtrlName = L"New Material";
+            string strMtrlName = ToString(wstrMtrlName);
+
+            ImGui::Text("New Material Name :");
+            ImGui::SameLine();
+
+            strMtrlName.resize(100);
+
+
+            ///
+            if (ImGui::InputText("##MakeMaterialName", (char*)strMtrlName.c_str(), 100, ImGuiInputTextFlags_EnterReturnsTrue))
+            {
+                wstring MtrlName = L"material\\" + ToWString(strMtrlName);
+
+                // 전체 null 제거
+                MtrlName.erase(remove(MtrlName.begin(), MtrlName.end(), '\0'), MtrlName.end());
+                MtrlName += L".mtrl";
+
+                // 머터리얼 생성
+                CMaterial* pMtrl = new CMaterial;
+                pMtrl->SetName(MtrlName);
+
+                // 파일에 저장
+                pMtrl->Save(MtrlName);
+
+                // 에셋 추가 후 컨텐츠 재구성
+                CAssetMgr::GetInst()->AddAsset<CMaterial>(MtrlName, pMtrl);
+                Content* content = (Content*)CImGuiMgr::GetInst()->FindUI("##Content");
+                content->ReloadContent();
             }
 
-            CMaterial* pMtrl = new CMaterial;
-            pMtrl->SetName(szPath);
-            pMtrl->Save(szPath);
-            GamePlayStatic::AddAsset(pMtrl);
+            ImGui::EndMenu();
+
         }
 
         Inspector* inspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");

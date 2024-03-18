@@ -47,5 +47,8 @@ private:
 public:
     Inspector();
     ~Inspector();
+
+
+    friend class PrefabUI;
 };
 
