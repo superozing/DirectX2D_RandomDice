@@ -402,7 +402,7 @@ void MenuUI::Asset()
 
         Inspector* pInspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");
         Ptr<CAsset> pAsset = pInspector->GetTargetAsset();
-        if (pAsset->GetType() == ASSET_TYPE::PREFAB)
+        if (pAsset != nullptr && pAsset->GetType() == ASSET_TYPE::PREFAB)
         {
             CPrefab* pPrefab = (CPrefab*)pAsset.Get();
 

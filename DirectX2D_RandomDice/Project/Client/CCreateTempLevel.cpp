@@ -110,7 +110,7 @@ void CCreateTempLevel::CreateTempLevel()
 	pCamObj->Transform()->SetRelativePos(Vec3(0.5f, 0.f, 0.f));
 	pCamObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, 0.f));
 
-	pCamObj->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
+	pCamObj->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
 	pCamObj->Camera()->SetCameraPriority(0);
 	pCamObj->Camera()->LayerCheckAll();
 	pCamObj->Camera()->LayerCheck(31, false);

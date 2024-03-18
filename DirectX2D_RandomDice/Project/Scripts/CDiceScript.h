@@ -47,20 +47,25 @@ private:
 
 	bool		m_Buff[2];		// 이 주사위가 받고 있는 버프
 
+
+
+
 	float		m_finalDamage;		// 버프, 디버프를 포함한 데미지
 	float		m_finalAttackSpeed; // 버프, 디버프를 포함한 공격속도
+	
+
 
 
 	UINT		m_DiceRow;
 	UINT		m_DiceCol;
 
 
-	// 주사위의 현재 상태를 저장할 예정이긴 한데............. 지금 생각해보니 굳이 써야 하나 싶네요?
-	CStateMachine* m_StateMachine;
-
-
 public:
 	DICE GetDice() const { return Dice; }
+
+
+	float GetFinalDamage() { return m_finalDamage; }
+	float GetFinalAttackSpeed() { return m_finalAttackSpeed; }
 
 	void SetDiceWithInfo(DICE _Dice) { Dice = _Dice; }
 

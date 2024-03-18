@@ -26,6 +26,9 @@ public:
     void RestoreMaterial();
 
 public:
+
+    virtual void begin() { GetDynamicMaterial(); }
+
     virtual void finaltick() {};
     virtual void UpdateData() = 0;
     virtual void render() = 0;
