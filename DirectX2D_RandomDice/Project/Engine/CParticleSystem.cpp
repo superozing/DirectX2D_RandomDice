@@ -193,6 +193,8 @@ void CParticleSystem::UpdateData()
 
 void CParticleSystem::SaveToFile(FILE* _File)
 {
+	CRenderComponent::SaveToFile(_File);
+
 	// 파티클 최대 갯수 및 모듈 정보 저장
 	fwrite(&m_MaxParticleCount, sizeof(UINT), 1, _File);
 	fwrite(&m_Module, sizeof(tParticleModule), 1, _File);	
@@ -206,6 +208,8 @@ void CParticleSystem::SaveToFile(FILE* _File)
 
 void CParticleSystem::LoadFromFile(FILE* _File)
 {
+	CRenderComponent::LoadFromFile(_File);
+
 	// 파티클 최대 갯수 및 모듈 정보 로드
 	fread(&m_MaxParticleCount, sizeof(UINT), 1, _File);
 	fread(&m_Module, sizeof(tParticleModule), 1, _File);
