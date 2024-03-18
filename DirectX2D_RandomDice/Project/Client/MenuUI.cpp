@@ -19,6 +19,7 @@
 #include "Inspector.h"
 #include "Outliner.h"
 #include "CLevelSaveLoad.h"
+#include "Content.h"
 
 
 
@@ -191,16 +192,9 @@ void MenuUI::GameObject()
             pNewObj->AddComponent(new CTransform);
             GamePlayStatic::SpawnGameObject(pNewObj, 0);
         }
+
+        // 구분선
         ImGui::Separator();
-
-        if (ImGui::BeginMenu("Component", ""))
-        {
-            if (ImGui::MenuItem("Cut", "CTRL+X")) {}
-            if (ImGui::MenuItem("Copy", "CTRL+C")) {}
-            if (ImGui::MenuItem("Paste", "CTRL+V")) {}
-
-            ImGui::EndMenu();
-        }
 
         if (ImGui::BeginMenu("Add Component", ""))
         {
@@ -247,7 +241,7 @@ void MenuUI::GameObject()
             ImGui::EndMenu();
         }
 
-        if (ImGui::BeginMenu("Change Name", ""))
+        if (ImGui::BeginMenu("Change Object Name", ""))
         {
             Inspector* inspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");
 
@@ -270,7 +264,7 @@ void MenuUI::GameObject()
             ImGui::EndMenu();
         }
 
-        if (ImGui::BeginMenu("Script", ""))
+        if (ImGui::BeginMenu("Add Script", ""))
         {
             vector<wstring> vecScriptName;
             CScriptMgr::GetScriptInfo(vecScriptName);
@@ -283,12 +277,59 @@ void MenuUI::GameObject()
                     if (nullptr != inspector->GetTargetObject())
                     {                     
                         inspector->GetTargetObject()->AddComponent(CScriptMgr::GetScript(vecScriptName[i]));
+
+                        Outliner* outliner = (Outliner*)CImGuiMgr::GetInst()->FindUI("##Outliner");
+                        outliner->ResetCurrentLevel();
                     }
                 }
             }
 
             ImGui::EndMenu();
         }
+
+        // 구분선
+        ImGui::Separator();
+
+        // 객체를 Prefab 화
+        if (ImGui::BeginMenu("Make Prefab", ""))
+        {
+            Inspector* inspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");
+
+            // 타겟 오브젝트가 존재할 경우, 이 오브젝트를 프리팹 화 시킨 후 에셋 매니저에 넣어주어야 해요.
+            if (nullptr != inspector->GetTargetObject())
+            {
+
+                wstring wstrObjName = inspector->GetTargetObject()->GetName();
+                string strObjName = ToString(wstrObjName);
+
+                ImGui::Text("New Prefab Name :");
+                ImGui::SameLine();
+
+                strObjName.resize(100);
+
+                if (ImGui::InputText("##MakePrefabObjectName", (char*)strObjName.c_str(), 100, ImGuiInputTextFlags_EnterReturnsTrue))
+                {
+                    CPrefab* pNewPrefab = new CPrefab();
+                    pNewPrefab->SetGameObject(inspector->GetTargetObject());
+
+                    wstring prefabName = L"prefab\\" + ToWString(strObjName);
+
+                    // 전체 null 제거
+                    prefabName.erase(remove(prefabName.begin(), prefabName.end(), '\0'), prefabName.end());
+                    prefabName += L".prefab";
+
+                    CAssetMgr::GetInst()->AddAsset<CPrefab>(prefabName, pNewPrefab);
+                    pNewPrefab->Save(prefabName);
+
+                    // 컨텐츠 재구성
+                    Content* content = (Content*)CImGuiMgr::GetInst()->FindUI("##Content");
+                    content->ReloadContent();
+                }
+            }
+
+            ImGui::EndMenu();
+        }
+
 
         ImGui::EndMenu();
     }
