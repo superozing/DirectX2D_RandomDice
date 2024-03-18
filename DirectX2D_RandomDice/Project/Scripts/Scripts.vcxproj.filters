@@ -40,7 +40,9 @@
     <ClInclude Include="CDiceMergeScript.h">
       <Filter>Scripts\DiceMerge</Filter>
     </ClInclude>
-    <ClInclude Include="CUIScript.h" />
+    <ClInclude Include="CUIScript.h">
+      <Filter>Scripts\UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -82,7 +84,9 @@
     <ClCompile Include="CDiceMergeScript.cpp">
       <Filter>Scripts\DiceMerge</Filter>
     </ClCompile>
-    <ClCompile Include="CUIScript.cpp" />
+    <ClCompile Include="CUIScript.cpp">
+      <Filter>Scripts\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -117,6 +121,9 @@
     </Filter>
     <Filter Include="Scripts\UI">
       <UniqueIdentifier>{61e30a39-c22c-4c1c-85c7-cadbb167d704}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Enemy">
+      <UniqueIdentifier>{a253f0ba-1386-423e-b475-a1a6b41f72f4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

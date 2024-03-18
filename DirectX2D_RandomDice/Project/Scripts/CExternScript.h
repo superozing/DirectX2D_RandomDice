@@ -30,13 +30,7 @@ enum class DICE
     END,
 };
 
-enum class ATTACK_PRIORITY // 주사위의 공격 우선 순위
-{
-    BUFF,		 // 버프 주사위 - 공격을 하지 않음
-    FRONT,		 // 앞 쪽 적 우선 공격
-    HIGH_HEALTH, // 높은 체력의 적 우선 공격
-    END,
-};
+
 
 enum class DICE_BUFF
 {
