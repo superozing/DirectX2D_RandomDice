@@ -20,7 +20,7 @@ public:
         if (m_FSM_Inst.Get())
             return m_FSM_Inst;
         else
-            m_FSM;
+            return m_FSM;
     };
 
     void AddBlackboardData(const wstring& _strKey, BB_DATA _Type, void* _pData);
