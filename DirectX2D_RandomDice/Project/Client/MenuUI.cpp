@@ -309,9 +309,13 @@ void MenuUI::GameObject()
 
                 if (ImGui::InputText("##MakePrefabObjectName", (char*)strObjName.c_str(), 100, ImGuiInputTextFlags_EnterReturnsTrue))
                 {
-                    CPrefab* pNewPrefab = new CPrefab();
-                    pNewPrefab->SetGameObject(inspector->GetTargetObject());
-
+                    CPrefab* pNewPrefab = new CPrefab;
+                    CGameObject* pCloneGameObject = inspector->GetTargetObject()->Clone();
+                    
+                    pNewPrefab->SetGameObject(pCloneGameObject);
+                    
+                    
+                    
                     wstring prefabName = L"prefab\\" + ToWString(strObjName);
 
                     // 전체 null 제거
