@@ -338,6 +338,16 @@ void CAssetMgr::CreateDefaultMaterial()
 	//AddAsset<CMaterial>(L"TestMtrl", pMtrl);
 	
 
+	// UIMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"UIShader"));
+	AddAsset<CMaterial>(L"UIMtrl", pMtrl);
+		
+	// AlphaBlendMtrl
+	pMtrl = new CMaterial(true);
+	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"AlphaBlendShader"));
+	AddAsset<CMaterial>(L"AlphaBlendMtrl", pMtrl);
+		
 	// BackgroundMtrl
 	pMtrl = new CMaterial(true);
 	pMtrl->SetShader(FindAsset<CGraphicsShader>(L"Std2DShader"));
