@@ -21,7 +21,7 @@ CFieldScript::~CFieldScript()
 
 void CFieldScript::begin()
 {
-	
+
 	GetOwner()->GetRenderComponent()->GetDynamicMaterial();
 	GetOwner()->GetRenderComponent()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0
 					, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\BattleField\\battlefield_normal_bg_top.png", L"texture\\BattleField\\battlefield_normal_bg_top.png"));
@@ -44,7 +44,7 @@ void CFieldScript::begin()
 			wstring DiceName = L"Dice_" + to_wstring(i) + to_wstring(j);
 			pDice->SetName(DiceName);
 
-			wstring CurDicePath = DicePathArr[(UINT)i + 1];
+			wstring CurDicePath = L"texture\\Dice\\01_fire.png";
 
 			Ptr<CTexture> pTex = CAssetMgr::GetInst()->Load<CTexture>(CurDicePath, CurDicePath);
 			pDice->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);

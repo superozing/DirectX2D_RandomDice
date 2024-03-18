@@ -1,7 +1,11 @@
 CBackgroundScript
+CDiceAttackScript
+CDiceBuffScript
+CDiceMergeScript
 CDiceScript
 CExternScript
 CFieldScript
 CMissileScript
 CMonsterScript
 CPlayerScript
+CUIScript

@@ -101,12 +101,3 @@ void CExternScript::SetDice(UINT _idx, DICE _diceType)
 		m_diceDeck[duplicateDiceIdx] = Temp;
 	}
 }
-
-
-//
-
-
-
-{
-
-}

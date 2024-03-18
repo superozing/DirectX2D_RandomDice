@@ -163,6 +163,9 @@ call CodeGen.exe</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CBackgroundScript.h" />
+    <ClInclude Include="CDiceAttackScript.h" />
+    <ClInclude Include="CDiceBuffScript.h" />
+    <ClInclude Include="CDiceMergeScript.h" />
     <ClInclude Include="CDiceScript.h" />
     <ClInclude Include="CExternScript.h" />
     <ClInclude Include="CFieldScript.h" />
@@ -170,11 +173,15 @@ call CodeGen.exe</Command>
     <ClInclude Include="CMonsterScript.h" />
     <ClInclude Include="CPlayerScript.h" />
     <ClInclude Include="CScriptMgr.h" />
+    <ClInclude Include="CUIScript.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBackgroundScript.cpp" />
+    <ClCompile Include="CDiceAttackScript.cpp" />
+    <ClCompile Include="CDiceBuffScript.cpp" />
+    <ClCompile Include="CDiceMergeScript.cpp" />
     <ClCompile Include="CDiceScript.cpp" />
     <ClCompile Include="CExternScript.cpp" />
     <ClCompile Include="CFieldScript.cpp" />
@@ -182,6 +189,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CMonsterScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
+    <ClCompile Include="CUIScript.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -23,7 +23,7 @@
       <Filter>Scripts\Default</Filter>
     </ClInclude>
     <ClInclude Include="CDiceScript.h">
-      <Filter>Scripts\Field\Dice</Filter>
+      <Filter>Scripts\Dice</Filter>
     </ClInclude>
     <ClInclude Include="CExternScript.h">
       <Filter>Scripts\Extern</Filter>
@@ -31,6 +31,16 @@
     <ClInclude Include="CFieldScript.h">
       <Filter>Scripts\Field</Filter>
     </ClInclude>
+    <ClInclude Include="CDiceAttackScript.h">
+      <Filter>Scripts\DiceAttack</Filter>
+    </ClInclude>
+    <ClInclude Include="CDiceBuffScript.h">
+      <Filter>Scripts\DiceBuff</Filter>
+    </ClInclude>
+    <ClInclude Include="CDiceMergeScript.h">
+      <Filter>Scripts\DiceMerge</Filter>
+    </ClInclude>
+    <ClInclude Include="CUIScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -55,7 +65,7 @@
       <Filter>Scripts\Default</Filter>
     </ClCompile>
     <ClCompile Include="CDiceScript.cpp">
-      <Filter>Scripts\Field\Dice</Filter>
+      <Filter>Scripts\Dice</Filter>
     </ClCompile>
     <ClCompile Include="CExternScript.cpp">
       <Filter>Scripts\Extern</Filter>
@@ -63,6 +73,16 @@
     <ClCompile Include="CFieldScript.cpp">
       <Filter>Scripts\Field</Filter>
     </ClCompile>
+    <ClCompile Include="CDiceAttackScript.cpp">
+      <Filter>Scripts\DiceAttack</Filter>
+    </ClCompile>
+    <ClCompile Include="CDiceBuffScript.cpp">
+      <Filter>Scripts\DiceBuff</Filter>
+    </ClCompile>
+    <ClCompile Include="CDiceMergeScript.cpp">
+      <Filter>Scripts\DiceMerge</Filter>
+    </ClCompile>
+    <ClCompile Include="CUIScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -83,8 +103,20 @@
     <Filter Include="Scripts\Field">
       <UniqueIdentifier>{d0e1cfc7-6c7b-4561-878c-68e04070b794}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\Field\Dice">
+    <Filter Include="Scripts\DiceAttack">
+      <UniqueIdentifier>{c88a7274-9b0f-4393-bb50-5bb15b7f8e50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\DiceBuff">
+      <UniqueIdentifier>{b28fc24c-a36f-4421-9d1d-ec3318fbbaf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\DiceMerge">
+      <UniqueIdentifier>{d10a1952-fe61-4bc3-9958-6d60a6bddca8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Dice">
       <UniqueIdentifier>{0504a554-b40a-4fec-bbc6-d8de26089e9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\UI">
+      <UniqueIdentifier>{61e30a39-c22c-4c1c-85c7-cadbb167d704}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
