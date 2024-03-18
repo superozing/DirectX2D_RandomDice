@@ -348,6 +348,8 @@ void MenuUI::Asset()
 {
     if (ImGui::BeginMenu("Asset"))
     {
+        ImGui::SeparatorText(u8"재질 관련");
+
         if (ImGui::BeginMenu("Create Empty Material"))
         {
             wstring wstrMtrlName = L"New Material";
@@ -395,6 +397,43 @@ void MenuUI::Asset()
                     target->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->FindAsset<CTexture>(L"texture\\Dice\\03_wind.png"));
             }
         }
+
+
+
+        Inspector* pInspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");
+        Ptr<CAsset> pAsset = pInspector->GetTargetAsset();
+        if (pAsset->GetType() == ASSET_TYPE::PREFAB)
+        {
+            CPrefab* pPrefab = (CPrefab*)pAsset.Get();
+
+            ImGui::SeparatorText(u8"프리팹 관련");
+
+            if (ImGui::BeginMenu(u8"Prefab 인스턴스화(복제)"))
+            {
+                string strCloneObjectName;
+                ImGui::Text("Instantiate GameObject Name :");
+                ImGui::SameLine();
+                strCloneObjectName.resize(100);
+
+                ///
+                if (ImGui::InputText("##PrefabInstantiateText", (char*)strCloneObjectName.c_str(), 100, ImGuiInputTextFlags_EnterReturnsTrue))
+                {
+
+                    // 전체 null 제거
+                    strCloneObjectName.erase(remove(strCloneObjectName.begin(), strCloneObjectName.end(), '\0'), strCloneObjectName.end());
+                    
+                    // 복제
+                    CGameObject* pGameObject = pPrefab->Instantiate();
+
+                    pGameObject->SetName(ToWString(strCloneObjectName));
+                    GamePlayStatic::SpawnGameObject(pGameObject, 0);
+                }
+
+                ImGui::EndMenu();
+
+            }
+        }
+
 
         ImGui::EndMenu();
     }
