@@ -15,7 +15,15 @@ PrefabUI::~PrefabUI()
 
 void PrefabUI::render_update()
 {
-	AssetUI::render_update();
+	ImGui::PushID(0);
+	ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(0.6f, 0.6f, 0.6f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(0.6f, 0.6f, 0.6f));
+	ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(0.6f, 0.6f, 0.6f));
+
+	ImGui::Button(u8"Prefab 게임 오브젝트");
+
+	ImGui::PopStyleColor(3);
+	ImGui::PopID();
 }
 
 void PrefabUI::Activate()
