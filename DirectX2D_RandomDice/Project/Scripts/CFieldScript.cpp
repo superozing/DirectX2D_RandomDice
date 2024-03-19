@@ -26,6 +26,7 @@ void CFieldScript::begin()
 	wstring wstrPath;
 
 	wstrPath = L"texture\\BattleField\\battlefield_normal_bg_top.png";
+	OBJECT->GetRenderComponent()->GetDynamicMaterial();
 	OBJECT->GetRenderComponent()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 	OBJECT->Transform()->SetRelativePos(Vec3(0, -210, 500));
 	OBJECT->Transform()->SetRelativeScale(Vec3(540, 540, 1));
@@ -61,7 +62,7 @@ void CFieldScript::begin()
 			// 주사위 스크립트의 행렬, Pos, Name 설정
 			DiceScript->SetDiceXY(i + 1, j + 1);
 
-			// 주사위 종류과 정보 설정
+			// 주사위 종류과 정보 설정 (z : 3)
 			DiceScript->SetDiceWithInfo(DICE(i + 1));
 
 			// AddObject
@@ -71,8 +72,25 @@ void CFieldScript::begin()
 
 #pragma region _		Background Object
 
+			//////////////////////////////////
+			// battlefield_normal_dicebg_1 ~ 3
+			//////////////////////////////////
+	
+			pObj = pObjPref->Instantiate();
+
+			Vec3 dicePos = pDice->Transform()->GetRelativePos();
+			
+			pObj->Transform()->SetRelativePos(Vec3(dicePos.x, dicePos.y, dicePos.z + 1));
+			pObj->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 1.f));
+
+			wstrPath = L"texture\\BattleField\\Dice\\battlefield_normal_dicebg_" + to_wstring((i + j) % 3 + 1) + L".png";
+			pObj->SetName(wstrPath);
+
+			pObj->MeshRender()->GetDynamicMaterial();
+			pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
 
+			CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
 
 		}
 	}
@@ -89,13 +107,14 @@ void CFieldScript::begin()
 	pObj->Transform()->SetRelativePos(Vec3(0.f, -425.f, 0.f));
 	pObj->Transform()->SetRelativeScale(Vec3(510.f, 110.f, 1.f));
 
+	pObj->MeshRender()->GetDynamicMaterial();
 	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
 	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
 
 
 	////////////////////////////////
-	// battlefield_normal_bottom_bg
+	// 
 	////////////////////////////////
 
 	//pObj = pObjPref->Instantiate();
