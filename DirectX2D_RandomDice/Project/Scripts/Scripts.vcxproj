@@ -166,6 +166,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CDiceAttackScript.h" />
     <ClInclude Include="CDiceBuffScript.h" />
     <ClInclude Include="CDiceMergeScript.h" />
+    <ClInclude Include="CDiceScaleScript.h" />
     <ClInclude Include="CDiceScript.h" />
     <ClInclude Include="CEnemyScript.h" />
     <ClInclude Include="CExternScript.h" />
@@ -183,6 +184,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CDiceAttackScript.cpp" />
     <ClCompile Include="CDiceBuffScript.cpp" />
     <ClCompile Include="CDiceMergeScript.cpp" />
+    <ClCompile Include="CDiceScaleScript.cpp" />
     <ClCompile Include="CDiceScript.cpp" />
     <ClCompile Include="CEnemyScript.cpp" />
     <ClCompile Include="CExternScript.cpp" />

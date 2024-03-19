@@ -46,6 +46,9 @@
     <ClInclude Include="CEnemyScript.h">
       <Filter>Scripts\Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="CDiceScaleScript.h">
+      <Filter>Scripts\DiceAttack\DIceScale</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -93,6 +96,9 @@
     <ClCompile Include="CEnemyScript.cpp">
       <Filter>Scripts\Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="CDiceScaleScript.cpp">
+      <Filter>Scripts\DiceAttack\DIceScale</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -106,9 +112,6 @@
     </Filter>
     <Filter Include="Scripts\Default">
       <UniqueIdentifier>{7ee2fd6b-ca30-4c1e-b99f-2ab32b92438c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\Extern">
-      <UniqueIdentifier>{1f66e3fe-8295-4529-8f6e-192e00008f09}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scripts\Field">
       <UniqueIdentifier>{d0e1cfc7-6c7b-4561-878c-68e04070b794}</UniqueIdentifier>
@@ -130,6 +133,15 @@
     </Filter>
     <Filter Include="Scripts\Enemy">
       <UniqueIdentifier>{a253f0ba-1386-423e-b475-a1a6b41f72f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\DiceAttack\DIceScale">
+      <UniqueIdentifier>{3b7501c7-d0f4-4e97-aa0c-423064885c60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ExternInfo">
+      <UniqueIdentifier>{1f66e3fe-8295-4529-8f6e-192e00008f09}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Enemy\NewFilter1">
+      <UniqueIdentifier>{7d765733-dca9-47e5-88c8-75ec915f6e73}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
