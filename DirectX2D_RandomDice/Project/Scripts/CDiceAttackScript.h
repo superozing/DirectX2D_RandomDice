@@ -31,10 +31,10 @@ private:
 
     /// 눈금
     // 눈금 개수
-    UINT                m_DiceEye;
+    UINT                m_DiceScale;
 
     // 현재 공격을 실행시킬 눈금의 인덱스
-    UINT                m_CurAttackEyeIdx;
+    UINT                m_CurAttackDiceScaleIdx;
 
     // 눈금 벡터
     // 자... 드디어 파티클을 볼 때가 왔다.

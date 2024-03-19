@@ -14,7 +14,7 @@ CDiceScript::CDiceScript()
 	AddScriptParam(SCRIPT_PARAM::INT, "DiceCol :", &m_DiceCol);
 
 	// 눈금 개수(등급)
-	AddScriptParam(SCRIPT_PARAM::INT, "Grade :", &m_DiceGrade);
+	AddScriptParam(SCRIPT_PARAM::INT, "DiceScale :", &m_DiceScale);
 
 
 
@@ -28,12 +28,12 @@ CDiceScript::~CDiceScript()
 
 #define OBJECT GetOwner()
 
-void CDiceScript::SetDiceWithInfo(DICE _Dice)
+void CDiceScript::SetDiceType(DICE _Dice)
 {
-	Dice = _Dice;
+}
 
-	OBJECT->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0
-		, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Dice\\01_fire.png", L"texture\\Dice\\01_fire.png"));
+void CDiceScript::SetDiceInfo(DICE _Dice)
+{
 }
 
 void CDiceScript::SetDiceXY(UINT _DiceRow, UINT _DiceCol)

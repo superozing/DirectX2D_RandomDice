@@ -25,9 +25,6 @@
     <ClInclude Include="CDiceScript.h">
       <Filter>Scripts\Dice</Filter>
     </ClInclude>
-    <ClInclude Include="CExternScript.h">
-      <Filter>Scripts\Extern</Filter>
-    </ClInclude>
     <ClInclude Include="CFieldScript.h">
       <Filter>Scripts\Field</Filter>
     </ClInclude>
@@ -48,6 +45,18 @@
     </ClInclude>
     <ClInclude Include="CDiceScaleScript.h">
       <Filter>Scripts\DiceAttack\DIceScale</Filter>
+    </ClInclude>
+    <ClInclude Include="CExternScript.h">
+      <Filter>Scripts\Extern</Filter>
+    </ClInclude>
+    <ClInclude Include="CSpeedEnemyScript.h">
+      <Filter>Scripts\Enemy\Speed</Filter>
+    </ClInclude>
+    <ClInclude Include="CBigEnemyScript.h">
+      <Filter>Scripts\Enemy\Big</Filter>
+    </ClInclude>
+    <ClInclude Include="CDefaultEnemyScript.h">
+      <Filter>Scripts\Enemy\Default</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -75,9 +84,6 @@
     <ClCompile Include="CDiceScript.cpp">
       <Filter>Scripts\Dice</Filter>
     </ClCompile>
-    <ClCompile Include="CExternScript.cpp">
-      <Filter>Scripts\Extern</Filter>
-    </ClCompile>
     <ClCompile Include="CFieldScript.cpp">
       <Filter>Scripts\Field</Filter>
     </ClCompile>
@@ -98,6 +104,18 @@
     </ClCompile>
     <ClCompile Include="CDiceScaleScript.cpp">
       <Filter>Scripts\DiceAttack\DIceScale</Filter>
+    </ClCompile>
+    <ClCompile Include="CExternScript.cpp">
+      <Filter>Scripts\Extern</Filter>
+    </ClCompile>
+    <ClCompile Include="CSpeedEnemyScript.cpp">
+      <Filter>Scripts\Enemy\Speed</Filter>
+    </ClCompile>
+    <ClCompile Include="CBigEnemyScript.cpp">
+      <Filter>Scripts\Enemy\Big</Filter>
+    </ClCompile>
+    <ClCompile Include="CDefaultEnemyScript.cpp">
+      <Filter>Scripts\Enemy\Default</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,8 +158,20 @@
     <Filter Include="ExternInfo">
       <UniqueIdentifier>{1f66e3fe-8295-4529-8f6e-192e00008f09}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\Enemy\NewFilter1">
+    <Filter Include="Scripts\Enemy\Default">
       <UniqueIdentifier>{7d765733-dca9-47e5-88c8-75ec915f6e73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Enemy\Boss">
+      <UniqueIdentifier>{601453d8-d116-46d1-b0be-c2b8e4595b9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Enemy\Speed">
+      <UniqueIdentifier>{4ec542ff-23bd-41e2-8480-1aeecfa5b77b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Enemy\Big">
+      <UniqueIdentifier>{8e34fc64-e5c3-4a5b-bf27-91462f346e79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Extern">
+      <UniqueIdentifier>{a01248d7-fc99-436c-bec1-cb986033a328}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

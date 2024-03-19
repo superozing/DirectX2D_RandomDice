@@ -63,7 +63,7 @@ void CFieldScript::begin()
 			DiceScript->SetDiceXY(i + 1, j + 1);
 
 			// 주사위 종류과 정보 설정 (z : 3)
-			DiceScript->SetDiceWithInfo(DICE(i + 1));
+			DiceScript->SetDiceType(DICE(i + 1));
 
 			// AddObject
 			CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pDice, L"Dice");

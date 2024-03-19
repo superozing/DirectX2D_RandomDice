@@ -163,6 +163,8 @@ call CodeGen.exe</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CBackgroundScript.h" />
+    <ClInclude Include="CBigEnemyScript.h" />
+    <ClInclude Include="CDefaultEnemyScript.h" />
     <ClInclude Include="CDiceAttackScript.h" />
     <ClInclude Include="CDiceBuffScript.h" />
     <ClInclude Include="CDiceMergeScript.h" />
@@ -175,12 +177,15 @@ call CodeGen.exe</Command>
     <ClInclude Include="CMonsterScript.h" />
     <ClInclude Include="CPlayerScript.h" />
     <ClInclude Include="CScriptMgr.h" />
+    <ClInclude Include="CSpeedEnemyScript.h" />
     <ClInclude Include="CUIScript.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBackgroundScript.cpp" />
+    <ClCompile Include="CBigEnemyScript.cpp" />
+    <ClCompile Include="CDefaultEnemyScript.cpp" />
     <ClCompile Include="CDiceAttackScript.cpp" />
     <ClCompile Include="CDiceBuffScript.cpp" />
     <ClCompile Include="CDiceMergeScript.cpp" />
@@ -193,6 +198,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CMonsterScript.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
+    <ClCompile Include="CSpeedEnemyScript.cpp" />
     <ClCompile Include="CUIScript.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

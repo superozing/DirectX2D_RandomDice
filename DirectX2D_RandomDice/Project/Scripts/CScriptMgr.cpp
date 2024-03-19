@@ -2,9 +2,12 @@
 #include "CScriptMgr.h"
 
 #include "CBackgroundScript.h"
+#include "CBigEnemyScript.h"
+#include "CDefaultEnemyScript.h"
 #include "CDiceAttackScript.h"
 #include "CDiceBuffScript.h"
 #include "CDiceMergeScript.h"
+#include "CDiceScaleScript.h"
 #include "CDiceScript.h"
 #include "CEnemyScript.h"
 #include "CExternScript.h"
@@ -12,14 +15,18 @@
 #include "CMissileScript.h"
 #include "CMonsterScript.h"
 #include "CPlayerScript.h"
+#include "CSpeedEnemyScript.h"
 #include "CUIScript.h"
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
 	_vec.push_back(L"CBackgroundScript");
+	_vec.push_back(L"CBigEnemyScript");
+	_vec.push_back(L"CDefaultEnemyScript");
 	_vec.push_back(L"CDiceAttackScript");
 	_vec.push_back(L"CDiceBuffScript");
 	_vec.push_back(L"CDiceMergeScript");
+	_vec.push_back(L"CDiceScaleScript");
 	_vec.push_back(L"CDiceScript");
 	_vec.push_back(L"CEnemyScript");
 	_vec.push_back(L"CExternScript");
@@ -27,6 +34,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CMissileScript");
 	_vec.push_back(L"CMonsterScript");
 	_vec.push_back(L"CPlayerScript");
+	_vec.push_back(L"CSpeedEnemyScript");
 	_vec.push_back(L"CUIScript");
 }
 
@@ -34,12 +42,18 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 {
 	if (L"CBackgroundScript" == _strScriptName)
 		return new CBackgroundScript;
+	if (L"CBigEnemyScript" == _strScriptName)
+		return new CBigEnemyScript;
+	if (L"CDefaultEnemyScript" == _strScriptName)
+		return new CDefaultEnemyScript;
 	if (L"CDiceAttackScript" == _strScriptName)
 		return new CDiceAttackScript;
 	if (L"CDiceBuffScript" == _strScriptName)
 		return new CDiceBuffScript;
 	if (L"CDiceMergeScript" == _strScriptName)
 		return new CDiceMergeScript;
+	if (L"CDiceScaleScript" == _strScriptName)
+		return new CDiceScaleScript;
 	if (L"CDiceScript" == _strScriptName)
 		return new CDiceScript;
 	if (L"CEnemyScript" == _strScriptName)
@@ -54,6 +68,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CMonsterScript;
 	if (L"CPlayerScript" == _strScriptName)
 		return new CPlayerScript;
+	if (L"CSpeedEnemyScript" == _strScriptName)
+		return new CSpeedEnemyScript;
 	if (L"CUIScript" == _strScriptName)
 		return new CUIScript;
 	return nullptr;
@@ -66,6 +82,12 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::BACKGROUNDSCRIPT:
 		return new CBackgroundScript;
 		break;
+	case (UINT)SCRIPT_TYPE::BIGENEMYSCRIPT:
+		return new CBigEnemyScript;
+		break;
+	case (UINT)SCRIPT_TYPE::DEFAULTENEMYSCRIPT:
+		return new CDefaultEnemyScript;
+		break;
 	case (UINT)SCRIPT_TYPE::DICEATTACKSCRIPT:
 		return new CDiceAttackScript;
 		break;
@@ -74,6 +96,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::DICEMERGESCRIPT:
 		return new CDiceMergeScript;
+		break;
+	case (UINT)SCRIPT_TYPE::DICESCALESCRIPT:
+		return new CDiceScaleScript;
 		break;
 	case (UINT)SCRIPT_TYPE::DICESCRIPT:
 		return new CDiceScript;
@@ -96,6 +121,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::PLAYERSCRIPT:
 		return new CPlayerScript;
 		break;
+	case (UINT)SCRIPT_TYPE::SPEEDENEMYSCRIPT:
+		return new CSpeedEnemyScript;
+		break;
 	case (UINT)SCRIPT_TYPE::UISCRIPT:
 		return new CUIScript;
 		break;
@@ -111,6 +139,14 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CBackgroundScript";
 		break;
 
+	case SCRIPT_TYPE::BIGENEMYSCRIPT:
+		return L"CBigEnemyScript";
+		break;
+
+	case SCRIPT_TYPE::DEFAULTENEMYSCRIPT:
+		return L"CDefaultEnemyScript";
+		break;
+
 	case SCRIPT_TYPE::DICEATTACKSCRIPT:
 		return L"CDiceAttackScript";
 		break;
@@ -121,6 +157,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::DICEMERGESCRIPT:
 		return L"CDiceMergeScript";
+		break;
+
+	case SCRIPT_TYPE::DICESCALESCRIPT:
+		return L"CDiceScaleScript";
 		break;
 
 	case SCRIPT_TYPE::DICESCRIPT:
@@ -149,6 +189,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::PLAYERSCRIPT:
 		return L"CPlayerScript";
+		break;
+
+	case SCRIPT_TYPE::SPEEDENEMYSCRIPT:
+		return L"CSpeedEnemyScript";
 		break;
 
 	case SCRIPT_TYPE::UISCRIPT:
