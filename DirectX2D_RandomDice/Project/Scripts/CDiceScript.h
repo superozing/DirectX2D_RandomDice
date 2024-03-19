@@ -1,6 +1,7 @@
 #pragma once
 #include <Engine/CScript.h>
 #include "CExternScript.h"
+#include "CFieldScript.h"
 
 // 필드 위에 존재할 주사위 게임 오브젝트에 부착될 스크립트.
 class CDiceScript
@@ -9,6 +10,9 @@ class CDiceScript
 private:
 	// if DICE == NONE일 경우, 현재 필드 칸 위에 주사위가 존재하지 않음. 이 경우 아무 행동도 하지 않아요.
 	// 음...아니면 bool 값으로 주사위 자리 활성화 여부를 둘까...?
+
+	CFieldScript* m_OwnerField;
+
 
 	DICE		Dice;			// 주사위 종류
 	DICE_INFO	m_Info;			// 주사위 종류에 따른 주사위 정보
@@ -39,13 +43,14 @@ public:
 	float GetFinalDamage() { return m_finalDamage; }
 	float GetFinalAttackSpeed() { return m_finalAttackSpeed; }
 
-	void SetDiceWithInfo(DICE _Dice) { Dice = _Dice; }
+	void SetDiceWithInfo(DICE _Dice);
 
 
-	void SetDiceRow(UINT _DiceRow) { m_DiceRow = _DiceRow; }
-	void SetDiceCol(UINT _DiceCol) { m_DiceCol = _DiceCol; }
+	void SetDiceXY(UINT _DiceRow, UINT _DiceCol);
 
+	void SetField(CFieldScript* _field) { m_OwnerField = _field; }
 
+	virtual void begin() override;
 public:
 	virtual void SaveToFile(FILE* _File) {  }
 	virtual void LoadFromFile(FILE* _File) {  }

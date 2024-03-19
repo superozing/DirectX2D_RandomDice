@@ -18,53 +18,103 @@ CFieldScript::~CFieldScript()
 {
 }
 
+#define OBJECT GetOwner()
 
 void CFieldScript::begin()
 {
+	CGameObject* pObj = nullptr;
+	wstring wstrPath;
 
-	GetOwner()->GetRenderComponent()->GetDynamicMaterial();
-	GetOwner()->GetRenderComponent()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0
-					, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\BattleField\\battlefield_normal_bg_top.png", L"texture\\BattleField\\battlefield_normal_bg_top.png"));
+	wstrPath = L"texture\\BattleField\\battlefield_normal_bg_top.png";
+	OBJECT->GetRenderComponent()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
+	OBJECT->Transform()->SetRelativePos(Vec3(0, -210, 500));
+	OBJECT->Transform()->SetRelativeScale(Vec3(540, 540, 1));
 
-	GetOwner()->Transform()->SetRelativePos(Vec3(0, -240, 500));
-	GetOwner()->Transform()->SetRelativeScale(Vec3(540, 480, 1));
+
+
+	wstrPath = L"prefab\\AlphaBlendGameObject.pref";
+	// MeshRender, Transform, alphablend shader, mtrl 달린 프리팹.
+	Ptr<CPrefab> pObjPref = CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath);
+
+	
+	wstrPath = L"prefab\\Dice.pref";
+	// 주사위 프리팹
+	Ptr<CPrefab> pDicePref = CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath);
 
 	for (int i = 0; i < 5; ++i)
 	{
 		for (int j = 0; j < 3; ++j)
 		{
-			Ptr<CPrefab> pDicePrefab = CAssetMgr::GetInst()->Load<CPrefab>(L"prefab\\DicePrefab.pref", L"prefab\\DicePrefab.pref");
+#pragma region _		Set Dice
 
-			// 새로운 게임 오브젝트 할당
-			CGameObject* pDice = m_DiceField[i][j] = pDicePrefab->Instantiate();
+			// 프리팹 객체화
+			CGameObject* pDice = pDicePref->Instantiate();
 
-			pDice->MeshRender()->GetDynamicMaterial();
+			// 스크립트 가져와서 저장
+			CDiceScript* DiceScript = m_DiceField[i][j] = pDice->GetScript<CDiceScript>();
 
-			// 주사위의 이름을 행과 열로 표시
-			wstring DiceName = L"Dice_" + to_wstring(i) + to_wstring(j);
-			pDice->SetName(DiceName);
+			DiceScript->begin();
 
-			wstring CurDicePath = L"texture\\Dice\\01_fire.png";
+			// 주사위 스크립트와 쌍방으로 연결
+			DiceScript->SetField(this);
 
-			Ptr<CTexture> pTex = CAssetMgr::GetInst()->Load<CTexture>(CurDicePath, CurDicePath);
-			pDice->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
-			
-			pDice->Transform()->SetRelativePos(Vec3(-140 + (i * 70), -310 + (j * 70), 1));
-			
-			// 게임 오브젝트에 주사위 스크립트 추가
-			pDice->AddComponent(new CDiceScript);
-			CDiceScript* DiceScript = pDice->GetScript<CDiceScript>();
-
-			// 주사위 스크립트의 행렬 설정
-			DiceScript->SetDiceRow(i + 1);
-			DiceScript->SetDiceCol(j + 1);
-
+			// 주사위 스크립트의 행렬, Pos, Name 설정
+			DiceScript->SetDiceXY(i + 1, j + 1);
 
 			// 주사위 종류과 정보 설정
 			DiceScript->SetDiceWithInfo(DICE(i + 1));
 
 			// AddObject
 			CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pDice, L"Dice");
+
+#pragma endregion
+
+#pragma region _		Background Object
+
+
+
+
 		}
 	}
+
+	////////////////////////////////
+	// battlefield_normal_bottom_bg
+	////////////////////////////////
+	
+	pObj = pObjPref->Instantiate();
+
+	wstrPath = L"texture\\BattleField\\Deck\\battlefield_normal_bottom_bg.png";
+	pObj->SetName(wstrPath);
+
+	pObj->Transform()->SetRelativePos(Vec3(0.f, -425.f, 0.f));
+	pObj->Transform()->SetRelativeScale(Vec3(510.f, 110.f, 1.f));
+
+	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
+
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+
+
+	////////////////////////////////
+	// battlefield_normal_bottom_bg
+	////////////////////////////////
+
+	//pObj = pObjPref->Instantiate();
+
+	//wstrPath = L"texture\\BattleField\\Deck\\battlefield_normal_bottom_bg.png";
+	//pObj->SetName(wstrPath);
+
+	//pObj->Transform()->SetRelativePos(Vec3(0.f, 905.f, 0.f));
+	//pObj->Transform()->SetRelativeScale(Vec3(510.f, 110.f, 1.f));
+
+	//pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
+
+	//CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+
+#pragma endregion
+
+
+
+
 }
+
+#undef OBJECT

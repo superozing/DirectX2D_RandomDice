@@ -6,7 +6,7 @@ class CFieldScript :
     public CScript
 {
 private:
-    class CGameObject* m_DiceField[5][3]; // CDiceScript를 가진 CGameObject의 2차원 배열
+    class CDiceScript* m_DiceField[5][3]; // CDiceScript를 가진 CGameObject의 2차원 배열
 
     virtual void begin() override;
 
