@@ -23,7 +23,16 @@ private:
 
     float                   m_Time;
 
+    bool                    m_IsActivate;
+
 public:
+
+    void SetParticleModule(const tParticleModule& _Module) { m_Module = _Module; }
+    void SetParticleTexture(Ptr<CTexture> _ParticleTex) { m_ParticleTex = _ParticleTex; }
+
+    void SetActivate(bool _IsActivate) { m_IsActivate = m_IsActivate; }
+    bool GetActivate() const { return m_IsActivate; }
+
     virtual void UpdateData() override;
     virtual void finaltick() override;
     virtual void render() override;

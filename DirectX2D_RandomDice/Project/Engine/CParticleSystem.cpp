@@ -14,6 +14,7 @@ CParticleSystem::CParticleSystem()
 	: CRenderComponent(COMPONENT_TYPE::PARTICLESYSTEM)
 	, m_ParticleBuffer(nullptr)
 	, m_MaxParticleCount(1000)
+	, m_IsActivate(false)
 {
 	// 전용 메쉬와 전용 재질 사용
 	SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"PointMesh"));
@@ -132,23 +133,26 @@ CParticleSystem::~CParticleSystem()
 
 void CParticleSystem::finaltick()
 {	
-	m_Time += DT;
-
-	if ((1.f / m_Module.SpawnRate) < m_Time)
+	if (m_IsActivate)
 	{
-		// 누적 시간을 스폰 간격으로 나눈 값
-		float fSpawnCount = m_Time / (1.f / m_Module.SpawnRate);
+		m_Time += DT;
 
-		// 스폰 간격을 제외한 잔량을 남은 누적시간으로 설정
-		m_Time -= (1.f / m_Module.SpawnRate) * floorf(fSpawnCount);
-				
-		tSpawnCount count = tSpawnCount{ (int)fSpawnCount, 0, 0, 0 };
-		m_SpawnCountBuffer->SetData(&count);		
-	}
-	else
-	{
-		tSpawnCount count = tSpawnCount{ 0, 0, 0, 0 };
-		m_SpawnCountBuffer->SetData(&count);
+		if ((1.f / m_Module.SpawnRate) < m_Time)
+		{
+			// 누적 시간을 스폰 간격으로 나눈 값
+			float fSpawnCount = m_Time / (1.f / m_Module.SpawnRate);
+
+			// 스폰 간격을 제외한 잔량을 남은 누적시간으로 설정
+			m_Time -= (1.f / m_Module.SpawnRate) * floorf(fSpawnCount);
+
+			tSpawnCount count = tSpawnCount{ (int)fSpawnCount, 0, 0, 0 };
+			m_SpawnCountBuffer->SetData(&count);
+		}
+		else
+		{
+			tSpawnCount count = tSpawnCount{ 0, 0, 0, 0 };
+			m_SpawnCountBuffer->SetData(&count);
+		}
 	}
 
 
