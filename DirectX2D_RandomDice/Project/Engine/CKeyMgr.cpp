@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "CKeyMgr.h"
+#include "CTimeMgr.h"
+#include "CFontMgr.h"
 #include "CEngine.h"
 
 int g_KeySync[KEY::KEY_END] =
@@ -27,6 +29,29 @@ CKeyMgr::CKeyMgr()
 CKeyMgr::~CKeyMgr()
 {
 }
+
+
+#ifndef _RELEASE_GAME
+void CKeyMgr::render()
+{
+	int height = 80;
+	for (auto iter = m_mouseClick.begin(); iter != m_mouseClick.end(); )
+	{
+		iter->AccTime += DT_ENGINE;
+
+		if (iter->AccTime > iter->MaxTime)
+		{
+			iter = m_mouseClick.erase(iter);
+		}
+		else
+		{
+			CFontMgr::GetInst()->DrawFont(iter->OutputWStr.c_str(), 10.f, height, 15, FONT_RGBA(255, 255, 255, 255));
+			height += 20;
+			++iter;
+		}
+	}
+}
+#endif
 
 void CKeyMgr::init()
 {
@@ -109,5 +134,12 @@ void CKeyMgr::tick()
 
 		// 마우스 이동 방향
 		m_vMouseDrag = m_vMousePos - m_vMousePrevPos;
+
+#ifndef _RELEASE_GAME
+		if (KEY_TAP(KEY::LBTN))
+			m_mouseClick.push_back({ 0.f, 3.f
+				, wstring(L"clicked: (") + std::to_wstring((int)m_vMousePos.x - 270) + L", " + std::to_wstring((int)m_vMousePos.y - 480) + L")" });
+#endif
+
 	}
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include <utility>
 
 // Key Value
 enum KEY
@@ -36,6 +37,13 @@ struct FKeyData
 	bool		bPressed;
 };
 
+struct FFontOutput
+{
+	float	AccTime;
+	float	MaxTime;
+	wstring OutputWStr;
+};
+
 class CKeyMgr
 	: public CSingleton<CKeyMgr>
 {
@@ -47,6 +55,13 @@ private:
 	Vec2				m_vMousePrevPos;
 
 	Vec2				m_vMouseDrag;
+
+#ifndef _RELEASE_GAME
+	list<FFontOutput>	m_mouseClick;
+
+public:
+	void render();
+#endif
 
 public:
 	KEY_STATE GetKeyState(KEY _Key) { return m_vecKeyData[_Key].eState; }

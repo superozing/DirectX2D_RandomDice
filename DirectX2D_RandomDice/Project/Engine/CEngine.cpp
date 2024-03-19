@@ -74,6 +74,9 @@ void CEngine::progress()
 	CLevelMgr::GetInst()->tick();
 	CTimeMgr::GetInst()->render();
 
+#ifndef _RELEASE_GAME
+	CKeyMgr::GetInst()->render();
+#endif
 	// GC
 	CGC::GetInst()->tick();
 
