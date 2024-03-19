@@ -104,7 +104,7 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Deck\\battlefield_normal_bottom_bg.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(0.f, -425.f, 0.f));
+	pObj->Transform()->SetRelativePos(Vec3(0.f, -425.f, 9.f));
 	pObj->Transform()->SetRelativeScale(Vec3(510.f, 110.f, 1.f));
 
 	pObj->MeshRender()->GetDynamicMaterial();
@@ -114,20 +114,104 @@ void CFieldScript::begin()
 
 
 	////////////////////////////////
-	// 
+	// battlefield_normal_vs_line_1
 	////////////////////////////////
 
-	//pObj = pObjPref->Instantiate();
+	pObj = pObjPref->Instantiate();
 
-	//wstrPath = L"texture\\BattleField\\Deck\\battlefield_normal_bottom_bg.png";
-	//pObj->SetName(wstrPath);
+	wstrPath = L"texture\\BattleField\\Line\\battlefield_normal_vs_line_1.png";
+	pObj->SetName(wstrPath);
 
-	//pObj->Transform()->SetRelativePos(Vec3(0.f, 905.f, 0.f));
-	//pObj->Transform()->SetRelativeScale(Vec3(510.f, 110.f, 1.f));
+	pObj->Transform()->SetRelativePos(Vec3(-230.f, -160.f, 10.f));
+	pObj->Transform()->SetRelativeScale(Vec3(33.f, 340.f, 1.f));
 
-	//pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
+	pObj->MeshRender()->GetDynamicMaterial();
+	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
-	//CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+
+	////////////////////////////////
+	// battlefield_normal_vs_line_2
+	////////////////////////////////
+
+	pObj = pObjPref->Instantiate();
+
+	wstrPath = L"texture\\BattleField\\Line\\battlefield_normal_vs_line_2.png";
+	pObj->SetName(wstrPath);
+
+	pObj->Transform()->SetRelativePos(Vec3(-10.f, 3.f, 10.f));
+	pObj->Transform()->SetRelativeScale(Vec3(407.f, 19.f, 1.f));
+
+	pObj->MeshRender()->GetDynamicMaterial();
+	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
+
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+
+	////////////////////////////////
+	// battlefield_normal_vs_line_3
+	////////////////////////////////
+
+	pObj = pObjPref->Instantiate();
+
+	wstrPath = L"texture\\BattleField\\Line\\battlefield_normal_vs_line_3.png";
+	pObj->SetName(wstrPath);
+
+	pObj->Transform()->SetRelativePos(Vec3(216.f, -160.f, 10.f));
+	pObj->Transform()->SetRelativeScale(Vec3(46.f, 343.f, 1.f));
+
+	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
+
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+
+	////////////////////////////////
+	// battlefield_normal_deco_1
+	////////////////////////////////
+
+	pObj = pObjPref->Instantiate();
+
+	wstrPath = L"texture\\BattleField\\Deco\\battlefield_normal_deco_1.png";
+	pObj->SetName(wstrPath);
+
+	pObj->Transform()->SetRelativePos(Vec3(180.f, -280.f, 10.f));
+	pObj->Transform()->SetRelativeScale(Vec3(75.f, 75.f, 1.f));
+	pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 3));
+
+	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
+
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+
+	////////////////////////////////
+	// battlefield_normal_deco_2
+	////////////////////////////////
+
+	pObj = pObjPref->Instantiate();
+
+	wstrPath = L"texture\\BattleField\\Deco\\battlefield_normal_deco_2.png";
+	pObj->SetName(wstrPath);
+
+	pObj->Transform()->SetRelativePos(Vec3(189.f, -101.f, 10.f));
+	pObj->Transform()->SetRelativeScale(Vec3(50.f, 40.f, 1.f));
+
+	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
+
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+
+	////////////////////////////////
+	// battlefield_normal_deco_4
+	////////////////////////////////
+
+	pObj = pObjPref->Instantiate();
+
+	wstrPath = L"texture\\BattleField\\Deco\\battlefield_normal_deco_4.png";
+	pObj->SetName(wstrPath);
+
+	pObj->Transform()->SetRelativePos(Vec3(-190.f, -45.f, 10.f));
+	pObj->Transform()->SetRelativeScale(Vec3(60.f, 60.f, 1.f));
+
+	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
+
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+
 
 #pragma endregion
 
