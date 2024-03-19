@@ -6,6 +6,7 @@
 #include "CDiceBuffScript.h"
 #include "CDiceMergeScript.h"
 #include "CDiceScript.h"
+#include "CEnemyScript.h"
 #include "CExternScript.h"
 #include "CFieldScript.h"
 #include "CMissileScript.h"
@@ -20,6 +21,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CDiceBuffScript");
 	_vec.push_back(L"CDiceMergeScript");
 	_vec.push_back(L"CDiceScript");
+	_vec.push_back(L"CEnemyScript");
 	_vec.push_back(L"CExternScript");
 	_vec.push_back(L"CFieldScript");
 	_vec.push_back(L"CMissileScript");
@@ -40,6 +42,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CDiceMergeScript;
 	if (L"CDiceScript" == _strScriptName)
 		return new CDiceScript;
+	if (L"CEnemyScript" == _strScriptName)
+		return new CEnemyScript;
 	if (L"CExternScript" == _strScriptName)
 		return new CExternScript;
 	if (L"CFieldScript" == _strScriptName)
@@ -73,6 +77,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::DICESCRIPT:
 		return new CDiceScript;
+		break;
+	case (UINT)SCRIPT_TYPE::ENEMYSCRIPT:
+		return new CEnemyScript;
 		break;
 	case (UINT)SCRIPT_TYPE::EXTERNSCRIPT:
 		return new CExternScript;
@@ -118,6 +125,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::DICESCRIPT:
 		return L"CDiceScript";
+		break;
+
+	case SCRIPT_TYPE::ENEMYSCRIPT:
+		return L"CEnemyScript";
 		break;
 
 	case SCRIPT_TYPE::EXTERNSCRIPT:

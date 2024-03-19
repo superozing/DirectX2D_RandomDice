@@ -26,8 +26,8 @@ void CFieldScript::begin()
 	GetOwner()->GetRenderComponent()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0
 					, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\BattleField\\battlefield_normal_bg_top.png", L"texture\\BattleField\\battlefield_normal_bg_top.png"));
 
-	GetOwner()->Transform()->SetRelativePos(Vec3(0, -380, 1));
-	GetOwner()->Transform()->SetRelativeScale(Vec3(540, 400, 1));
+	GetOwner()->Transform()->SetRelativePos(Vec3(0, -240, 500));
+	GetOwner()->Transform()->SetRelativeScale(Vec3(540, 480, 1));
 
 	for (int i = 0; i < 5; ++i)
 	{
@@ -49,7 +49,7 @@ void CFieldScript::begin()
 			Ptr<CTexture> pTex = CAssetMgr::GetInst()->Load<CTexture>(CurDicePath, CurDicePath);
 			pDice->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, pTex);
 			
-			pDice->Transform()->SetRelativePos(Vec3(-140 * (i * 70), -310 + (j * 70), 1));
+			pDice->Transform()->SetRelativePos(Vec3(-140 + (i * 70), -310 + (j * 70), 1));
 			
 			// 게임 오브젝트에 주사위 스크립트 추가
 			pDice->AddComponent(new CDiceScript);

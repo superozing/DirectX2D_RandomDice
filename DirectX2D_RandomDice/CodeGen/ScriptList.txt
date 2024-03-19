@@ -3,6 +3,7 @@ CDiceAttackScript
 CDiceBuffScript
 CDiceMergeScript
 CDiceScript
+CEnemyScript
 CExternScript
 CFieldScript
 CMissileScript

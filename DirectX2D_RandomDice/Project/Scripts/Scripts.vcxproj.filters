@@ -43,6 +43,9 @@
     <ClInclude Include="CUIScript.h">
       <Filter>Scripts\UI</Filter>
     </ClInclude>
+    <ClInclude Include="CEnemyScript.h">
+      <Filter>Scripts\Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -86,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="CUIScript.cpp">
       <Filter>Scripts\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyScript.cpp">
+      <Filter>Scripts\Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
