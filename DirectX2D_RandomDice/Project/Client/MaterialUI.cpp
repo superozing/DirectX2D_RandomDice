@@ -53,7 +53,7 @@ void MaterialUI::render_update()
             if (ASSET_TYPE::GRAPHICS_SHADER == pAsset->GetType())
             {
                 pMtrl->SetShader((CGraphicsShader*)pAsset);
-                pMtrl->Save(pMtrl->GetName());
+                pMtrl->Save(pMtrl->GetRelativePath());
             }
         }
         ImGui::EndDragDropTarget();
@@ -124,5 +124,7 @@ void MaterialUI::SelectTexture(DWORD_PTR _dwData)
 
     Ptr<CTexture> pTex = CAssetMgr::GetInst()->FindAsset<CTexture>(strTexName);
     Ptr<CMaterial> pMtrl = (CMaterial*)GetAsset().Get();
-    pMtrl->SetTexParam(m_SelectTexParam, pTex);    
+    pMtrl->SetTexParam(m_SelectTexParam, pTex);  
+
+    pMtrl->Save(pMtrl->GetName());
 }

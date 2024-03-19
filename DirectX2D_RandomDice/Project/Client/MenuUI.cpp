@@ -300,7 +300,7 @@ void MenuUI::GameObject()
             {
 
                 wstring wstrObjName = inspector->GetTargetObject()->GetName();
-                string strObjName = ToString(wstrObjName);
+                string strObjName;// = ToString(wstrObjName);
 
                 ImGui::Text("New Prefab Name :");
                 ImGui::SameLine();
@@ -353,7 +353,7 @@ void MenuUI::Asset()
         if (ImGui::BeginMenu("Create Empty Material"))
         {
             wstring wstrMtrlName = L"New Material";
-            string strMtrlName = ToString(wstrMtrlName);
+            string strMtrlName;// = ToString(wstrMtrlName);
 
             ImGui::Text("New Material Name :");
             ImGui::SameLine();
