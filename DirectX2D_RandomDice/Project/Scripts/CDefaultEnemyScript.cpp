@@ -13,7 +13,7 @@ CDefaultEnemyScript::CDefaultEnemyScript()
 
 	tModule.SpaceType = 1;
 
-	tModule.vSpawnColor = Vec4(0.4f, 0.4f, 0.4f, 0.6f);
+	tModule.vSpawnColor = Vec4(0.f, 0.f, 0.f, 0.6f);
 	tModule.vSpawnMinScale = Vec4(20.f, 20.f, 1.f, 1.f);
 	tModule.vSpawnMaxScale = Vec4(40.f, 40.f, 1.f, 1.f);
 
@@ -54,7 +54,7 @@ CDefaultEnemyScript::CDefaultEnemyScript()
 	wstring strPath = L"texture\\Enemy\\enemy_normal.png";
 
 	tInfo.MonTex = CAssetMgr::GetInst()->Load<CTexture>(strPath, strPath);
-	tInfo.MoveSpeed = 5.f; // 초당 진행도 5 증가. 총 20초가 걸려야 끝 지점에 도달해요.
+	tInfo.MoveSpeed = 6.f; // 초당 진행도 5 증가. 총 20초가 걸려야 끝 지점에 도달해요.
 	tInfo.MonScale = Vec3(50.f, 50.f, 1.f);
 	CEnemyScript::SetEnemyInfo(tInfo);
 
@@ -113,7 +113,7 @@ CDefaultEnemyScript::CDefaultEnemyScript(const CDefaultEnemyScript& _Origin)
 	wstring strPath = L"texture\\Enemy\\enemy_normal.png";
 
 	tInfo.MonTex = CAssetMgr::GetInst()->Load<CTexture>(strPath, strPath);
-	tInfo.MoveSpeed = 5.f; // 초당 진행도 5 증가. 총 20초가 걸려야 끝 지점에 도달해요.
+	tInfo.MoveSpeed = 6.f; // 초당 진행도 5 증가. 총 20초가 걸려야 끝 지점에 도달해요.
 	tInfo.MonScale = Vec3(50.f, 50.f, 1.f);
 	CEnemyScript::SetEnemyInfo(tInfo);
 }
