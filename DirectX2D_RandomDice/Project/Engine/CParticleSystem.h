@@ -30,7 +30,7 @@ public:
     void SetParticleModule(const tParticleModule& _Module) { m_Module = _Module; }
     void SetParticleTexture(Ptr<CTexture> _ParticleTex) { m_ParticleTex = _ParticleTex; }
 
-    void SetActivate(bool _IsActivate) { m_IsActivate = m_IsActivate; }
+    void SetActivate(bool _IsActivate) { m_IsActivate = _IsActivate; }
     bool GetActivate() const { return m_IsActivate; }
 
     virtual void UpdateData() override;
