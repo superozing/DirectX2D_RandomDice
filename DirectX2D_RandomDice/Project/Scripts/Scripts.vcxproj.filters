@@ -64,6 +64,7 @@
     <ClInclude Include="CEnemyGateScript.h">
       <Filter>Scripts\EnemyGate</Filter>
     </ClInclude>
+    <ClInclude Include="CGameMemoryPool.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -129,6 +130,7 @@
     <ClCompile Include="CEnemyGateScript.cpp">
       <Filter>Scripts\EnemyGate</Filter>
     </ClCompile>
+    <ClCompile Include="CGameMemoryPool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -190,6 +192,9 @@
     </Filter>
     <Filter Include="Scripts\EnemyGate">
       <UniqueIdentifier>{387bb16a-e5cc-44c2-b8a1-8e3670e53dc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Memory Pool">
+      <UniqueIdentifier>{9704712e-15b5-46bc-a464-0bcc8b7c19d5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
