@@ -14,6 +14,14 @@
 CFieldScript::CFieldScript()
 	:CScript(FIELDSCRIPT)
 {
+	wstring wstrPath = L"prefab\\DefaultEnemy.pref";
+	m_NormalEnemyPool.SetObject(CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath)->Instantiate());
+
+	wstrPath = L"prefab\\BigEnemy.pref";
+	m_BigEnemyPool.SetObject(CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath)->Instantiate());
+
+	wstrPath = L"prefab\\SpeedEnemy.pref";
+	m_SpeedEnemyPool.SetObject(CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath)->Instantiate());
 }
 
 CFieldScript::~CFieldScript()
