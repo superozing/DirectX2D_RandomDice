@@ -6,11 +6,13 @@ CDiceBuffScript
 CDiceMergeScript
 CDiceScaleScript
 CDiceScript
+CEnemyGateScript
 CEnemyScript
 CExternScript
 CFieldScript
 CMissileScript
 CMonsterScript
 CPlayerScript
+CRotateScript
 CSpeedEnemyScript
 CUIScript

@@ -6,6 +6,8 @@
 #include <Engine/CLevel.h>
 
 #include "CDiceScript.h"
+#include "CRotateScript.h"
+#include "CEnemyGateScript.h"
 
 
 
@@ -28,13 +30,13 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\battlefield_normal_bg_top.png";
 	OBJECT->GetRenderComponent()->GetDynamicMaterial();
 	OBJECT->GetRenderComponent()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
-	OBJECT->Transform()->SetRelativePos(Vec3(0, -210, 500));
+	OBJECT->Transform()->SetRelativePos(Vec3(0, -210, 1000));
 	OBJECT->Transform()->SetRelativeScale(Vec3(540, 540, 1));
 
 
 
 	wstrPath = L"prefab\\AlphaBlendGameObject.pref";
-	// MeshRender, Transform, alphablend shader, mtrl 달린 프리팹.
+	// MeshRender, Transform, alphablend shader, mtrl 달린 프리팹. 기능 없는 오브젝트에 사용 예정
 	Ptr<CPrefab> pObjPref = CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath);
 
 	
@@ -62,7 +64,7 @@ void CFieldScript::begin()
 			// 주사위 스크립트의 행렬, Pos, Name 설정
 			DiceScript->SetDiceXY(i + 1, j + 1);
 
-			// 주사위 종류과 정보 설정 (z : 3)
+			// 주사위 종류과 정보 설정 (z : 200)
 			DiceScript->SetDiceType(DICE(i + 1));
 
 			// AddObject
@@ -80,7 +82,7 @@ void CFieldScript::begin()
 
 			Vec3 dicePos = pDice->Transform()->GetRelativePos();
 			
-			pObj->Transform()->SetRelativePos(Vec3(dicePos.x, dicePos.y, dicePos.z + 1));
+			pObj->Transform()->SetRelativePos(Vec3(dicePos.x, dicePos.y, dicePos.z + 100));
 			pObj->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 1.f));
 
 			wstrPath = L"texture\\BattleField\\Dice\\battlefield_normal_dicebg_" + to_wstring((i + j) % 3 + 1) + L".png";
@@ -104,7 +106,7 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Deck\\battlefield_normal_bottom_bg.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(0.f, -425.f, 9.f));
+	pObj->Transform()->SetRelativePos(Vec3(0.f, -425.f, 600.f));
 	pObj->Transform()->SetRelativeScale(Vec3(510.f, 110.f, 1.f));
 
 	pObj->MeshRender()->GetDynamicMaterial();
@@ -122,7 +124,7 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Line\\battlefield_normal_vs_line_1.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(-230.f, -160.f, 10.f));
+	pObj->Transform()->SetRelativePos(Vec3(-230.f, -160.f, 700.f));
 	pObj->Transform()->SetRelativeScale(Vec3(33.f, 340.f, 1.f));
 
 	pObj->MeshRender()->GetDynamicMaterial();
@@ -139,7 +141,7 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Line\\battlefield_normal_vs_line_2.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(-10.f, 3.f, 10.f));
+	pObj->Transform()->SetRelativePos(Vec3(-10.f, 3.f, 700.f));
 	pObj->Transform()->SetRelativeScale(Vec3(407.f, 19.f, 1.f));
 
 	pObj->MeshRender()->GetDynamicMaterial();
@@ -156,7 +158,7 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Line\\battlefield_normal_vs_line_3.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(216.f, -160.f, 10.f));
+	pObj->Transform()->SetRelativePos(Vec3(216.f, -160.f, 700.f));
 	pObj->Transform()->SetRelativeScale(Vec3(46.f, 343.f, 1.f));
 
 	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
@@ -172,7 +174,7 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Deco\\battlefield_normal_deco_1.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(180.f, -280.f, 10.f));
+	pObj->Transform()->SetRelativePos(Vec3(180.f, -280.f, 700.f));
 	pObj->Transform()->SetRelativeScale(Vec3(75.f, 75.f, 1.f));
 	pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 3));
 
@@ -189,7 +191,7 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Deco\\battlefield_normal_deco_2.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(189.f, -101.f, 10.f));
+	pObj->Transform()->SetRelativePos(Vec3(189.f, -101.f, 700.f));
 	pObj->Transform()->SetRelativeScale(Vec3(50.f, 40.f, 1.f));
 
 	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
@@ -205,13 +207,38 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Deco\\battlefield_normal_deco_4.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(-190.f, -45.f, 10.f));
+	pObj->Transform()->SetRelativePos(Vec3(-190.f, -45.f, 700.f));
 	pObj->Transform()->SetRelativeScale(Vec3(60.f, 60.f, 1.f));
 
 	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
 	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
 
+	////////////////////
+	// ingame_mob_gate 1
+	////////////////////
+
+	pObj = new CGameObject;
+	pObj->AddComponent(new CTransform);
+	pObj->Transform()->SetRelativePos(Vec3(-235.f, -320.f, 600.f));
+
+	pObj->AddComponent(new CEnemyGateScript);
+	pObj->SetName(L"ingame_mob_gate_1");
+
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+
+	////////////////////
+	// ingame_mob_gate 2
+	////////////////////
+
+	pObj = new CGameObject;
+	pObj->AddComponent(new CTransform);
+	pObj->Transform()->SetRelativePos(Vec3(230.f, -320.f, 600.f));
+
+	pObj->AddComponent(new CEnemyGateScript);
+	pObj->SetName(L"ingame_mob_gate_2");
+
+	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
 
 #pragma endregion
 

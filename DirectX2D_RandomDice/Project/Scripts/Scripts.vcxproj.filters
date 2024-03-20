@@ -58,6 +58,12 @@
     <ClInclude Include="CDefaultEnemyScript.h">
       <Filter>Scripts\Enemy\Default</Filter>
     </ClInclude>
+    <ClInclude Include="CRotateScript.h">
+      <Filter>Scripts\Rotate</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemyGateScript.h">
+      <Filter>Scripts\EnemyGate</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -117,6 +123,12 @@
     <ClCompile Include="CDefaultEnemyScript.cpp">
       <Filter>Scripts\Enemy\Default</Filter>
     </ClCompile>
+    <ClCompile Include="CRotateScript.cpp">
+      <Filter>Scripts\Rotate</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemyGateScript.cpp">
+      <Filter>Scripts\EnemyGate</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -172,6 +184,12 @@
     </Filter>
     <Filter Include="Scripts\Extern">
       <UniqueIdentifier>{a01248d7-fc99-436c-bec1-cb986033a328}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\Rotate">
+      <UniqueIdentifier>{de17f40a-7b94-4ac4-96d6-bdfe816c0446}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\EnemyGate">
+      <UniqueIdentifier>{387bb16a-e5cc-44c2-b8a1-8e3670e53dc6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

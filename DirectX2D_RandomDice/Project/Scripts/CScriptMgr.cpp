@@ -9,12 +9,14 @@
 #include "CDiceMergeScript.h"
 #include "CDiceScaleScript.h"
 #include "CDiceScript.h"
+#include "CEnemyGateScript.h"
 #include "CEnemyScript.h"
 #include "CExternScript.h"
 #include "CFieldScript.h"
 #include "CMissileScript.h"
 #include "CMonsterScript.h"
 #include "CPlayerScript.h"
+#include "CRotateScript.h"
 #include "CSpeedEnemyScript.h"
 #include "CUIScript.h"
 
@@ -28,12 +30,14 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CDiceMergeScript");
 	_vec.push_back(L"CDiceScaleScript");
 	_vec.push_back(L"CDiceScript");
+	_vec.push_back(L"CEnemyGateScript");
 	_vec.push_back(L"CEnemyScript");
 	_vec.push_back(L"CExternScript");
 	_vec.push_back(L"CFieldScript");
 	_vec.push_back(L"CMissileScript");
 	_vec.push_back(L"CMonsterScript");
 	_vec.push_back(L"CPlayerScript");
+	_vec.push_back(L"CRotateScript");
 	_vec.push_back(L"CSpeedEnemyScript");
 	_vec.push_back(L"CUIScript");
 }
@@ -56,6 +60,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CDiceScaleScript;
 	if (L"CDiceScript" == _strScriptName)
 		return new CDiceScript;
+	if (L"CEnemyGateScript" == _strScriptName)
+		return new CEnemyGateScript;
 	if (L"CEnemyScript" == _strScriptName)
 		return new CEnemyScript;
 	if (L"CExternScript" == _strScriptName)
@@ -68,6 +74,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CMonsterScript;
 	if (L"CPlayerScript" == _strScriptName)
 		return new CPlayerScript;
+	if (L"CRotateScript" == _strScriptName)
+		return new CRotateScript;
 	if (L"CSpeedEnemyScript" == _strScriptName)
 		return new CSpeedEnemyScript;
 	if (L"CUIScript" == _strScriptName)
@@ -103,6 +111,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::DICESCRIPT:
 		return new CDiceScript;
 		break;
+	case (UINT)SCRIPT_TYPE::ENEMYGATESCRIPT:
+		return new CEnemyGateScript;
+		break;
 	case (UINT)SCRIPT_TYPE::ENEMYSCRIPT:
 		return new CEnemyScript;
 		break;
@@ -120,6 +131,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::PLAYERSCRIPT:
 		return new CPlayerScript;
+		break;
+	case (UINT)SCRIPT_TYPE::ROTATESCRIPT:
+		return new CRotateScript;
 		break;
 	case (UINT)SCRIPT_TYPE::SPEEDENEMYSCRIPT:
 		return new CSpeedEnemyScript;
@@ -167,6 +181,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CDiceScript";
 		break;
 
+	case SCRIPT_TYPE::ENEMYGATESCRIPT:
+		return L"CEnemyGateScript";
+		break;
+
 	case SCRIPT_TYPE::ENEMYSCRIPT:
 		return L"CEnemyScript";
 		break;
@@ -189,6 +207,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::PLAYERSCRIPT:
 		return L"CPlayerScript";
+		break;
+
+	case SCRIPT_TYPE::ROTATESCRIPT:
+		return L"CRotateScript";
 		break;
 
 	case SCRIPT_TYPE::SPEEDENEMYSCRIPT:
