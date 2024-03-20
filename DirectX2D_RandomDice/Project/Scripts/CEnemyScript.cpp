@@ -9,8 +9,14 @@ CEnemyScript::CEnemyScript()
 {
 }
 
+CEnemyScript::CEnemyScript(SCRIPT_TYPE _ScriptType)
+	:CScript(_ScriptType)
+	, m_DeathParticleTimer(-1.f)
+{
+}
+
 CEnemyScript::CEnemyScript(const CEnemyScript& _Origin)
-	: CScript(ENEMYSCRIPT)
+	: CScript(_Origin.GetScriptType())
 	, m_DeathParticleTimer(-1.f)
 {
 }

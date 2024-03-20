@@ -27,7 +27,7 @@ class CEnemyScript :
 private:
 
     // 필드
-    CFieldScript*       m_OwnerField;
+    //CFieldScript*       m_OwnerField;
     
     // 적 종류와 정보
     ENEMY_TYPE        m_EnemyType;
@@ -69,6 +69,7 @@ protected:
 public:
     CLONE(CEnemyScript);
     CEnemyScript();
+    CEnemyScript(SCRIPT_TYPE _ScriptType);
     CEnemyScript(const CEnemyScript& _Origin);
     ~CEnemyScript();
 };
