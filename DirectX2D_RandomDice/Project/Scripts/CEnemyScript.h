@@ -16,6 +16,8 @@ struct ENEMY_INFO
     Ptr<CTexture>   MonTex;                 // 몬스터 텍스쳐
     tParticleModule DeathParticleModule;    // 데스 파티클 모듈
     float           MoveSpeed;              // 초당 진행도(이동 속도)
+
+    Vec3            MonScale;               // 몬스터 크기
 };
 
 // Enemy는 메모리 풀을 사용해서 관리하는게 어떨까
@@ -38,8 +40,10 @@ private:
     float               m_MoveProgress;
     
     // 파티클 시스템 컴포넌트
+    CGameObject*        m_pParticleObject;
     CParticleSystem*    m_ParticleSystem;
 
+    float               m_DeathParticleTimer;
 
     // 데미지 리스트
 
@@ -54,6 +58,8 @@ private:
 public:
     virtual void tick() override;
     virtual void begin() override;
+
+    void PlayDeathParticle();
 
 protected:
     virtual void SetEnemyType(ENEMY_TYPE _Enemytype);

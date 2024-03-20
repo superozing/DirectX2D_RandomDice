@@ -14,7 +14,7 @@ CDefaultEnemyScript::CDefaultEnemyScript()
 
 	tModule.vSpawnColor = Vec4(0.2f, 0.2f, 0.2f, 0.6f);
 	tModule.vSpawnMinScale = Vec4(20.f, 20.f, 1.f, 1.f);
-	tModule.vSpawnMaxScale = Vec4(100.f, 100.f, 1.f, 1.f);
+	tModule.vSpawnMaxScale = Vec4(40.f, 40.f, 1.f, 1.f);
 
 	tModule.MinLife = 0.5f;
 	tModule.MaxLife = 1.f;
@@ -22,13 +22,13 @@ CDefaultEnemyScript::CDefaultEnemyScript()
 	tModule.MaxMass = 1.f;
 	tModule.SpawnShape = 0; // 0 : Sphere, 1 : Box
 	tModule.Radius = 10.f;
-	tModule.SpawnRate = 30;
+	tModule.SpawnRate = 50;
 
 	// Add Velocity Module
 	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::ADD_VELOCITY] = 1;
 	tModule.AddVelocityType = 0; // 0 : From Center, 1: To Center, 2: Fix Direction
-	tModule.MinSpeed = 100;
-	tModule.MaxSpeed = 100;
+	tModule.MinSpeed = 70;
+	tModule.MaxSpeed = 40;
 	tModule.FixedDirection;
 	tModule.FixedAngle;
 
@@ -53,8 +53,8 @@ CDefaultEnemyScript::CDefaultEnemyScript()
 	wstring strPath = L"texture\\Enemy\\enemy_normal.png";
 
 	tInfo.MonTex = CAssetMgr::GetInst()->Load<CTexture>(strPath, strPath);
-	tInfo.MoveSpeed = 5.f;
-
+	tInfo.MoveSpeed = 5.f; // 초당 진행도 5 증가. 총 20초가 걸려야 끝 지점에 도달해요.
+	tInfo.MonScale = Vec3(50.f, 50.f, 1.f);
 	CEnemyScript::SetEnemyInfo(tInfo);
 
 }

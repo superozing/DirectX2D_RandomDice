@@ -225,7 +225,7 @@ void MenuUI::GameObject()
         {
             Inspector* inspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");
 
-            if (nullptr != inspector->GetTargetObject() && inspector->GetTargetObject()->GetRenderComopnent() == nullptr)
+            if (nullptr != inspector->GetTargetObject() && inspector->GetTargetObject()->GetRenderComponent() == nullptr)
             {
                 if (ImGui::MenuItem("MeshRender"))
                     inspector->GetTargetObject()->AddComponent(new CMeshRender);
