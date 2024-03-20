@@ -8,8 +8,9 @@ class CDefaultEnemyScript :
 
 public:
 
-    CLONE_DISABLE(CDefaultEnemyScript);
+    CLONE(CDefaultEnemyScript);
     CDefaultEnemyScript();
+    CDefaultEnemyScript(const CDefaultEnemyScript& _Origin);
     ~CDefaultEnemyScript();
 };
 
