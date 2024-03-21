@@ -275,21 +275,24 @@ void CFieldScript::tick()
 
 		CEnemyScript* EnemyScript = pEnemy->GetScript<CEnemyScript>();
 
-		// 만약 이동 진행도가 100을 넘어설 경우
-		if (EnemyScript->GetMoveProgress() > 100.f && !EnemyScript->IsEndDeathParticle())
-		{
-			// 사망 파티클 출력
-			EnemyScript->PlayDeathParticle();
-			++it;
-		}
-		else if (EnemyScript->IsEndDeathParticle())
+		// 만약 사망 파티클 출력이 끝났을 경우
+		if (EnemyScript->IsEndDeathParticle())
 		{
 			// 메모리 풀에 반환
 			m_EnemyPool[(UINT)EnemyScript->GetEnemyType()].Deallocate(pEnemy);
 			it = m_EnemyList.erase(it);
 		}
-		else
+		// 만약 이동 진행도가 100을 넘어설 경우
+		else if (EnemyScript->GetMoveProgress() > 100.f && !EnemyScript->IsEndDeathParticle())
+		{
+			// 사망 파티클 출력
+			EnemyScript->PlayDeathParticle();
 			++it;
+		}
+		else
+		{
+			++it;
+		}
 
 	}
 
