@@ -14,21 +14,28 @@
 CFieldScript::CFieldScript()
 	:CScript(FIELDSCRIPT)
 {
-	wstring wstrPath = L"prefab\\DefaultEnemy.pref";
-	m_NormalEnemyPool.SetObject(CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath)->Instantiate());
+	// EnemyPool에 프로토타입 오브젝트 세팅
+	wstring wstrPath;
+	
+	wstrPath = L"prefab\\DefaultEnemy.pref";
+	m_EnemyPool[(UINT)ENEMY_TYPE::DEFAULT].SetObject(CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath)->Instantiate());
 
 	wstrPath = L"prefab\\BigEnemy.pref";
-	m_BigEnemyPool.SetObject(CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath)->Instantiate());
+	m_EnemyPool[(UINT)ENEMY_TYPE::BIG].SetObject(CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath)->Instantiate());
 
 	wstrPath = L"prefab\\SpeedEnemy.pref";
-	m_SpeedEnemyPool.SetObject(CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath)->Instantiate());
+	m_EnemyPool[(UINT)ENEMY_TYPE::SPEED].SetObject(CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath)->Instantiate());
 }
 
 CFieldScript::~CFieldScript()
 {
 }
 
-#define OBJECT GetOwner()
+#define OBJECT			GetOwner()
+
+#define POOL_DEFAULT	m_EnemyPool[(UINT)ENEMY_TYPE::DEFAULT]
+#define POOL_BIG		m_EnemyPool[(UINT)ENEMY_TYPE::BIG]
+#define POOL_SPEED		m_EnemyPool[(UINT)ENEMY_TYPE::SPEED]
 
 void CFieldScript::begin()
 {
@@ -250,9 +257,47 @@ void CFieldScript::begin()
 
 #pragma endregion
 
+	CGameObject* PoolAllocEnemy = POOL_DEFAULT.Allocate();
 
+	PoolAllocEnemy->begin();
+	PoolAllocEnemy->Transform()->SetRelativePos(Vec3(-235.f, -320.f, 600.f));
+
+	m_EnemyList.push_back(PoolAllocEnemy);
+
+}
+
+void CFieldScript::tick()
+{
+	for (auto it = m_EnemyList.begin(); it != m_EnemyList.end(); )
+	{
+		CGameObject* pEnemy = *it;
+		pEnemy->tick();
+
+		CEnemyScript* EnemyScript = pEnemy->GetScript<CEnemyScript>();
+
+		// 만약 이동 진행도가 100을 넘어설 경우
+		if (EnemyScript->GetMoveProgress() > 100.f && !EnemyScript->IsEndDeathParticle())
+		{
+			// 사망 파티클 출력
+			EnemyScript->PlayDeathParticle();
+			++it;
+		}
+		else if (EnemyScript->IsEndDeathParticle())
+		{
+			// 메모리 풀에 반환
+			m_EnemyPool[(UINT)EnemyScript->GetEnemyType()].Deallocate(pEnemy);
+			it = m_EnemyList.erase(it);
+		}
+		else
+			++it;
+
+	}
 
 
 }
 
 #undef OBJECT
+
+#undef POOL_DEFAULT
+#undef POOL_BIG	
+#undef POOL_SPEED	

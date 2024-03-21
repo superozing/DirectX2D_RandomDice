@@ -1,6 +1,5 @@
 #pragma once
 #include <Engine\CScript.h>
-#include "CFieldScript.h"
 
 enum class ENEMY_TYPE
 {
@@ -45,6 +44,8 @@ private:
 
     float               m_DeathParticleTimer;
 
+    bool                EndDeathParticle;
+
     // 데미지 리스트
 
 
@@ -60,6 +61,10 @@ public:
     virtual void begin() override;
 
     void PlayDeathParticle();
+
+    float GetMoveProgress() const { return m_MoveProgress; }
+    ENEMY_TYPE GetEnemyType() const { return m_EnemyType; }
+    bool IsEndDeathParticle() const { return EndDeathParticle; }
 
 protected:
     virtual void SetEnemyType(ENEMY_TYPE _Enemytype);

@@ -32,13 +32,6 @@ void CEnemyScript::tick()
 	// 자신의 진행도를 갱신함
 	m_MoveProgress += m_EnemyInfo.MoveSpeed * DT * 5;
 
-	// 나중에 밖으로 뺴야 하는 코드/////////////////////////////////////////////////////
-	if (m_MoveProgress >= 100.f)
-	{
-		PlayDeathParticle();
-		m_MoveProgress = 0.f;
-	}
-
 	// 사망 파티클 출력
 	if (m_ParticleSystem != nullptr && m_DeathParticleTimer != -1.f)
 	{
@@ -48,6 +41,7 @@ void CEnemyScript::tick()
 		{
 			m_ParticleSystem->SetActivate(false);
 			m_DeathParticleTimer = -1.f;
+			EndDeathParticle = true;
 		}
 	}
 }
@@ -91,6 +85,8 @@ void CEnemyScript::begin()
 
 void CEnemyScript::PlayDeathParticle()
 {
+	OBJECT->Transform()->SetRelativeScale(Vec3(0, 0, 0));
+
 	if (m_DeathParticleTimer == -1.f)
 		m_DeathParticleTimer = 0.f;
 	auto pos = OBJECT->Transform()->GetRelativePos();
