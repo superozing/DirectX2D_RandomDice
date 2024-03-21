@@ -43,7 +43,6 @@ void CDiceScript::SetDiceXY(UINT _DiceRow, UINT _DiceCol)
 
 	Vec3 fieldPos = m_OwnerField->Transform()->GetRelativePos();
 
-	OBJECT->Transform()->SetRelativePos(Vec3(((int)m_DiceRow - 3) * 62, ((int)m_DiceCol - 3) * 62 - 90, 200));
 
 	OBJECT->SetName(L"Dice_" + to_wstring(m_DiceRow) + L"_" + to_wstring(m_DiceCol));
 

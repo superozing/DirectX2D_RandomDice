@@ -14,17 +14,7 @@
 CFieldScript::CFieldScript()
 	:CScript(FIELDSCRIPT)
 {
-	// EnemyPool에 프로토타입 오브젝트 세팅
-	wstring wstrPath;
 	
-	wstrPath = L"prefab\\DefaultEnemy.pref";
-	m_EnemyPool[(UINT)ENEMY_TYPE::DEFAULT].SetObject(CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath)->Instantiate());
-
-	wstrPath = L"prefab\\BigEnemy.pref";
-	m_EnemyPool[(UINT)ENEMY_TYPE::BIG].SetObject(CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath)->Instantiate());
-
-	wstrPath = L"prefab\\SpeedEnemy.pref";
-	m_EnemyPool[(UINT)ENEMY_TYPE::SPEED].SetObject(CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath)->Instantiate());
 }
 
 CFieldScript::~CFieldScript()
@@ -32,10 +22,6 @@ CFieldScript::~CFieldScript()
 }
 
 #define OBJECT			GetOwner()
-
-#define POOL_DEFAULT	m_EnemyPool[(UINT)ENEMY_TYPE::DEFAULT]
-#define POOL_BIG		m_EnemyPool[(UINT)ENEMY_TYPE::BIG]
-#define POOL_SPEED		m_EnemyPool[(UINT)ENEMY_TYPE::SPEED]
 
 void CFieldScript::begin()
 {
@@ -48,6 +34,7 @@ void CFieldScript::begin()
 	OBJECT->Transform()->SetRelativePos(Vec3(0, -210, 1000));
 	OBJECT->Transform()->SetRelativeScale(Vec3(540, 540, 1));
 
+	Vec3 FieldPos = OBJECT->Transform()->GetRelativePos();
 
 
 	wstrPath = L"prefab\\AlphaBlendGameObject.pref";
@@ -68,6 +55,9 @@ void CFieldScript::begin()
 			// 프리팹 객체화
 			CGameObject* pDice = pDicePref->Instantiate();
 
+			// 행렬 위치에 따른 Pos 설정
+			pDice->Transform()->SetRelativePos(Vec3(((int)i - 2) * 62 - FieldPos.x, ((int)j - 2) * 62 - 90 - FieldPos.y, 200 - FieldPos.z));
+
 			// 스크립트 가져와서 저장
 			CDiceScript* DiceScript = m_DiceField[i][j] = pDice->GetScript<CDiceScript>();
 
@@ -83,7 +73,7 @@ void CFieldScript::begin()
 			DiceScript->SetDiceType(DICE(i + 1));
 
 			// AddObject
-			CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pDice, L"Dice");
+			OBJECT->AddChild(pDice);
 
 #pragma endregion
 
@@ -99,6 +89,7 @@ void CFieldScript::begin()
 			
 			pObj->Transform()->SetRelativePos(Vec3(dicePos.x, dicePos.y, dicePos.z + 100));
 			pObj->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 1.f));
+			pObj->Transform()->SetAbsolute(true);
 
 			wstrPath = L"texture\\BattleField\\Dice\\battlefield_normal_dicebg_" + to_wstring((i + j) % 3 + 1) + L".png";
 			pObj->SetName(wstrPath);
@@ -107,7 +98,7 @@ void CFieldScript::begin()
 			pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
 
-			CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+			OBJECT->AddChild(pObj);
 
 		}
 	}
@@ -121,13 +112,14 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Deck\\battlefield_normal_bottom_bg.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(0.f, -425.f, 600.f));
+	pObj->Transform()->SetRelativePos(Vec3(0.f - FieldPos.x, -425.f - FieldPos.y, 600.f - FieldPos.z));
 	pObj->Transform()->SetRelativeScale(Vec3(510.f, 110.f, 1.f));
+	pObj->Transform()->SetAbsolute(true);
 
 	pObj->MeshRender()->GetDynamicMaterial();
 	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+	OBJECT->AddChild(pObj);
 
 
 	////////////////////////////////
@@ -139,13 +131,14 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Line\\battlefield_normal_vs_line_1.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(-230.f, -160.f, 700.f));
+	pObj->Transform()->SetRelativePos(Vec3(-230.f - FieldPos.x, -160.f - FieldPos.y, 700.f - FieldPos.z));
 	pObj->Transform()->SetRelativeScale(Vec3(33.f, 340.f, 1.f));
+	pObj->Transform()->SetAbsolute(true);
 
 	pObj->MeshRender()->GetDynamicMaterial();
 	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+	OBJECT->AddChild(pObj);
 
 	////////////////////////////////
 	// battlefield_normal_vs_line_2
@@ -156,13 +149,14 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Line\\battlefield_normal_vs_line_2.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(-10.f, 3.f, 700.f));
+	pObj->Transform()->SetRelativePos(Vec3(-10.f - FieldPos.x, 3.f - FieldPos.y, 700.f - FieldPos.z));
 	pObj->Transform()->SetRelativeScale(Vec3(407.f, 19.f, 1.f));
+	pObj->Transform()->SetAbsolute(true);
 
 	pObj->MeshRender()->GetDynamicMaterial();
 	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+	OBJECT->AddChild(pObj);
 
 	////////////////////////////////
 	// battlefield_normal_vs_line_3
@@ -173,12 +167,13 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Line\\battlefield_normal_vs_line_3.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(216.f, -160.f, 700.f));
+	pObj->Transform()->SetRelativePos(Vec3(216.f - FieldPos.x, -160.f - FieldPos.y, 700.f - FieldPos.z));
 	pObj->Transform()->SetRelativeScale(Vec3(46.f, 343.f, 1.f));
+	pObj->Transform()->SetAbsolute(true);
 
 	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+	OBJECT->AddChild(pObj);
 
 	////////////////////////////////
 	// battlefield_normal_deco_1
@@ -189,13 +184,14 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Deco\\battlefield_normal_deco_1.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(180.f, -280.f, 700.f));
+	pObj->Transform()->SetRelativePos(Vec3(180.f - FieldPos.x, -280.f - FieldPos.y, 700.f - FieldPos.z));
 	pObj->Transform()->SetRelativeScale(Vec3(75.f, 75.f, 1.f));
 	pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 3));
+	pObj->Transform()->SetAbsolute(true);
 
 	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+	OBJECT->AddChild(pObj);
 
 	////////////////////////////////
 	// battlefield_normal_deco_2
@@ -206,12 +202,13 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Deco\\battlefield_normal_deco_2.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(189.f, -101.f, 700.f));
+	pObj->Transform()->SetRelativePos(Vec3(189.f - FieldPos.x, -101.f - FieldPos.y, 700.f - FieldPos.z));
 	pObj->Transform()->SetRelativeScale(Vec3(50.f, 40.f, 1.f));
+	pObj->Transform()->SetAbsolute(true);
 
 	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+	OBJECT->AddChild(pObj);
 
 	////////////////////////////////
 	// battlefield_normal_deco_4
@@ -222,12 +219,13 @@ void CFieldScript::begin()
 	wstrPath = L"texture\\BattleField\\Deco\\battlefield_normal_deco_4.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(-190.f, -45.f, 700.f));
+	pObj->Transform()->SetRelativePos(Vec3(-190.f - FieldPos.x, -45.f - FieldPos.y, 700.f - FieldPos.z));
 	pObj->Transform()->SetRelativeScale(Vec3(60.f, 60.f, 1.f));
+	pObj->Transform()->SetAbsolute(true);
 
 	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+	OBJECT->AddChild(pObj);
 
 	////////////////////
 	// ingame_mob_gate 1
@@ -235,12 +233,13 @@ void CFieldScript::begin()
 
 	pObj = new CGameObject;
 	pObj->AddComponent(new CTransform);
-	pObj->Transform()->SetRelativePos(Vec3(-235.f, -320.f, 600.f));
+	pObj->Transform()->SetRelativePos(Vec3(-235.f - FieldPos.x, -320.f - FieldPos.y, 600.f - FieldPos.z));
+	pObj->Transform()->SetAbsolute(true);
 
 	pObj->AddComponent(new CEnemyGateScript);
 	pObj->SetName(L"ingame_mob_gate_1");
 
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+	OBJECT->AddChild(pObj);
 
 	////////////////////
 	// ingame_mob_gate 2
@@ -248,59 +247,53 @@ void CFieldScript::begin()
 
 	pObj = new CGameObject;
 	pObj->AddComponent(new CTransform);
-	pObj->Transform()->SetRelativePos(Vec3(230.f, -320.f, 600.f));
+	pObj->Transform()->SetRelativePos(Vec3(230.f - FieldPos.x, -320.f - FieldPos.y, 600.f - FieldPos.z));
+	pObj->Transform()->SetAbsolute(true);
 
 	pObj->AddComponent(new CEnemyGateScript);
 	pObj->SetName(L"ingame_mob_gate_2");
 
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObj, L"Background");
+	OBJECT->AddChild(pObj);
 
 #pragma endregion
-
-	CGameObject* PoolAllocEnemy = POOL_DEFAULT.Allocate();
-
-	PoolAllocEnemy->begin();
-	PoolAllocEnemy->Transform()->SetRelativePos(Vec3(-235.f, -320.f, 600.f));
-
-	m_EnemyList.push_back(PoolAllocEnemy);
 
 }
 
 void CFieldScript::tick()
 {
-	for (auto it = m_EnemyList.begin(); it != m_EnemyList.end(); )
-	{
-		CGameObject* pEnemy = *it;
-		pEnemy->tick();
 
-		CEnemyScript* EnemyScript = pEnemy->GetScript<CEnemyScript>();
+	//////////////
+	// Enemy 관리
+	//////////////
+	//for (auto it = m_EnemyList.begin(); it != m_EnemyList.end(); )
+	//{
+	//	CGameObject* pEnemy = *it;
+	//	pEnemy->tick();
 
-		// 만약 사망 파티클 출력이 끝났을 경우
-		if (EnemyScript->IsEndDeathParticle())
-		{
-			// 메모리 풀에 반환
-			m_EnemyPool[(UINT)EnemyScript->GetEnemyType()].Deallocate(pEnemy);
-			it = m_EnemyList.erase(it);
-		}
-		// 만약 이동 진행도가 100을 넘어설 경우
-		else if (EnemyScript->GetMoveProgress() > 100.f && !EnemyScript->IsEndDeathParticle())
-		{
-			// 사망 파티클 출력
-			EnemyScript->PlayDeathParticle();
-			++it;
-		}
-		else
-		{
-			++it;
-		}
+	//	CEnemyScript* EnemyScript = pEnemy->GetScript<CEnemyScript>();
 
-	}
+	//	// 만약 사망 파티클 출력이 끝났을 경우
+	//	if (EnemyScript->IsEndDeathParticle())
+	//	{
+	//		// 메모리 풀에 반환
+	//		m_EnemyPool[(UINT)EnemyScript->GetEnemyType()].Deallocate(pEnemy);
+	//		it = m_EnemyList.erase(it);
+	//	}
+	//	// 만약 이동 진행도가 100을 넘어설 경우
+	//	else if (EnemyScript->GetMoveProgress() > 100.f && !EnemyScript->IsEndDeathParticle())
+	//	{
+	//		// 사망 파티클 출력
+	//		EnemyScript->PlayDeathParticle();
+	//		++it;
+	//	}
+	//	else
+	//	{
+	//		++it;
+	//	}
+	//}
 
 
 }
 
 #undef OBJECT
 
-#undef POOL_DEFAULT
-#undef POOL_BIG	
-#undef POOL_SPEED	
