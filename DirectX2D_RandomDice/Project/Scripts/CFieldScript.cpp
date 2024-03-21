@@ -37,9 +37,13 @@ void CFieldScript::begin()
 	Vec3 FieldPos = OBJECT->Transform()->GetRelativePos();
 
 
-	wstrPath = L"prefab\\AlphaBlendGameObject.pref";
 	// MeshRender, Transform, alphablend shader, mtrl 달린 프리팹. 기능 없는 오브젝트에 사용 예정
-	Ptr<CPrefab> pObjPref = CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath);
+	wstrPath = L"prefab\\AlphaBlendGameObject.pref";
+	Ptr<CPrefab> pAlphaPref = CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath);
+
+	// MeshRender, Transform, Std2D shader, mtrl 달린 프리팹. 기능 없는 오브젝트에 사용 예정
+	wstrPath = L"prefab\\Std2DGameObject.pref";
+	Ptr<CPrefab> pStd2DPref = CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath);
 
 	
 	wstrPath = L"prefab\\Dice.pref";
@@ -55,8 +59,8 @@ void CFieldScript::begin()
 			// 프리팹 객체화
 			CGameObject* pDice = pDicePref->Instantiate();
 
-			// 행렬 위치에 따른 Pos 설정
-			pDice->Transform()->SetRelativePos(Vec3(((int)i - 2) * 62 - FieldPos.x, ((int)j - 2) * 62 - 90 - FieldPos.y, 200 - FieldPos.z));
+			// 행렬 위치에 따른 Pos 설정(z : 500)
+			pDice->Transform()->SetRelativePos(Vec3(((int)i - 2) * 62 - FieldPos.x, ((int)j - 2) * 62 - 90 - FieldPos.y, 500 - FieldPos.z));
 
 			// 스크립트 가져와서 저장
 			CDiceScript* DiceScript = m_DiceField[i][j] = pDice->GetScript<CDiceScript>();
@@ -69,7 +73,7 @@ void CFieldScript::begin()
 			// 주사위 스크립트의 행렬, Pos, Name 설정
 			DiceScript->SetDiceXY(i + 1, j + 1);
 
-			// 주사위 종류과 정보 설정 (z : 200)
+			// 주사위 종류과 정보 설정 
 			DiceScript->SetDiceType(DICE(i + 1));
 
 			// AddObject
@@ -83,11 +87,11 @@ void CFieldScript::begin()
 			// battlefield_normal_dicebg_1 ~ 3
 			//////////////////////////////////
 	
-			pObj = pObjPref->Instantiate();
+			pObj = pAlphaPref->Instantiate();
 
 			Vec3 dicePos = pDice->Transform()->GetRelativePos();
 			
-			pObj->Transform()->SetRelativePos(Vec3(dicePos.x, dicePos.y, dicePos.z + 100));
+			pObj->Transform()->SetRelativePos(Vec3(dicePos.x, dicePos.y, -20));
 			pObj->Transform()->SetRelativeScale(Vec3(50.f, 50.f, 1.f));
 			pObj->Transform()->SetAbsolute(true);
 
@@ -107,12 +111,12 @@ void CFieldScript::begin()
 	// battlefield_normal_bottom_bg
 	////////////////////////////////
 	
-	pObj = pObjPref->Instantiate();
+	pObj = pAlphaPref->Instantiate();
 
 	wstrPath = L"texture\\BattleField\\Deck\\battlefield_normal_bottom_bg.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(0.f - FieldPos.x, -425.f - FieldPos.y, 600.f - FieldPos.z));
+	pObj->Transform()->SetRelativePos(Vec3(0.f - FieldPos.x, -425.f - FieldPos.y, -30));
 	pObj->Transform()->SetRelativeScale(Vec3(510.f, 110.f, 1.f));
 	pObj->Transform()->SetAbsolute(true);
 
@@ -126,12 +130,12 @@ void CFieldScript::begin()
 	// battlefield_normal_vs_line_1
 	////////////////////////////////
 
-	pObj = pObjPref->Instantiate();
+	pObj = pAlphaPref->Instantiate();
 
 	wstrPath = L"texture\\BattleField\\Line\\battlefield_normal_vs_line_1.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(-230.f - FieldPos.x, -160.f - FieldPos.y, 700.f - FieldPos.z));
+	pObj->Transform()->SetRelativePos(Vec3(-230.f - FieldPos.x, -160.f - FieldPos.y, -10.f));
 	pObj->Transform()->SetRelativeScale(Vec3(33.f, 340.f, 1.f));
 	pObj->Transform()->SetAbsolute(true);
 
@@ -144,12 +148,12 @@ void CFieldScript::begin()
 	// battlefield_normal_vs_line_2
 	////////////////////////////////
 
-	pObj = pObjPref->Instantiate();
+	pObj = pAlphaPref->Instantiate();
 
 	wstrPath = L"texture\\BattleField\\Line\\battlefield_normal_vs_line_2.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(-10.f - FieldPos.x, 3.f - FieldPos.y, 700.f - FieldPos.z));
+	pObj->Transform()->SetRelativePos(Vec3(-10.f - FieldPos.x, 3.f - FieldPos.y, -10.f));
 	pObj->Transform()->SetRelativeScale(Vec3(407.f, 19.f, 1.f));
 	pObj->Transform()->SetAbsolute(true);
 
@@ -162,12 +166,12 @@ void CFieldScript::begin()
 	// battlefield_normal_vs_line_3
 	////////////////////////////////
 
-	pObj = pObjPref->Instantiate();
+	pObj = pAlphaPref->Instantiate();
 
 	wstrPath = L"texture\\BattleField\\Line\\battlefield_normal_vs_line_3.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(216.f - FieldPos.x, -160.f - FieldPos.y, 700.f - FieldPos.z));
+	pObj->Transform()->SetRelativePos(Vec3(216.f - FieldPos.x, -160.f - FieldPos.y, -10.f));
 	pObj->Transform()->SetRelativeScale(Vec3(46.f, 343.f, 1.f));
 	pObj->Transform()->SetAbsolute(true);
 
@@ -179,12 +183,12 @@ void CFieldScript::begin()
 	// battlefield_normal_deco_1
 	////////////////////////////////
 
-	pObj = pObjPref->Instantiate();
+	pObj = pAlphaPref->Instantiate();
 
 	wstrPath = L"texture\\BattleField\\Deco\\battlefield_normal_deco_1.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(180.f - FieldPos.x, -280.f - FieldPos.y, 700.f - FieldPos.z));
+	pObj->Transform()->SetRelativePos(Vec3(180.f - FieldPos.x, -280.f - FieldPos.y, -10.f));
 	pObj->Transform()->SetRelativeScale(Vec3(75.f, 75.f, 1.f));
 	pObj->Transform()->SetRelativeRotation(Vec3(0.f, 0.f, XM_PI / 3));
 	pObj->Transform()->SetAbsolute(true);
@@ -197,12 +201,12 @@ void CFieldScript::begin()
 	// battlefield_normal_deco_2
 	////////////////////////////////
 
-	pObj = pObjPref->Instantiate();
+	pObj = pAlphaPref->Instantiate();
 
 	wstrPath = L"texture\\BattleField\\Deco\\battlefield_normal_deco_2.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(189.f - FieldPos.x, -101.f - FieldPos.y, 700.f - FieldPos.z));
+	pObj->Transform()->SetRelativePos(Vec3(189.f - FieldPos.x, -101.f - FieldPos.y, -10.f));
 	pObj->Transform()->SetRelativeScale(Vec3(50.f, 40.f, 1.f));
 	pObj->Transform()->SetAbsolute(true);
 
@@ -214,12 +218,12 @@ void CFieldScript::begin()
 	// battlefield_normal_deco_4
 	////////////////////////////////
 
-	pObj = pObjPref->Instantiate();
+	pObj = pAlphaPref->Instantiate();
 
 	wstrPath = L"texture\\BattleField\\Deco\\battlefield_normal_deco_4.png";
 	pObj->SetName(wstrPath);
 
-	pObj->Transform()->SetRelativePos(Vec3(-190.f - FieldPos.x, -45.f - FieldPos.y, 700.f - FieldPos.z));
+	pObj->Transform()->SetRelativePos(Vec3(-190.f - FieldPos.x, -45.f - FieldPos.y, -10.f));
 	pObj->Transform()->SetRelativeScale(Vec3(60.f, 60.f, 1.f));
 	pObj->Transform()->SetAbsolute(true);
 
@@ -233,7 +237,7 @@ void CFieldScript::begin()
 
 	pObj = new CGameObject;
 	pObj->AddComponent(new CTransform);
-	pObj->Transform()->SetRelativePos(Vec3(-235.f - FieldPos.x, -320.f - FieldPos.y, 600.f - FieldPos.z));
+	pObj->Transform()->SetRelativePos(Vec3(-235.f - FieldPos.x, -320.f - FieldPos.y, -20));
 	pObj->Transform()->SetAbsolute(true);
 
 	pObj->AddComponent(new CEnemyGateScript);
@@ -247,7 +251,7 @@ void CFieldScript::begin()
 
 	pObj = new CGameObject;
 	pObj->AddComponent(new CTransform);
-	pObj->Transform()->SetRelativePos(Vec3(230.f - FieldPos.x, -320.f - FieldPos.y, 600.f - FieldPos.z));
+	pObj->Transform()->SetRelativePos(Vec3(230.f - FieldPos.x, -320.f - FieldPos.y, -20));
 	pObj->Transform()->SetAbsolute(true);
 
 	pObj->AddComponent(new CEnemyGateScript);

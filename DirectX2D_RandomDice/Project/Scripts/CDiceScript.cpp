@@ -65,6 +65,9 @@ void CDiceScript::begin()
 	if (OBJECT->MeshRender() != nullptr)
 	{
 		OBJECT->GetRenderComponent()->GetDynamicMaterial();
+		wstring wstrPath = L"texture\\Dice\\01_fire.png";
+		OBJECT->GetRenderComponent()->GetDynamicMaterial()
+			->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
 	}
 }
