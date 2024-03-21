@@ -68,13 +68,13 @@ void CEnemyGateScript::begin()
 		SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
 	// Transform()에 Scale, 게이트의 Pos Set
-	Vec3 gatePos = OBJECT->Transform()->GetRelativePos();
-	gatePos.z += 30;
+	Vec3 gatePos(0.f, 0.f, 0.f);
+	gatePos.z += 1;
 	m_Background->Transform()->SetRelativePos(gatePos);
 	m_Background->Transform()->SetRelativeScale(Vec3(44.f, 44.f, 1.f));
 
 	// AddObject
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(m_Background, L"Background");
+	OBJECT->AddChild(m_Background);
 
 
 
@@ -87,7 +87,7 @@ void CEnemyGateScript::begin()
 	m_pParticleObject = new CGameObject;
 	m_pParticleObject->AddComponent(new CTransform);
 
-	gatePos.z = 200;
+	gatePos.z -= 2;
 
 	m_pParticleObject->Transform()->SetRelativePos(gatePos);
 
@@ -145,8 +145,8 @@ void CEnemyGateScript::begin()
 	m_ParticleSystem->SetParticleTexture(CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 	m_ParticleSystem->SetActivate(true);
 	// 파티클 오브젝트 추가
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(m_pParticleObject, L"Background");
-	
+	OBJECT->AddChild(m_pParticleObject);
+
 }
 
 
