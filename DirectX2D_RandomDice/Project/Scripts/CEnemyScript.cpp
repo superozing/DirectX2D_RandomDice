@@ -30,18 +30,20 @@ CEnemyScript::~CEnemyScript()
 void CEnemyScript::tick()
 {
 	// 자신의 진행도를 갱신함
-	m_MoveProgress += m_EnemyInfo.MoveSpeed * DT * 5;
+	m_MoveProgress += m_EnemyInfo.MoveSpeed * DT;
 
 	// 사망 파티클 출력
 	if (m_ParticleSystem != nullptr && m_DeathParticleTimer != -1.f)
 	{
+		if (m_DeathParticleTimer > 2.f)
+			EndDeathParticle = true;
+
 		m_DeathParticleTimer += DT;
 		m_ParticleSystem->SetActivate(true);
+
 		if (m_DeathParticleTimer > 0.1f)
 		{
 			m_ParticleSystem->SetActivate(false);
-			m_DeathParticleTimer = -1.f;
-			EndDeathParticle = true;
 		}
 	}
 }
@@ -69,6 +71,7 @@ void CEnemyScript::begin()
 	// 파티클 오브젝트 생성
 	m_pParticleObject = new CGameObject;
 	m_pParticleObject->AddComponent(new CTransform);
+	m_pParticleObject->SetName(L"DeathParticleObject");
 
 	// 파티클 시스템 컴포넌트 부착
 	m_ParticleSystem = new CParticleSystem;
@@ -79,19 +82,19 @@ void CEnemyScript::begin()
 	m_ParticleSystem->SetParticleModule(m_EnemyInfo.DeathParticleModule);
 	m_ParticleSystem->SetParticleTexture(CAssetMgr::GetInst()->Load<CTexture>(strPath, strPath));
 
+	// 파티클 출력 위치
+	m_pParticleObject->Transform()->SetRelativePos(Vec3(0.f, 0.f, -200.f));
+
 	// 파티클 오브젝트 추가
-	CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(m_pParticleObject, L"Particle");
+	OBJECT->AddChild(m_pParticleObject);
 }
 
 void CEnemyScript::PlayDeathParticle()
 {
-	OBJECT->Transform()->SetRelativeScale(Vec3(0, 0, 0));
+	//OBJECT->Transform()->SetRelativeScale(Vec3(0, 0, 0));
 
 	if (m_DeathParticleTimer == -1.f)
 		m_DeathParticleTimer = 0.f;
-	auto pos = OBJECT->Transform()->GetRelativePos();
-	
-	m_pParticleObject->Transform()->SetRelativePos(Vec3(pos.x, pos.y, pos.z - 1));
 }
 
 void CEnemyScript::SetEnemyType(ENEMY_TYPE _Enemytype)
