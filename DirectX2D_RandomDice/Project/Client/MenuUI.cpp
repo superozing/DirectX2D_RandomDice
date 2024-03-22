@@ -247,15 +247,18 @@ void MenuUI::GameObject()
 
             if (nullptr != inspector->GetTargetObject())
             {
-                
-                wstring wstrObjName = inspector->GetTargetObject()->GetName();
-                string strObjName = ToString(wstrObjName);
+                // c스타일 문자열
+                char str[100]{};
+
+                // 문자열에 기존 이름 정보 담기
+                strcpy_s(str, ToString(inspector->GetTargetObject()->GetName()).c_str());
 
                 ImGui::Text("Name ");
                 ImGui::SameLine();
-                if (ImGui::InputText("##ObjName", (char*)strObjName.c_str(), 100, ImGuiInputTextFlags_EnterReturnsTrue))
+                if (ImGui::InputText("##ObjName", str, 100, ImGuiInputTextFlags_EnterReturnsTrue))
                 {
-                    inspector->GetTargetObject()->SetName(ToWString(strObjName));
+                    // 입력받은 이름 정보를 wsting으로 변환해서 SetName
+                    inspector->GetTargetObject()->SetName(ToWString(string(str)));
                     Outliner* outliner = (Outliner*)CImGuiMgr::GetInst()->FindUI("##Outliner");
                     outliner->ResetCurrentLevel();
                 }
