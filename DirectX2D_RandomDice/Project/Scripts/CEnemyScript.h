@@ -53,6 +53,7 @@ private:
 private:
 
     ///////////////////////////////////////////////////////////// 자식 쪽에서 오버라이딩을 반드시 해야 해요.
+    // 사실 안쓰면 안해도 되는거 아닐까?>
     virtual void SaveToFile(FILE* _File) {}
     virtual void LoadFromFile(FILE* _File) {}
 
