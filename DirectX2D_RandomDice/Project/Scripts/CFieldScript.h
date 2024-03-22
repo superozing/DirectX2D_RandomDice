@@ -11,6 +11,16 @@ struct ENEMY_PAIR
 };
 
 
+struct SPAWN_ENEMY_COOLDOWN
+{
+    UINT    EnemySpawnCount;
+    float   CoolDown;
+
+public:
+    bool EnableSpawn() const { return CoolDown == 0.f; }
+};
+
+
 // 필드의 주사위 배치와 주사위 함수 호출을 관리할 필드 스크립트
 class CFieldScript :
     public CScript
@@ -25,7 +35,7 @@ private:
 
     // 적 프리팹
     Ptr<CPrefab>        m_EnemyPrefab[(UINT)ENEMY_TYPE::END];
-    bool                m_bSpawnEnemyArr[(UINT)ENEMY_TYPE::END];
+    SPAWN_ENEMY_COOLDOWN m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::END];
 
 
 

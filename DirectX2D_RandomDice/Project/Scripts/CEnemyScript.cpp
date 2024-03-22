@@ -83,7 +83,7 @@ void CEnemyScript::begin()
 	m_ParticleSystem->SetParticleTexture(CAssetMgr::GetInst()->Load<CTexture>(strPath, strPath));
 
 	// 파티클 출력 위치
-	m_pParticleObject->Transform()->SetRelativePos(Vec3(0.f, 0.f, -200.f));
+	m_pParticleObject->Transform()->SetRelativePos(Vec3(0.f, 0.f, -650.f));
 
 	// 파티클 오브젝트 추가
 	OBJECT->AddChild(m_pParticleObject);
