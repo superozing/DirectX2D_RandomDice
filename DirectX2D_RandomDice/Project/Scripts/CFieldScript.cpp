@@ -301,10 +301,6 @@ void CFieldScript::begin()
 	assert(m_EnemyPrefab[(UINT)ENEMY_TYPE::SPEED].Get());
 	assert(m_EnemyPrefab[(UINT)ENEMY_TYPE::BIG].Get());
 
-
-	m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnemySpawnCount = 10;
-	m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::SPEED].EnemySpawnCount = 0;
-	m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnemySpawnCount = 0;
 }
 
 void CFieldScript::tick()
@@ -314,9 +310,11 @@ void CFieldScript::tick()
 	// Spawn Enemy Check
 	//==================
 
-	// m_SpawnEnemyCheck의 쿨다운 감소
 	for (UINT i = 0; i < (UINT)ENEMY_TYPE::END; ++i)
 	{
+		m_AccSpawnCoolDown[i] -= DT;
+
+		// m_SpawnEnemyCheck의 쿨다운 감소
 		m_SpawnEnemyCheck[i].CoolDown -= DT;
 
 		// 쿨타임이 돌았으면 0으로 초기화 해놓기
@@ -324,16 +322,28 @@ void CFieldScript::tick()
 			m_SpawnEnemyCheck[i].CoolDown = 0.f;
 	}
 
-	Vec3 FieldPos = OBJECT->Transform()->GetRelativePos();
+	if (m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::DEFAULT] < 0.f)
+	{
+		m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::DEFAULT] = 2.f;
+		++m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnemySpawnCount;
+	}
+	if (m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::SPEED] < 0.f)
+	{
+		m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::SPEED] = 7.f;
+		++m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::SPEED].EnemySpawnCount;
+	}
+	if (m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::BIG] < 0.f)
+	{
+		m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::BIG] = 10.f;
+		++m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnemySpawnCount;
+	}
 
-	Vec3 Gate1Pos(m_EnemyGate1->Transform()->GetWorldPos());
-	Vec3 Line2Pos(m_Line2->Transform()->GetWorldPos());
-	Vec3 Gate2Pos(m_EnemyGate2->Transform()->GetWorldPos());
 
-	Vec3 Line1StartPos(Gate1Pos.x, Gate1Pos.y, 600);
-	Vec3 Line2StartPos(Gate1Pos.x, Line2Pos.y, 600);
-	Vec3 Line3StartPos(Gate2Pos.x, Line2Pos.y, 600);
-	Vec3 LineEndPos(Gate2Pos.x, Gate2Pos.y, 600);
+
+	Vec3 Line1StartPos(m_EnemyGate1->Transform()->GetWorldPos().x, m_EnemyGate1->Transform()->GetWorldPos().y, 600);
+	Vec3 Line2StartPos(m_EnemyGate1->Transform()->GetWorldPos().x, m_Line2->Transform()->GetWorldPos().y, 600);
+	Vec3 Line3StartPos(m_EnemyGate2->Transform()->GetWorldPos().x, m_Line2->Transform()->GetWorldPos().y, 600);
+	Vec3 LineEndPos	  (m_EnemyGate2->Transform()->GetWorldPos().x, m_EnemyGate2->Transform()->GetWorldPos().y, 600);
 
 	float YLineLen = Line2StartPos.y - Line1StartPos.y;
 	float XLineLen = Line3StartPos.x - Line2StartPos.x;
@@ -435,6 +445,16 @@ void CFieldScript::tick()
 
 		// 위치 비율 - 31 : 38 : 31
 		float MoveProgress = pEScript->GetMoveProgress();
+
+		// ATTACK_PRIORITY Check - FRONT
+		if (m_AttackPriority[(UINT)ATTACK_PRIORITY::FRONT].pObject == nullptr 
+			|| (m_AttackPriority[(UINT)ATTACK_PRIORITY::FRONT].pEnemyScript->GetMoveProgress() < MoveProgress
+			&& MoveProgress < 100.f))
+		{
+			// 공격 우선 순위 오브젝트가 nullptr일 경우
+			// 진행도가 가장 앞서는 경우
+			m_AttackPriority[(UINT)ATTACK_PRIORITY::FRONT] = pEnemy;
+		}
 
 		Vec3 Pos(0.f, 0.f, 600.f);
 

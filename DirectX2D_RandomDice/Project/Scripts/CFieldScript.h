@@ -26,18 +26,18 @@ class CFieldScript :
     public CScript
 {
 private:
-    class CDiceScript*  m_DiceField[5][3]; // CDiceScript를 가진 CGameObject의 2차원 배열
+    class CDiceScript*      m_DiceField[5][3]; // CDiceScript를 가진 CGameObject의 2차원 배열
 
-    list<ENEMY_PAIR>    m_EnemyList;
+    list<ENEMY_PAIR>        m_EnemyList;
 
     // 공격 우선 순위에 해당하는 적 포인터 모음
-    ENEMY_PAIR          m_AttackPriority[(UINT)ATTACK_PRIORITY::END];
+    ENEMY_PAIR              m_AttackPriority[(UINT)ATTACK_PRIORITY::END];
 
     // 적 프리팹
-    Ptr<CPrefab>        m_EnemyPrefab[(UINT)ENEMY_TYPE::END];
-    SPAWN_ENEMY_COOLDOWN m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::END];
+    Ptr<CPrefab>            m_EnemyPrefab[(UINT)ENEMY_TYPE::END];
+    SPAWN_ENEMY_COOLDOWN    m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::END];
 
-
+    float                   m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::END];
 
 private: // EnemyPos 계산 용도의 GameObject*
     CGameObject* m_EnemyGate1;
