@@ -14,8 +14,8 @@ CBigEnemyScript::CBigEnemyScript()
 	tModule.SpaceType = 1;
 
 	tModule.vSpawnColor = Vec4(0.2f, 0.2f, 0.2f, 0.6f);
-	tModule.vSpawnMinScale = Vec4(40.f, 40.f, 1.f, 1.f);
-	tModule.vSpawnMaxScale = Vec4(70.f, 70.f, 1.f, 1.f);
+	tModule.vSpawnMinScale = Vec4(70.f, 70.f, 1.f, 1.f);
+	tModule.vSpawnMaxScale = Vec4(150.f, 150.f, 1.f, 1.f);
 
 	tModule.MinLife = 0.5f;
 	tModule.MaxLife = 1.f;
@@ -73,8 +73,8 @@ CBigEnemyScript::CBigEnemyScript(const CBigEnemyScript& _Origin)
 	tModule.SpaceType = 1;
 
 	tModule.vSpawnColor = Vec4(0.2f, 0.2f, 0.2f, 0.6f);
-	tModule.vSpawnMinScale = Vec4(40.f, 40.f, 1.f, 1.f);
-	tModule.vSpawnMaxScale = Vec4(70.f, 70.f, 1.f, 1.f);
+	tModule.vSpawnMinScale = Vec4(70.f, 70.f, 1.f, 1.f);
+	tModule.vSpawnMaxScale = Vec4(150.f, 150.f, 1.f, 1.f);
 
 	tModule.MinLife = 0.5f;
 	tModule.MaxLife = 1.f;

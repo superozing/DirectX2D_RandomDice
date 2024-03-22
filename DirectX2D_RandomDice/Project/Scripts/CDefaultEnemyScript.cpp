@@ -73,8 +73,8 @@ CDefaultEnemyScript::CDefaultEnemyScript(const CDefaultEnemyScript& _Origin)
 	tModule.SpaceType = 1;
 
 	tModule.vSpawnColor = Vec4(0.4f, 0.4f, 0.4f, 0.6f);
-	tModule.vSpawnMinScale = Vec4(20.f, 20.f, 1.f, 1.f);
-	tModule.vSpawnMaxScale = Vec4(40.f, 40.f, 1.f, 1.f);
+	tModule.vSpawnMinScale = Vec4(40.f, 40.f, 1.f, 1.f);
+	tModule.vSpawnMaxScale = Vec4(70.f, 70.f, 1.f, 1.f);
 
 	tModule.MinLife = 0.5f;
 	tModule.MaxLife = 1.f;
