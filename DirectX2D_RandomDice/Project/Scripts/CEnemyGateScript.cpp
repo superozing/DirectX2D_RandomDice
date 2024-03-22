@@ -144,6 +144,8 @@ void CEnemyGateScript::begin()
 	m_ParticleSystem->SetName(wstrPath);
 	m_ParticleSystem->SetParticleTexture(CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 	m_ParticleSystem->SetActivate(true);
+
+
 	// 파티클 오브젝트 추가
 	OBJECT->AddChild(m_pParticleObject);
 

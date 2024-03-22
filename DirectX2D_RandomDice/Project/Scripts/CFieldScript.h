@@ -1,6 +1,7 @@
 #pragma once
 #include <Engine\CScript.h>
 #include "CDiceAttackScript.h"
+#include "CEnemyScript.h"
 
 // EnemyScript를 조금 더 빠르게 참조하기 위해서 구조체 사용
 struct ENEMY_PAIR
@@ -21,6 +22,20 @@ private:
 
     // 공격 우선 순위에 해당하는 적 포인터 모음
     ENEMY_PAIR          m_AttackPriority[(UINT)ATTACK_PRIORITY::END];
+
+    // 적 프리팹
+    Ptr<CPrefab>        m_EnemyPrefab[(UINT)ENEMY_TYPE::END];
+    bool                m_bSpawnEnemyArr[(UINT)ENEMY_TYPE::END];
+
+
+
+private: // EnemyPos 계산 용도의 GameObject*
+    CGameObject* m_EnemyGate1;
+    CGameObject* m_Line2;
+    CGameObject* m_EnemyGate2;
+
+
+
 
 public:
     virtual void begin() override;
