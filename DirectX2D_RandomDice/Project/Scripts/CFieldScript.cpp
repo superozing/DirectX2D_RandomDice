@@ -6,7 +6,6 @@
 #include <Engine/CLevel.h>
 
 #include "CDiceScript.h"
-#include "CRotateScript.h"
 #include "CEnemyGateScript.h"
 
 
@@ -25,12 +24,25 @@ CFieldScript::~CFieldScript()
 
 void CFieldScript::begin()
 {
+	// 예외 처리
+	
+	assert(OBJECT);
+
+	if (OBJECT->GetRenderComponent() == nullptr)
+	{
+		OBJECT->AddComponent(new CMeshRender);
+		OBJECT->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+		OBJECT->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"AlphaBlendMtrl"));
+	}
+
+	assert(OBJECT->MeshRender());
+	OBJECT->MeshRender()->GetDynamicMaterial();
+
 	CGameObject* pObj = nullptr;
 	wstring wstrPath;
 
 	wstrPath = L"texture\\BattleField\\battlefield_normal_bg_top.png";
-	OBJECT->GetRenderComponent()->GetDynamicMaterial();
-	OBJECT->GetRenderComponent()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
+	OBJECT->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
 
 	// 플레이어 자신일 경우 -> Vec3(0, -210, 1000)
@@ -50,8 +62,8 @@ void CFieldScript::begin()
 	Ptr<CPrefab> pStd2DPref = CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath);
 
 	
-	wstrPath = L"prefab\\Dice.pref";
 	// 주사위 프리팹
+	wstrPath = L"prefab\\Dice.pref";
 	Ptr<CPrefab> pDicePref = CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath);
 
 	for (int i = 0; i < 5; ++i)
@@ -290,14 +302,9 @@ void CFieldScript::begin()
 	assert(m_EnemyPrefab[(UINT)ENEMY_TYPE::BIG].Get());
 
 
-
-
-
-
-
-	m_bSpawnEnemyArr[(UINT)ENEMY_TYPE::DEFAULT] = true;
-	m_bSpawnEnemyArr[(UINT)ENEMY_TYPE::SPEED] = true;
-	m_bSpawnEnemyArr[(UINT)ENEMY_TYPE::BIG] = true;
+	m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnemySpawnCount = 10;
+	m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::SPEED].EnemySpawnCount = 0;
+	m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnemySpawnCount = 0;
 }
 
 void CFieldScript::tick()
@@ -306,6 +313,16 @@ void CFieldScript::tick()
 	//==================
 	// Spawn Enemy Check
 	//==================
+
+	// m_SpawnEnemyCheck의 쿨다운 감소
+	for (UINT i = 0; i < (UINT)ENEMY_TYPE::END; ++i)
+	{
+		m_SpawnEnemyCheck[i].CoolDown -= DT;
+
+		// 쿨타임이 돌았으면 0으로 초기화 해놓기
+		if (m_SpawnEnemyCheck[i].CoolDown < 0.f)
+			m_SpawnEnemyCheck[i].CoolDown = 0.f;
+	}
 
 	Vec3 FieldPos = OBJECT->Transform()->GetRelativePos();
 
@@ -324,8 +341,10 @@ void CFieldScript::tick()
 	ENEMY_PAIR SpawnEnemy{};
 
 	///// DEFAULT
-	if (m_bSpawnEnemyArr[(UINT)ENEMY_TYPE::DEFAULT])
+	if (m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnemySpawnCount > 0
+		&& m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnableSpawn())
 	{
+
 		// 1. 프리팹 객체화
 		SpawnEnemy.pObject = m_EnemyPrefab[(UINT)ENEMY_TYPE::DEFAULT]->Instantiate();
 		SpawnEnemy.pObject->SetName(L"DefaultEnemy");
@@ -334,7 +353,7 @@ void CFieldScript::tick()
 
 		// 시작 게이트 Pos
 		SpawnEnemy.pEnemyScript->begin();
-		SpawnEnemy.pObject->Transform()->SetRelativePos(Vec3(Gate1Pos.x, Gate1Pos.y, 600));
+		SpawnEnemy.pObject->Transform()->SetRelativePos(Line1StartPos);
 
 		// 2. EnemyList에 삽입
 		m_EnemyList.push_back(SpawnEnemy);
@@ -342,12 +361,15 @@ void CFieldScript::tick()
 		// 3. SpawnObject로 게임에 생성
 		GamePlayStatic::SpawnGameObject(SpawnEnemy.pObject, 7);
 
-		m_bSpawnEnemyArr[(UINT)ENEMY_TYPE::DEFAULT] = false;
+		m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].CoolDown = 0.5f;
+		--m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnemySpawnCount;
 	}
 
 	///// SPEED
-	if (m_bSpawnEnemyArr[(UINT)ENEMY_TYPE::SPEED])
+	if (m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::SPEED].EnemySpawnCount > 0
+		&& m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::SPEED].EnableSpawn())
 	{
+
 		// 1. 프리팹 객체화
 		SpawnEnemy.pObject = m_EnemyPrefab[(UINT)ENEMY_TYPE::SPEED]->Instantiate();
 		SpawnEnemy.pObject->SetName(L"SpeedEnemy");
@@ -356,7 +378,7 @@ void CFieldScript::tick()
 
 		// 시작 게이트 Pos
 		SpawnEnemy.pObject->begin();
-		SpawnEnemy.pObject->Transform()->SetRelativePos(Vec3(Gate1Pos.x, Gate1Pos.y, 600));
+		SpawnEnemy.pObject->Transform()->SetRelativePos(Line1StartPos);
 
 		// 2. EnemyList에 삽입
 		m_EnemyList.push_back(SpawnEnemy);
@@ -364,12 +386,15 @@ void CFieldScript::tick()
 		// 3. SpawnObject로 게임에 생성
 		GamePlayStatic::SpawnGameObject(SpawnEnemy.pObject, 7);
 
-		m_bSpawnEnemyArr[(UINT)ENEMY_TYPE::SPEED] = false;
+		m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::SPEED].CoolDown = 0.5f;
+		--m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::SPEED].EnemySpawnCount;
 	}
 
 	///// BIG
-	if (m_bSpawnEnemyArr[(UINT)ENEMY_TYPE::BIG])
+	if (m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnemySpawnCount > 0
+		&& m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnableSpawn())
 	{
+
 		// 1. 프리팹 객체화
 		SpawnEnemy.pObject = m_EnemyPrefab[(UINT)ENEMY_TYPE::BIG]->Instantiate();
 		SpawnEnemy.pObject->SetName(L"BigEnemy");
@@ -378,7 +403,7 @@ void CFieldScript::tick()
 
 		// 시작 게이트 Pos
 		SpawnEnemy.pObject->begin();
-		SpawnEnemy.pObject->Transform()->SetRelativePos(Vec3(Gate1Pos.x, Gate1Pos.y, 600));
+		SpawnEnemy.pObject->Transform()->SetRelativePos(Vec3(Line1StartPos.x, Line1StartPos.y, 599.f));
 
 		// 2. EnemyList에 삽입
 		m_EnemyList.push_back(SpawnEnemy);
@@ -386,7 +411,9 @@ void CFieldScript::tick()
 		// 3. SpawnObject로 게임에 생성
 		GamePlayStatic::SpawnGameObject(SpawnEnemy.pObject, 7);
 
-		m_bSpawnEnemyArr[(UINT)ENEMY_TYPE::BIG] = false;
+
+		m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].CoolDown = 0.5f;
+		--m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnemySpawnCount;
 	}
 
 	
