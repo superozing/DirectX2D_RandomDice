@@ -138,7 +138,7 @@ void CKeyMgr::tick()
 #ifndef _RELEASE_GAME
 		if (KEY_TAP(KEY::LBTN))
 			m_mouseClick.push_back({ 0.f, 3.f
-				, wstring(L"clicked: (") + std::to_wstring((int)m_vMousePos.x - 270) + L", " + std::to_wstring((int)m_vMousePos.y - 480) + L")" });
+				, wstring(L"clicked: (") + std::to_wstring((int)m_vMousePos.x - 270) + L", " + std::to_wstring(((int)m_vMousePos.y - 480) * -1) + L")" });
 #endif
 
 	}
