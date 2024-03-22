@@ -34,7 +34,7 @@ void CFieldScript::begin()
 
 
 	// 플레이어 자신일 경우 -> Vec3(0, -210, 1000)
-	// 적 플레이어일 경우 -> Vec3(0, -210, 1000)
+	// 적 플레이어일 경우 -> Vec3(0, 340, 1000)
 	//OBJECT->Transform()->SetRelativePos(Vec3(0, -210, 1000));
 	OBJECT->Transform()->SetRelativeScale(Vec3(540, 540, 1));
 
@@ -313,8 +313,13 @@ void CFieldScript::tick()
 	Vec3 Line2Pos(m_Line2->Transform()->GetWorldPos());
 	Vec3 Gate2Pos(m_EnemyGate2->Transform()->GetWorldPos());
 
-	float YLineLen = abs(Line2Pos.y - Gate1Pos.y);
-	float XLineLen = abs(Gate1Pos.x - Gate2Pos.x);
+	Vec3 Line1StartPos(Gate1Pos.x, Gate1Pos.y, 600);
+	Vec3 Line2StartPos(Gate1Pos.x, Line2Pos.y, 600);
+	Vec3 Line3StartPos(Gate2Pos.x, Line2Pos.y, 600);
+	Vec3 LineEndPos(Gate2Pos.x, Gate2Pos.y, 600);
+
+	float YLineLen = Line2StartPos.y - Line1StartPos.y;
+	float XLineLen = Line3StartPos.x - Line2StartPos.x;
 
 	ENEMY_PAIR SpawnEnemy{};
 
@@ -408,28 +413,28 @@ void CFieldScript::tick()
 
 		if (MoveProgress <= 31.f) // 왼 쪽 라인에 위치
 		{
-			Pos.x = Gate1Pos.x;
-			Pos.y = Gate1Pos.y + YLineLen * (MoveProgress / 31.f);
+			Pos = Line1StartPos;
+			Pos.y += YLineLen * (MoveProgress / 31.f);
 		}
 		else if (MoveProgress > 69.f) // 오른 쪽 라인에 위치
 		{
-			Pos.x = Gate2Pos.x;
-
 			if (MoveProgress > 100.f)
 			{
-				ThisEnemyIsDead = true;
-				Pos.y = Gate2Pos.y;
+				Pos = LineEndPos;
 				Pos.z = OBJECT->Transform()->GetRelativePos().z + 100;
+				
+				ThisEnemyIsDead = true;
 			}
 			else
 			{
-				Pos.y = Line2Pos.y - YLineLen * ((MoveProgress - 69.f) / 31.f);
+				Pos = Line3StartPos;
+				Pos.y -= YLineLen * ((MoveProgress - 69.f) / 31.f);
 			}
 		}
 		else // 중앙 라인에 위치
 		{
-			Pos.x = Gate1Pos.x + XLineLen * ((MoveProgress - 31.f) / 38.f);
-			Pos.y = Line2Pos.y;
+			Pos = Line2StartPos;
+			Pos.x += XLineLen * ((MoveProgress - 31.f) / 38.f);
 		}
 
 		pObject->Transform()->SetRelativePos(Pos);
