@@ -1,5 +1,6 @@
 #pragma once
 #include <Engine\CScript.h>
+#include <Engine\CFontMgr.h>
 
 enum class ENEMY_TYPE
 {
@@ -46,7 +47,7 @@ private:
 
     bool                EndDeathParticle;
 
-    // 데미지 리스트
+    
 
 
 
@@ -66,6 +67,10 @@ public:
     float GetMoveProgress() const { return m_MoveProgress; }
     ENEMY_TYPE GetEnemyType() const { return m_EnemyType; }
     bool IsEndDeathParticle() const { return EndDeathParticle; }
+
+
+    void SetEnemyHealth(int _Health) { m_CurHealth = _Health; }
+    int GetEnemyHealth() const { return m_CurHealth; }
 
 protected:
     virtual void SetEnemyType(ENEMY_TYPE _Enemytype);

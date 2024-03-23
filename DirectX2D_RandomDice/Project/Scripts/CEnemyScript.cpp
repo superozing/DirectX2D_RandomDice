@@ -87,6 +87,9 @@ void CEnemyScript::begin()
 
 	// 파티클 오브젝트 추가
 	OBJECT->AddChild(m_pParticleObject);
+
+
+	SetEnemyHealth(100);
 }
 
 void CEnemyScript::PlayDeathParticle()
