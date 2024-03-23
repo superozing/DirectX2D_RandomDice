@@ -14,6 +14,7 @@
 
 CFieldScript::CFieldScript()
 	:CScript(FIELDSCRIPT)
+	, AutoSpawnEnemy(true)
 {
 	
 }
@@ -26,6 +27,8 @@ CFieldScript::~CFieldScript()
 
 void CFieldScript::begin()
 {
+
+
 	// 예외 처리
 	
 	assert(OBJECT);
@@ -312,6 +315,17 @@ void CFieldScript::begin()
 	m_fInfo.fFontSize = 15.f;
 	m_fInfo.FontType = FONT_TYPE::MAPLE;
 	m_fInfo.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+
+
+	//==================
+	// Debug
+	//==================
+	AddScriptParam(SCRIPT_PARAM::INT, "Enemy Auto Spawn", &AutoSpawnEnemy);
+	AddScriptParam(SCRIPT_PARAM::INT, "DEFAULT Enemy Spawn Count", &m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnemySpawnCount);
+	AddScriptParam(SCRIPT_PARAM::INT, "BIG Enemy Spawn Count", &m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnemySpawnCount);
+	AddScriptParam(SCRIPT_PARAM::INT, "SPEED Enemy Spawn Count", &m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::SPEED].EnemySpawnCount);
+
+
 }
 
 void CFieldScript::tick()
@@ -333,22 +347,25 @@ void CFieldScript::tick()
 			m_SpawnEnemyCheck[i].CoolDown = 0.f;
 	}
 
-	if (m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::DEFAULT] < 0.f)
+	// AutoSpawnEnemy
+	if (AutoSpawnEnemy)
 	{
-		m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::DEFAULT] = 2.f;
-		++m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnemySpawnCount;
+		if (m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::DEFAULT] < 0.f)
+		{
+			m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::DEFAULT] = 2.f;
+			++m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnemySpawnCount;
+		}
+		if (m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::SPEED] < 0.f)
+		{
+			m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::SPEED] = 7.f;
+			++m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::SPEED].EnemySpawnCount;
+		}
+		if (m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::BIG] < 0.f)
+		{
+			m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::BIG] = 10.f;
+			++m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnemySpawnCount;
+		}
 	}
-	if (m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::SPEED] < 0.f)
-	{
-		m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::SPEED] = 7.f;
-		++m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::SPEED].EnemySpawnCount;
-	}
-	if (m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::BIG] < 0.f)
-	{
-		m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::BIG] = 10.f;
-		++m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnemySpawnCount;
-	}
-
 
 
 	Vec3 Line1StartPos(m_EnemyGate1->Transform()->GetWorldPos().x, m_EnemyGate1->Transform()->GetWorldPos().y, 600);
