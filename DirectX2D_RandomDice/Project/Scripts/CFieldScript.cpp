@@ -4,6 +4,7 @@
 #include <Engine/CGameObject.h>
 #include <Engine/CLevelMgr.h>
 #include <Engine/CLevel.h>
+#include <Engine/CFontMgr.h>
 
 #include "CDiceScript.h"
 #include "CEnemyGateScript.h"
@@ -495,7 +496,17 @@ void CFieldScript::tick()
 		{
 			if (ThisEnemyIsDead)
 				pEScript->PlayDeathParticle();
+			else
+			{
+				wstring wstrHealth = to_wstring(pEScript->GetEnemyHealth());
+				FONTINFO fInfo = { 
+					wstrHealth
+					, Pos.x + 272 - ((wstrHealth.length() - 1) * 8.f), -Pos.y + 475
+					, 15.f, FONT_RGBA(255, 255, 255, 255) 
+				};
 
+				CFontMgr::GetInst()->AddFontAfterUIRender(fInfo);
+			}
 			++it;
 		}
 		// 만약 사망 파티클 출력이 끝났을 경우
