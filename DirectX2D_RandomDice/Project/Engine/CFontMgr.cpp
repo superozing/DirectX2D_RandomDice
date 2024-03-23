@@ -1,11 +1,12 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include "CFontMgr.h"
 
 #include "CDevice.h"
 
+#include <vector>
+
 CFontMgr::CFontMgr()
 	: m_pFW1Factory(nullptr)
-	, m_pFontWrapper(nullptr)
 {
 }
 
@@ -14,48 +15,47 @@ CFontMgr::~CFontMgr()
 	if (nullptr != m_pFW1Factory)
 		m_pFW1Factory->Release();
 
-	if (nullptr != m_pFontWrapper)
-		m_pFontWrapper->Release();
+	// 모든 폰트 레퍼 해제
+	for (auto &it : m_pFontWrapper)
+		if (nullptr != it)
+			it->Release();
 }
 
 void CFontMgr::init()
 {
-	if (FAILED(FW1CreateFactory(FW1_VERSION, &m_pFW1Factory)))
-	{
-		assert(NULL);
-	}
+	wstring wstrPath = CPathMgr::GetContentPath();
 
-	if (FAILED(m_pFW1Factory->CreateFontWrapper(DEVICE, L"Arial", &m_pFontWrapper)))
-	{
+	// 폰트 래퍼 팩토리 생성
+	if (FAILED(FW1CreateFactory(FW1_VERSION, &m_pFW1Factory)))
 		assert(NULL);
-	}
+
+	// 폰트 래퍼 생성
+	if (FAILED(m_pFW1Factory->CreateFontWrapper(DEVICE, L"Arial", &m_pFontWrapper[(UINT)FONT_TYPE::ARIAL])))
+		assert(NULL);
+
+	if (FAILED(m_pFW1Factory->CreateFontWrapper(DEVICE, L"Maplestory", &m_pFontWrapper[(UINT)FONT_TYPE::MAPLE])))
+		assert(NULL);
+
 }
 
-void CFontMgr::DrawFont(const wchar_t* _pStr, float _fPosX, float _fPosY, float _fFontSize, UINT _Color)
+void CFontMgr::DrawFont(const wchar_t* _pStr, float _fPosX, float _fPosY, float _fFontSize
+	, UINT _Color, FONT_TYPE _FontType, FW1_TEXT_FLAG _TextFlag)
 {
-	m_pFontWrapper->DrawString(
+	m_pFontWrapper[(UINT)_FontType]->DrawString(
 		CONTEXT,
-		_pStr, // String
-		_fFontSize,// Font size
-		_fPosX,// X position
-		_fPosY,// Y position
-		_Color,// Text color, 0xAaBbGgRr
-		FW1_RESTORESTATE      // Flags (for example FW1_RESTORESTATE to keep context states unchanged)
+		_pStr,			// String
+		_fFontSize,		// Font size
+		_fPosX,			// X position
+		_fPosY,			// Y position
+		_Color,			// Text color, 0xAaBbGgRr
+		_TextFlag       // Flags (for example FW1_RESTORESTATE to keep context states unchanged)
 	);
 }
 
-void CFontMgr::render_BeforeUI()
+void CFontMgr::render()
 {
-	for (auto& it : m_VecPrintFontBeforeUIRender)
-		DrawFont(it._pStr.c_str(), it._fPosX, it._fPosY, it._fFontSize, it._Color);
+	for (auto& it : m_VecRenderFont)
+		DrawFont(it.WStr.c_str(), it.fPosX, it.fPosY, it.fFontSize, it.Color, it.FontType, it.TextFlag);
 
-	m_VecPrintFontBeforeUIRender.clear();
-}
-
-void CFontMgr::render_AfterUI()
-{
-	for (auto& it : m_VecPrintFontAfterUIRender)
-		DrawFont(it._pStr.c_str(), it._fPosX, it._fPosY, it._fFontSize, it._Color);
-
-	m_VecPrintFontAfterUIRender.clear();
+	m_VecRenderFont.clear();
 }

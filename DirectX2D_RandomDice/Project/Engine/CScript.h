@@ -24,7 +24,7 @@ private:
 
 
 public:
-    UINT GetScriptType() { return m_iScriptType; }
+    UINT GetScriptType() const { return m_iScriptType; }
     const vector<tScriptParam>& GetScriptParam() { return m_ScriptParam; }
 
 

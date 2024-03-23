@@ -5,6 +5,7 @@
 #include <Engine/CLevelMgr.h>
 #include <Engine/CLevel.h>
 #include <Engine/CFontMgr.h>
+#include <Engine/CDevice.h>
 
 #include "CDiceScript.h"
 #include "CEnemyGateScript.h"
@@ -302,6 +303,15 @@ void CFieldScript::begin()
 	assert(m_EnemyPrefab[(UINT)ENEMY_TYPE::SPEED].Get());
 	assert(m_EnemyPrefab[(UINT)ENEMY_TYPE::BIG].Get());
 
+
+
+	//==================
+	// FONTINFO 세팅 
+	//==================
+	m_fInfo.Color = FONT_RGBA(255, 255, 255, 255);
+	m_fInfo.fFontSize = 15.f;
+	m_fInfo.FontType = FONT_TYPE::MAPLE;
+	m_fInfo.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
 }
 
 void CFieldScript::tick()
@@ -430,6 +440,7 @@ void CFieldScript::tick()
 	
 	///////////////////
 
+	Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
 
 	for (auto it = m_EnemyList.begin(); it != m_EnemyList.end(); )
 	{
@@ -498,15 +509,18 @@ void CFieldScript::tick()
 				pEScript->PlayDeathParticle();
 			else
 			{
-				wstring wstrHealth = to_wstring(pEScript->GetEnemyHealth());
-				FONTINFO fInfo = { 
-					wstrHealth
-					, Pos.x + 272 - ((wstrHealth.length() - 1) * 8.f), -Pos.y + 475
-					, 15.f, FONT_RGBA(255, 255, 255, 255) 
-				};
+				// 체력 폰트의 위치 설정
+				m_fInfo.fPosX = Pos.x + (vResol.x / 2);
+				m_fInfo.fPosY = -Pos.y + (vResol.y / 2) - 5;
 
-				CFontMgr::GetInst()->AddFontAfterUIRender(fInfo);
+				// 체력 폰트의 문자열 설정
+				m_fInfo.WStr = to_wstring(pEScript->GetEnemyHealth());
+				
+				// 폰트 매니저 출력에 추가
+				CFontMgr::GetInst()->AddRenderFont(m_fInfo);
 			}
+
+
 			++it;
 		}
 		// 만약 사망 파티클 출력이 끝났을 경우

@@ -51,7 +51,7 @@ void CLevelMgr::tick()
 
 	// Render
 	CRenderMgr::GetInst()->tick();
-	CFontMgr::GetInst()->render_AfterUI();
+	CFontMgr::GetInst()->render();
 }
 
 void CLevelMgr::ChangeLevel(CLevel* _NextLevel, LEVEL_STATE _NextLevelStartState)

@@ -39,6 +39,10 @@ private:
 
     float                   m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::END];
 
+
+    FONTINFO                m_fInfo;
+
+
 private: // EnemyPos 계산 용도의 GameObject*
     CGameObject* m_EnemyGate1;
     CGameObject* m_Line2;
