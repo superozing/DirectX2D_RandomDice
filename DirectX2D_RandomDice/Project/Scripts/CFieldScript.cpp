@@ -555,5 +555,15 @@ void CFieldScript::tick()
 
 }
 
+void CFieldScript::SummonDice()
+{
+	int i = 0;
+	i = 2;
+}
+
+void CFieldScript::SpawnDice(UINT _LOW, UINT _COL)
+{
+}
+
 #undef OBJECT
 

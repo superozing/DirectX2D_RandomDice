@@ -61,6 +61,19 @@ public:
     virtual void tick() override;
 
     ENEMY_PAIR GetTargetEnemy(ATTACK_PRIORITY attack_priority) const { return m_AttackPriority[(UINT)attack_priority]; }
+
+
+
+public:
+
+    // 주사위 소환 함수
+    void SummonDice();
+    void SpawnDice(UINT _LOW, UINT _COL);
+
+
+
+
+
 public:
     virtual void SaveToFile(FILE* _File){}
     virtual void LoadFromFile(FILE* _File){}
