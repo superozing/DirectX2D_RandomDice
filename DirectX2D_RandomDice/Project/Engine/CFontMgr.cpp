@@ -43,3 +43,19 @@ void CFontMgr::DrawFont(const wchar_t* _pStr, float _fPosX, float _fPosY, float 
 		FW1_RESTORESTATE      // Flags (for example FW1_RESTORESTATE to keep context states unchanged)
 	);
 }
+
+void CFontMgr::render_BeforeUI()
+{
+	for (auto& it : m_VecPrintFontBeforeUIRender)
+		DrawFont(it._pStr.c_str(), it._fPosX, it._fPosY, it._fFontSize, it._Color);
+
+	m_VecPrintFontBeforeUIRender.clear();
+}
+
+void CFontMgr::render_AfterUI()
+{
+	for (auto& it : m_VecPrintFontAfterUIRender)
+		DrawFont(it._pStr.c_str(), it._fPosX, it._fPosY, it._fFontSize, it._Color);
+
+	m_VecPrintFontAfterUIRender.clear();
+}
