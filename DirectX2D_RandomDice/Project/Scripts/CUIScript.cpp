@@ -44,15 +44,10 @@ void CUIScript::tick()
 	Vec2 vLT = Vec2(vWorldPos.x - vWorldScale.x / 2, vWorldPos.y - vWorldScale.y / 2);
 	Vec2 vRB = Vec2(vWorldPos.x + vWorldScale.x / 2, vWorldPos.y + vWorldScale.y / 2);
 
-	if (vLT.x < vWMousePos.x && vWMousePos.x < vRB.x
-		&& vLT.y < vWMousePos.y && vWMousePos.y < vRB.y)
-	{
+	if (vLT.x < vWMousePos.x && vWMousePos.x < vRB.x && vLT.y < vWMousePos.y && vWMousePos.y < vRB.y)
 		m_bMouseOn = true;
-	}
 	else
-	{
 		m_bMouseOn = false;
-	}
 
 	bool bLBtnTap = KEY_TAP(LBTN);
 	bool bLbtnReleased = KEY_RELEASED(LBTN);
@@ -61,32 +56,26 @@ void CUIScript::tick()
 	{
 		if (m_bMouseOn_Prev != m_bMouseOn)
 			OnHovered();
-
+		if (bLBtnTap)
+			LBtnClicked();
 		if (bLbtnReleased)
-		{
 			LBtnUp();
-
-			if (m_bMouseLBtnDown)
-			{
-				LBtnClicked();
-			}
-		}
-
-		if (bLbtnReleased)
-			m_bMouseLBtnDown = false;
 	}
 	else
 	{
 		if (m_bMouseOn_Prev != m_bMouseOn)
 			OnUnHovered();
+		if (bLbtnReleased)
+			LBtnUp();
 	}
 
-	render();
+	SetCurTexParam();
 }
 
-void CUIScript::render()
+void CUIScript::SetCurTexParam()
 {
-	GetOwner()->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_CurImg);
+	if (m_AllowSetRenderTexture)
+		GetOwner()->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_CurImg);
 }
 
 void CUIScript::OnHovered()
