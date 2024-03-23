@@ -54,6 +54,8 @@ private:
 	Vec2				m_vMousePos;
 	Vec2				m_vMousePrevPos;
 
+	Vec2				m_vMouseWorldPos;
+
 	Vec2				m_vMouseDrag;
 
 #ifndef _RELEASE_GAME
@@ -65,8 +67,10 @@ public:
 
 public:
 	KEY_STATE GetKeyState(KEY _Key) { return m_vecKeyData[_Key].eState; }
-	Vec2 GetMousePos() { return m_vMousePos; }
-	Vec2 GetMouseDrag() { return m_vMouseDrag; }
+	Vec2 GetMousePos() const { return m_vMousePos; }
+	Vec2 GetMouseDrag() const { return m_vMouseDrag; }
+
+	Vec2 GetMouseWorldPos() const { return m_vMouseWorldPos; }
 
 public:
 	void init();

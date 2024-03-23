@@ -3,6 +3,7 @@
 #include "CTimeMgr.h"
 #include "CFontMgr.h"
 #include "CEngine.h"
+#include "CDevice.h"
 
 int g_KeySync[KEY::KEY_END] =
 {
@@ -135,10 +136,15 @@ void CKeyMgr::tick()
 		// 마우스 이동 방향
 		m_vMouseDrag = m_vMousePos - m_vMousePrevPos;
 
+		Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
+		m_vMouseWorldPos.x = m_vMousePos.x - vResol.x / 2.f;
+		m_vMouseWorldPos.y = -m_vMousePos.y + vResol.y / 2.f;
+
+
 #ifndef _RELEASE_GAME
 		if (KEY_TAP(KEY::LBTN))
 			m_mouseClick.push_back({ 0.f, 3.f
-				, wstring(L"clicked: (") + std::to_wstring((int)m_vMousePos.x - 270) + L", " + std::to_wstring(((int)m_vMousePos.y - 480) * -1) + L")" });
+				, wstring(L"clicked: (") + std::to_wstring((int)m_vMouseWorldPos.x) + L", " + std::to_wstring((int)m_vMouseWorldPos.y ) + L")" });
 #endif
 
 	}
