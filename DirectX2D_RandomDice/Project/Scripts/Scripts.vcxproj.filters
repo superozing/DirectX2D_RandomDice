@@ -67,6 +67,7 @@
     <ClInclude Include="CGameMemoryPool.h">
       <Filter>Memory Pool</Filter>
     </ClInclude>
+    <ClInclude Include="CSummonDiceBtnScript.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -135,6 +136,7 @@
     <ClCompile Include="CGameMemoryPool.cpp">
       <Filter>Memory Pool</Filter>
     </ClCompile>
+    <ClCompile Include="CSummonDiceBtnScript.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -199,6 +201,9 @@
     </Filter>
     <Filter Include="Memory Pool">
       <UniqueIdentifier>{9704712e-15b5-46bc-a464-0bcc8b7c19d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\UI\SummonDiceBtn">
+      <UniqueIdentifier>{7a8676b5-c90e-47c6-a211-859bb982558f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -15,4 +15,5 @@ CMonsterScript
 CPlayerScript
 CRotateScript
 CSpeedEnemyScript
+CSummonDiceBtnScript
 CUIScript

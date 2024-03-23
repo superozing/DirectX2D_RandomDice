@@ -18,6 +18,7 @@
 #include "CPlayerScript.h"
 #include "CRotateScript.h"
 #include "CSpeedEnemyScript.h"
+#include "CSummonDiceBtnScript.h"
 #include "CUIScript.h"
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
@@ -39,6 +40,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CRotateScript");
 	_vec.push_back(L"CSpeedEnemyScript");
+	_vec.push_back(L"CSummonDiceBtnScript");
 	_vec.push_back(L"CUIScript");
 }
 
@@ -78,6 +80,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CRotateScript;
 	if (L"CSpeedEnemyScript" == _strScriptName)
 		return new CSpeedEnemyScript;
+	if (L"CSummonDiceBtnScript" == _strScriptName)
+		return new CSummonDiceBtnScript;
 	if (L"CUIScript" == _strScriptName)
 		return new CUIScript;
 	return nullptr;
@@ -137,6 +141,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::SPEEDENEMYSCRIPT:
 		return new CSpeedEnemyScript;
+		break;
+	case (UINT)SCRIPT_TYPE::SUMMONDICEBTNSCRIPT:
+		return new CSummonDiceBtnScript;
 		break;
 	case (UINT)SCRIPT_TYPE::UISCRIPT:
 		return new CUIScript;
@@ -215,6 +222,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::SPEEDENEMYSCRIPT:
 		return L"CSpeedEnemyScript";
+		break;
+
+	case SCRIPT_TYPE::SUMMONDICEBTNSCRIPT:
+		return L"CSummonDiceBtnScript";
 		break;
 
 	case SCRIPT_TYPE::UISCRIPT:
