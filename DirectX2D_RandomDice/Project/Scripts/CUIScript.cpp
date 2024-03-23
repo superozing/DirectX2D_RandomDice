@@ -36,11 +36,7 @@ void CUIScript::tick()
 {
 	m_bMouseOn_Prev = m_bMouseOn;
 
-	Vec2 vMousePos = CKeyMgr::GetInst()->GetMousePos();
-	Vec2 vResolution = CDevice::GetInst()->GetRenderResolution();
-
-	vMousePos.x -= vResolution.x / 2.f;
-	vMousePos.y = -(vMousePos.y - vResolution.y / 2.f);
+	Vec2 vWMousePos = CKeyMgr::GetInst()->GetMouseWorldPos();
 
 	Vec3 vWorldPos = GetOwner()->Transform()->GetWorldPos();
 	Vec3 vWorldScale = GetOwner()->Transform()->GetWorldScale();
@@ -48,8 +44,8 @@ void CUIScript::tick()
 	Vec2 vLT = Vec2(vWorldPos.x - vWorldScale.x / 2, vWorldPos.y - vWorldScale.y / 2);
 	Vec2 vRB = Vec2(vWorldPos.x + vWorldScale.x / 2, vWorldPos.y + vWorldScale.y / 2);
 
-	if (vLT.x < vMousePos.x && vMousePos.x < vRB.x
-		&& vLT.y < vMousePos.y && vMousePos.y < vRB.y)
+	if (vLT.x < vWMousePos.x && vWMousePos.x < vRB.x
+		&& vLT.y < vWMousePos.y && vWMousePos.y < vRB.y)
 	{
 		m_bMouseOn = true;
 	}
@@ -95,33 +91,40 @@ void CUIScript::render()
 
 void CUIScript::OnHovered()
 {
-	m_CurImg = m_HoverImg;
+	if (m_AllowSetRenderTexture)
+		m_CurImg = m_HoverImg;
 }
 
 void CUIScript::OnUnHovered()
 {
-	m_CurImg = m_NormalImg;
+	if (m_AllowSetRenderTexture)
+		m_CurImg = m_NormalImg;
 }
 
 void CUIScript::LBtnDown()
 {
-	m_CurImg = m_NormalImg;
+	if (m_AllowSetRenderTexture)
+		m_CurImg = m_NormalImg;
 }
 
 void CUIScript::LBtnUp()
 {
-	m_CurImg = m_NormalImg;
+	if (m_AllowSetRenderTexture)
+		m_CurImg = m_NormalImg;
 }
 
 void CUIScript::LBtnReleased()
 {
-	m_CurImg = m_NormalImg;
+	if (m_AllowSetRenderTexture)
+		m_CurImg = m_NormalImg;
+
 	m_bMouseLBtnDown = false;
 }
 
 void CUIScript::LBtnClicked()
 {
-	m_CurImg = m_NormalImg;
+	if (m_AllowSetRenderTexture)
+		m_CurImg = m_NormalImg;
 
 	// CallBack
 	if (m_CallBackFunc != nullptr) 

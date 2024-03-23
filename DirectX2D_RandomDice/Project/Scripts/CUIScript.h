@@ -9,6 +9,9 @@ class CUIScript :
     public CScript
 {
 private:
+
+    bool            m_AllowSetRenderTexture;
+
     Ptr<CTexture>   m_NormalImg;
     Ptr<CTexture>   m_HoverImg;
     Ptr<CTexture>   m_CurImg;
@@ -48,7 +51,8 @@ public:
     void LBtnReleased();
     void LBtnClicked();
 
-
+    void AllowSetRenderTexture()    { m_AllowSetRenderTexture = true; }
+    void DisallowSetRenderTexture() { m_AllowSetRenderTexture = false; }
 
 public:
     CLONE(CUIScript);
