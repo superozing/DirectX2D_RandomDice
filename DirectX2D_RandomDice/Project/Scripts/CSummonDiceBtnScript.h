@@ -12,15 +12,15 @@ private:
 	class CUIScript*	m_UI;
 
 	// 소환 시 소모 SP 출력
-	FONTINFO			m_FontInfo;
-
+	FONTINFO                m_fInfo1;
+	FONTINFO                m_fInfo2;
 
 public:
 	virtual void begin() override;
 	virtual void tick() override;
 
 
-
+	void ClickButton();
 
 
 public:

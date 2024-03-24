@@ -6,6 +6,7 @@
 
 #include "CFieldScript.h"
 #include "CUIScript.h"
+#include <Engine/CDevice.h>
 
 CSummonDiceBtnScript::CSummonDiceBtnScript()
 	: CScript(SUMMONDICEBTNSCRIPT)
@@ -29,7 +30,7 @@ void CSummonDiceBtnScript::begin()
 
 	// 필드 오브젝트 레벨로부터 가져오기 - 확실하지는 않지만 레이어가 31번이니까 호출이 제일 늦지 않을까요?
 	CGameObject* pField = CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"FieldObject");
-	
+
 	assert(pField);
 
 	// 필드오브젝트에게 스크립트 받아오기
@@ -79,10 +80,55 @@ void CSummonDiceBtnScript::begin()
 
 	m_UI = new CUIScript;
 	OBJECT->AddComponent(m_UI);
-	m_UI->SetDeletage((CEntity*)m_pFieldScript, (DelegateFunc)&CFieldScript::SummonDice);
+	m_UI->SetDeletage((CEntity*)this, (DelegateFunc)&CSummonDiceBtnScript::ClickButton);
+
+
+
+	//==================
+	// FONTINFO 세팅 
+	//==================
+	m_fInfo1.Color = FONT_RGBA(0, 0, 0, 255);
+	m_fInfo1.fFontSize = 12.f;
+	m_fInfo1.FontType = FONT_TYPE::ALBA_SUPER;
+	m_fInfo1.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+
+	m_fInfo2.Color = FONT_RGBA(255, 255, 255, 255);
+	m_fInfo2.fFontSize = 12.f;
+	m_fInfo2.FontType = FONT_TYPE::ALBA_MATTER;
+	m_fInfo2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+
+	// 체력 폰트의 문자열 설정
+	m_fInfo1.WStr = L"10";
+	m_fInfo2.WStr = L"10";
 
 }
+
+void CSummonDiceBtnScript::ClickButton()
+{
+	m_pFieldScript->SummonDice();
+	
+	m_fInfo1.WStr = to_wstring(m_pFieldScript->GetSummonSP());
+	m_fInfo2.WStr = to_wstring(m_pFieldScript->GetSummonSP());
+
+
+}
+
+
+
 
 void CSummonDiceBtnScript::tick()
 {
+	Vec3 vPos = OBJECT->Transform()->GetWorldPos();
+	Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
+
+	// 체력 폰트의 위치 설정
+	m_fInfo1.fPosX = vPos.x + (vResol.x / 2);
+	m_fInfo1.fPosY = -vPos.y + (vResol.y / 2) + 11;
+	m_fInfo2.fPosX = vPos.x + (vResol.x / 2);
+	m_fInfo2.fPosY = -vPos.y + (vResol.y / 2) + 14;
+
+	// 폰트 매니저 출력에 추가
+	CFontMgr::GetInst()->AddRenderFont(m_fInfo2);
+	CFontMgr::GetInst()->AddRenderFont(m_fInfo1);
 }
+
