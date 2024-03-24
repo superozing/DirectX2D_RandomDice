@@ -311,11 +311,15 @@ void CFieldScript::begin()
 	//==================
 	// FONTINFO 세팅 
 	//==================
-	m_fInfo.Color = FONT_RGBA(255, 255, 255, 255);
-	m_fInfo.fFontSize = 15.f;
-	m_fInfo.FontType = FONT_TYPE::MAPLE;
-	m_fInfo.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_fInfo1.Color = FONT_RGBA(0, 0, 0, 255);
+	m_fInfo1.fFontSize = 15.f;
+	m_fInfo1.FontType = FONT_TYPE::ALBA_SUPER;
+	m_fInfo1.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
 
+	m_fInfo2.Color = FONT_RGBA(255, 255, 255, 255);
+	m_fInfo2.fFontSize = 15.2f;
+	m_fInfo2.FontType = FONT_TYPE::ALBA_MATTER;
+	m_fInfo2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
 
 	//==================
 	// Debug
@@ -530,14 +534,18 @@ void CFieldScript::tick()
 			else
 			{
 				// 체력 폰트의 위치 설정
-				m_fInfo.fPosX = Pos.x + (vResol.x / 2);
-				m_fInfo.fPosY = -Pos.y + (vResol.y / 2) + 15;
+				m_fInfo1.fPosX = Pos.x + (vResol.x / 2);
+				m_fInfo1.fPosY = -Pos.y + (vResol.y / 2) + 7;
+				m_fInfo2.fPosX = Pos.x + (vResol.x / 2);
+				m_fInfo2.fPosY = -Pos.y + (vResol.y / 2) + 10;
 
 				// 체력 폰트의 문자열 설정
-				m_fInfo.WStr = to_wstring(pEScript->GetEnemyHealth());
+				m_fInfo1.WStr = to_wstring(pEScript->GetEnemyHealth());
+				m_fInfo2.WStr = to_wstring(pEScript->GetEnemyHealth());
 				
 				// 폰트 매니저 출력에 추가
-				CFontMgr::GetInst()->AddRenderFont(m_fInfo);
+				CFontMgr::GetInst()->AddRenderFont(m_fInfo2);
+				CFontMgr::GetInst()->AddRenderFont(m_fInfo1);
 			}
 
 

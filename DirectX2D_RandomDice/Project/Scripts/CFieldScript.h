@@ -39,7 +39,8 @@ private:
 
     float                   m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::END];
 
-    FONTINFO                m_fInfo;
+    FONTINFO                m_fInfo1;
+    FONTINFO                m_fInfo2;
 
     // Debug
     bool                    AutoSpawnEnemy;
