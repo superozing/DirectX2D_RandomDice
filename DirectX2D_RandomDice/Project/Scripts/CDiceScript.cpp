@@ -27,7 +27,7 @@ void CDiceScript::SetDiceType(DICE _Dice)
 
 	if (m_Dice == DICE::NONE)
 	{
-		OBJECT->Transform()->SetRelativeScale(Vec3(1.f, 1.f, 1.f));
+		OBJECT->Transform()->SetRelativeScale(Vec3(0.f, 0.f, 1.f));
 		return;
 	}
 

@@ -26,6 +26,9 @@ class CFieldScript :
     public CScript
 {
 private:
+
+    UINT                    m_CurRound;
+
     class CDiceScript*      m_DiceField[5][3]; // CDiceScript를 가진 CGameObject의 2차원 배열
 
     list<ENEMY_PAIR>        m_EnemyList;
@@ -39,6 +42,7 @@ private:
 
     float                   m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::END];
 
+
     FONTINFO                m_fInfo1;
     FONTINFO                m_fInfo2;
 
@@ -47,7 +51,13 @@ private:
     UINT                    m_SummonSP;
 
 
+    // 적 체력 관련
+    int                    m_MaxEnemyHP;
+    float                   m_EnemyHPUpdateTimer;
 
+    // 라운드에 따라 달라지는 값 들
+    float                   m_EnemySpawnRate[5] = { 0.7, 1, 1, 1.2, 1.5 };
+    int                    m_EnemyHPArr[5] = { 100, 1000, 2000, 5000, 9000 };
 
     // Debug
     bool                    AutoSpawnEnemy;

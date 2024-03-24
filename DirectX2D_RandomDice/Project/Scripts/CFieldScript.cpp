@@ -16,6 +16,7 @@ CFieldScript::CFieldScript()
 	:CScript(FIELDSCRIPT)
 	, AutoSpawnEnemy(true)
 	, m_SummonSP(10)
+	, m_MaxEnemyHP(0)
 {
 	
 }
@@ -323,9 +324,18 @@ void CFieldScript::begin()
 	m_fInfo2.FontType = FONT_TYPE::ALBA_MATTER;
 	m_fInfo2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
 
+
+	// 초기 스폰 타이밍 조절
+	m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::DEFAULT] = 4.f;
+	m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::SPEED] = 7.f;
+	m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::BIG] = 13.f;
+
+
+
 	//==================
 	// Debug
 	//==================
+	AddScriptParam(SCRIPT_PARAM::INT, "Cur Round", &m_CurRound);
 	AddScriptParam(SCRIPT_PARAM::INT, "Enemy Auto Spawn", &AutoSpawnEnemy);
 	AddScriptParam(SCRIPT_PARAM::INT, "DEFAULT Enemy Spawn Count", &m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnemySpawnCount);
 	AddScriptParam(SCRIPT_PARAM::INT, "BIG Enemy Spawn Count", &m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnemySpawnCount);
@@ -337,13 +347,10 @@ void CFieldScript::begin()
 void CFieldScript::tick()
 {
 
-	//==================
-	// Spawn Enemy Check
-	//==================
-	m_DiceField;
+	// AccSpawnCoolDown
 	for (UINT i = 0; i < (UINT)ENEMY_TYPE::END; ++i)
 	{
-		m_AccSpawnCoolDown[i] -= DT;
+		m_AccSpawnCoolDown[i] -= m_EnemySpawnRate[m_CurRound] * DT;
 
 		// m_SpawnEnemyCheck의 쿨다운 감소
 		m_SpawnEnemyCheck[i].CoolDown -= DT;
@@ -374,6 +381,24 @@ void CFieldScript::tick()
 	}
 
 
+	//======================
+	// Update MaxEnemyHealth
+	//======================
+
+	m_EnemyHPUpdateTimer += DT;
+
+	if (m_EnemyHPUpdateTimer > 5.f)
+	{
+		m_MaxEnemyHP += m_EnemyHPArr[m_CurRound];
+		m_EnemyHPUpdateTimer = 0.f;
+	}
+
+	/////
+
+	//==================
+	// Spawn Enemy Check
+	//==================
+
 	Vec3 Line1StartPos(m_EnemyGate1->Transform()->GetWorldPos().x, m_EnemyGate1->Transform()->GetWorldPos().y, 600);
 	Vec3 Line2StartPos(m_EnemyGate1->Transform()->GetWorldPos().x, m_Line2->Transform()->GetWorldPos().y, 600);
 	Vec3 Line3StartPos(m_EnemyGate2->Transform()->GetWorldPos().x, m_Line2->Transform()->GetWorldPos().y, 600);
@@ -398,6 +423,9 @@ void CFieldScript::tick()
 		// 시작 게이트 Pos
 		SpawnEnemy.pEnemyScript->begin();
 		SpawnEnemy.pObject->Transform()->SetRelativePos(Line1StartPos);
+
+		// 체력 설정
+		SpawnEnemy.pEnemyScript->SetEnemyHealth(m_MaxEnemyHP);
 
 		// 2. EnemyList에 삽입
 		m_EnemyList.push_back(SpawnEnemy);
@@ -424,6 +452,9 @@ void CFieldScript::tick()
 		SpawnEnemy.pObject->begin();
 		SpawnEnemy.pObject->Transform()->SetRelativePos(Line1StartPos);
 
+		// 체력 설정
+		SpawnEnemy.pEnemyScript->SetEnemyHealth(m_MaxEnemyHP);
+
 		// 2. EnemyList에 삽입
 		m_EnemyList.push_back(SpawnEnemy);
 
@@ -448,7 +479,10 @@ void CFieldScript::tick()
 		// 시작 게이트 Pos
 		SpawnEnemy.pObject->begin();
 		SpawnEnemy.pObject->Transform()->SetRelativePos(Vec3(Line1StartPos.x, Line1StartPos.y, 599.f));
-
+		
+		// 체력 설정
+		SpawnEnemy.pEnemyScript->SetEnemyHealth(m_MaxEnemyHP * 5);
+		
 		// 2. EnemyList에 삽입
 		m_EnemyList.push_back(SpawnEnemy);
 
@@ -535,6 +569,11 @@ void CFieldScript::tick()
 				pEScript->PlayDeathParticle();
 			else
 			{
+
+				//=========
+				// HP Text
+				//=========
+				
 				// 체력 폰트의 위치 설정
 				m_fInfo1.fPosX = Pos.x + (vResol.x / 2);
 				m_fInfo1.fPosY = -Pos.y + (vResol.y / 2) + 7;
@@ -542,8 +581,26 @@ void CFieldScript::tick()
 				m_fInfo2.fPosY = -Pos.y + (vResol.y / 2) + 10;
 
 				// 체력 폰트의 문자열 설정
-				m_fInfo1.WStr = to_wstring(pEScript->GetEnemyHealth());
-				m_fInfo2.WStr = to_wstring(pEScript->GetEnemyHealth());
+				UINT enemyHP = pEScript->GetEnemyHealth();
+
+				// 단위 맟추기
+				if (enemyHP < 10000)
+				{
+					m_fInfo1.WStr = to_wstring(enemyHP);
+					m_fInfo2.WStr = to_wstring(enemyHP);
+				}
+				else if (enemyHP < 1000000) // enemyHP 가 10000보다 커질 경우 가독성을 위해 1000을 나누어 K로 표시
+				{
+					enemyHP /= 1000;
+					m_fInfo1.WStr = to_wstring(enemyHP) + L"K";
+					m_fInfo2.WStr = to_wstring(enemyHP) + L"K";
+				}
+				else // enemyHP 가 1000000보다 커질 경우 가독성을 위해 1000000을 나누어 M로 표시
+				{
+					enemyHP /= 1000000;
+					m_fInfo1.WStr = to_wstring(enemyHP) + L"M";
+					m_fInfo2.WStr = to_wstring(enemyHP) + L"M";
+				}
 				
 				// 폰트 매니저 출력에 추가
 				CFontMgr::GetInst()->AddRenderFont(m_fInfo2);
