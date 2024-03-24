@@ -83,6 +83,15 @@ float4 PS_AlphaBlend(VS_OUT _in) : SV_Target
     if (0.f == vColor.a)
         discard;
     
+    // 만약 float 0번을 사용한다면 음영처리 해주기.
+    if (g_float_0 != 0.f)
+    {
+        vColor.r *= g_float_0;
+        vColor.g *= g_float_0;
+        vColor.b *= g_float_0;
+        vColor.a *= g_float_0;
+    }
+    
     return vColor;
 }
 
