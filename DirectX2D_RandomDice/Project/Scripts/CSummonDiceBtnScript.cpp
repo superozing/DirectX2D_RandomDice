@@ -139,5 +139,11 @@ void CSummonDiceBtnScript::tick()
 	// 폰트 매니저 출력에 추가
 	CFontMgr::GetInst()->AddRenderFont(m_fInfo2);
 	CFontMgr::GetInst()->AddRenderFont(m_fInfo1);
+
+
+	if (m_pFieldScript->GetCurSP() < m_pFieldScript->GetSummonSP() || m_pFieldScript->GetDiceCount() == 15)
+		OBJECT->GetRenderComponent()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.8f);
+	else
+		OBJECT->GetRenderComponent()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.f);
 }
 

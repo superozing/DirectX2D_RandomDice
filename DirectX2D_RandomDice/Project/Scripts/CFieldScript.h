@@ -79,7 +79,7 @@ private: // EnemyPos 계산 용도의 GameObject*
     CGameObject* m_Line2;
     CGameObject* m_EnemyGate2;
 
-    CDiceScript* GetRandomDice() 
+    class CDiceScript* GetRandomDice() 
     {
         // 0 ~ 4, 0 ~ 2
         return m_DiceField[m_XDis(m_gen)][m_YDis(m_gen)];
@@ -95,6 +95,8 @@ public:
     UINT GetSummonSP() const { return m_SummonSP; }
 
     UINT GetCurWave() const { return m_CurWave; }
+
+    UINT GetDiceCount() const { return m_CurDiceCount; }
 
 
     void AddCurSP(int _addSP) { m_SP += _addSP; }

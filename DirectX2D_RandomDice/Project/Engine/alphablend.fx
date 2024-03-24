@@ -89,7 +89,6 @@ float4 PS_AlphaBlend(VS_OUT _in) : SV_Target
         vColor.r *= g_float_0;
         vColor.g *= g_float_0;
         vColor.b *= g_float_0;
-        vColor.a *= g_float_0;
     }
     
     return vColor;
