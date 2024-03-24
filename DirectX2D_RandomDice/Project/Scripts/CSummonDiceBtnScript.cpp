@@ -10,6 +10,7 @@
 
 CSummonDiceBtnScript::CSummonDiceBtnScript()
 	: CScript(SUMMONDICEBTNSCRIPT)
+	, m_fScaleSize(1.f)
 {
 }
 
@@ -47,8 +48,8 @@ void CSummonDiceBtnScript::begin()
 	Vec3 vFieldWorldPos = pField->Transform()->GetWorldPos();
 
 	OBJECT->Transform()->SetRelativePos(Vec3(vFieldWorldPos.x, vFieldWorldPos.y - 100, vFieldWorldPos.z - 100));
-	OBJECT->Transform()->SetRelativeScale(Vec3(92.f, 80.f, 1.f));
-
+	m_vScale = Vec3(92.f, 80.f, 1.f);
+	OBJECT->Transform()->SetRelativeScale(m_vScale);
 
 
 	//=====================
@@ -106,6 +107,8 @@ void CSummonDiceBtnScript::begin()
 void CSummonDiceBtnScript::ClickButton()
 {
 	m_pFieldScript->SummonDice();
+
+	m_fScaleSize = 0.9f;
 	
 	m_fInfo1.WStr = to_wstring(m_pFieldScript->GetSummonSP());
 	m_fInfo2.WStr = to_wstring(m_pFieldScript->GetSummonSP());
@@ -114,18 +117,24 @@ void CSummonDiceBtnScript::ClickButton()
 }
 
 
-
-
 void CSummonDiceBtnScript::tick()
 {
+	m_fScaleSize += 0.8f * DT;
+	
+	if (m_fScaleSize > 1.f)
+		m_fScaleSize = 1.f;
+
+	// 스케일 적용
+	OBJECT->Transform()->SetRelativeScale(m_vScale * m_fScaleSize);
+
 	Vec3 vPos = OBJECT->Transform()->GetWorldPos();
 	Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
 
 	// 체력 폰트의 위치 설정
 	m_fInfo1.fPosX = vPos.x + (vResol.x / 2);
-	m_fInfo1.fPosY = -vPos.y + (vResol.y / 2) + 11;
+	m_fInfo1.fPosY = -vPos.y + (vResol.y / 2) + 9;
 	m_fInfo2.fPosX = vPos.x + (vResol.x / 2);
-	m_fInfo2.fPosY = -vPos.y + (vResol.y / 2) + 14;
+	m_fInfo2.fPosY = -vPos.y + (vResol.y / 2) + 12;
 
 	// 폰트 매니저 출력에 추가
 	CFontMgr::GetInst()->AddRenderFont(m_fInfo2);

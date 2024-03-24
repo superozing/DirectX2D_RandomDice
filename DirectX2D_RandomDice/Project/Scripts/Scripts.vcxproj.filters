@@ -70,7 +70,9 @@
     <ClInclude Include="CSummonDiceBtnScript.h">
       <Filter>Scripts\SummonBtnUI</Filter>
     </ClInclude>
-    <ClInclude Include="CSPBarScript.h" />
+    <ClInclude Include="CSPBarScript.h">
+      <Filter>Scripts\SPBar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -142,7 +144,9 @@
     <ClCompile Include="CSummonDiceBtnScript.cpp">
       <Filter>Scripts\SummonBtnUI</Filter>
     </ClCompile>
-    <ClCompile Include="CSPBarScript.cpp" />
+    <ClCompile Include="CSPBarScript.cpp">
+      <Filter>Scripts\SPBar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
