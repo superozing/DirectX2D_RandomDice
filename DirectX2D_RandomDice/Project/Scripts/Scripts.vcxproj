@@ -180,6 +180,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CPlayerScript.h" />
     <ClInclude Include="CRotateScript.h" />
     <ClInclude Include="CScriptMgr.h" />
+    <ClInclude Include="CSPBarScript.h" />
     <ClInclude Include="CSpeedEnemyScript.h" />
     <ClInclude Include="CSummonDiceBtnScript.h" />
     <ClInclude Include="CUIScript.h" />
@@ -205,6 +206,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CPlayerScript.cpp" />
     <ClCompile Include="CRotateScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
+    <ClCompile Include="CSPBarScript.cpp" />
     <ClCompile Include="CSpeedEnemyScript.cpp" />
     <ClCompile Include="CSummonDiceBtnScript.cpp" />
     <ClCompile Include="CUIScript.cpp" />
