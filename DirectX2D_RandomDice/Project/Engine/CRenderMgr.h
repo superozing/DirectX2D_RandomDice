@@ -33,6 +33,7 @@ private:
     // render function pointer
     typedef void(CRenderMgr::*RENDER_FUNC)(void);
     RENDER_FUNC             m_RenderFunc;
+    bool                    m_isEditorMode;
 
 public:
     void RegisterCamera(CCamera* _Cam, int _Idx);
@@ -52,9 +53,15 @@ public:
     void ActiveEditorMode(bool _bActive)
     {
         if (_bActive)
+        {
             m_RenderFunc = &CRenderMgr::render_editor;
+            m_isEditorMode = true;
+        }
         else
+        {
             m_RenderFunc = &CRenderMgr::render_play;
+            m_isEditorMode = false;
+        }
     }
 
 
