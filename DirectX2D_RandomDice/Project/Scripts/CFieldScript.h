@@ -51,6 +51,8 @@ private:
 
 
 
+    int                     m_SP;
+
     UINT                    m_SummonSP;
 
 
@@ -91,6 +93,12 @@ public:
     ENEMY_PAIR GetTargetEnemy(ATTACK_PRIORITY attack_priority) const { return m_AttackPriority[(UINT)attack_priority]; }
 
     UINT GetSummonSP() const { return m_SummonSP; }
+
+
+
+    void AddCurSP(int _addSP) { m_SP += _addSP; }
+    int  GetCurSP() const { return m_SP; }
+    
 
 
 public:

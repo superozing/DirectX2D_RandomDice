@@ -17,6 +17,7 @@ CFieldScript::CFieldScript()
 	:CScript(FIELDSCRIPT)
 	, AutoSpawnEnemy(true)
 	, m_SummonSP(10)
+	, m_SP(200)
 	, m_MaxEnemyHP(0)
 	, m_gen(m_rd())
 	, m_XDis(0, 4)
@@ -629,9 +630,13 @@ void CFieldScript::tick()
 }
 
 void CFieldScript::SummonDice()
-{
-	if (m_CurDiceCount >= 15) // 추가적으로 나중에 SP가 없을 경우에도 return을 해주어야 한다.
+{ 
+	// 필드가 모두 차 있거나, 보유 SP가 소환 SP보다 적을 경우 return
+	if (m_CurDiceCount >= 15 || m_SP < m_SummonSP)
 		return;
+
+	// SP 소모하기
+	m_SP -= m_SummonSP;
 
 	// 소환 SP 증가
 	m_SummonSP += 10;
