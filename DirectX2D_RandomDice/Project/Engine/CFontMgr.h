@@ -19,6 +19,7 @@ enum class FONT_TYPE
     MAPLE,
     ALBA_SUPER,
     ALBA_MATTER,
+    EXO2,
     END
 };
 

@@ -42,6 +42,9 @@ void CFontMgr::init()
 	if (FAILED(m_pFW1Factory->CreateFontWrapper(DEVICE, L"Alba Matter", &m_pFontWrapper[(UINT)FONT_TYPE::ALBA_MATTER])))
 		assert(NULL);
 
+	if (FAILED(m_pFW1Factory->CreateFontWrapper(DEVICE, L"Exo 2", &m_pFontWrapper[(UINT)FONT_TYPE::EXO2])))
+		assert(NULL);
+
 }
 
 void CFontMgr::DrawFont(const wchar_t* _pStr, float _fPosX, float _fPosY, float _fFontSize
