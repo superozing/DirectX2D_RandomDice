@@ -1,6 +1,9 @@
 #include "pch.h"
 #include "CDiceScript.h"
 
+#include <Engine\CLevelMgr.h>
+#include <Engine\CLevel.h>
+
 // 정의
 vector<wstring> CDiceScript::DicePath;
 
@@ -35,6 +38,8 @@ void CDiceScript::SetDiceType(DICE _Dice)
 
 	m_IsGrowing = true;
 
+	m_SpawnParticle->SetActivate(true);
+
 	wstring wstrPath = DicePath[(UINT)m_Dice];
 
 	OBJECT->GetRenderComponent()->GetDynamicMaterial()
@@ -65,25 +70,79 @@ void CDiceScript::begin()
 	if (OBJECT == nullptr)
 		return;
 
-	if (OBJECT->Transform() != nullptr)
-	{
-		m_vSrcScale = Vec3(90.f, 90.f, 1.f);
-
-	}
+	m_vSrcScale = Vec3(90.f, 90.f, 1.f);
 
 	if (OBJECT->MeshRender() != nullptr)
-	{
 		OBJECT->GetRenderComponent()->GetDynamicMaterial();
 
 
-	}
+	// 주사위 생성 파티클 모듈
+	CGameObject* pObject = new CGameObject;
+	pObject->AddComponent(new CTransform);
+	pObject->Transform()->SetRelativePos(Vec3(0.f, 0.f, -500.f));
+
+	m_SpawnParticle = new CParticleSystem;
+	pObject->AddComponent(m_SpawnParticle);
+
+	tParticleModule tModule;
+
+	// 초기 모듈 세팅		
+	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::SPAWN] = 1;
+	
+	tModule.SpaceType = 1;
+	
+	tModule.vSpawnColor = Vec4(1.f, 1.f, 1.f, 0.6f);
+	tModule.vSpawnMinScale = Vec4(10.f, 10.f, 1.f, 1.f);
+	tModule.vSpawnMaxScale = Vec4(10.f, 10.f, 1.f, 1.f);
+	
+	tModule.MinLife = 0.7f;
+	tModule.MaxLife = 1.f;
+	tModule.MinMass = 1.f;
+	tModule.MaxMass = 1.f;
+	tModule.SpawnShape = 0; // 0 : Sphere, 1 : Box
+	tModule.Radius = 40.f;
+	tModule.SpawnRate = 100;
+	
+	// Add Velocity Module
+	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::ADD_VELOCITY] = 1;
+	tModule.AddVelocityType = 0; // 0 : From Center, 1: To Center, 2: Fix Direction
+	tModule.MinSpeed = 70;
+	tModule.MaxSpeed = 70;
+	
+	// Noise Force
+	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::NOISE_FORCE] = 1;
+	tModule.NoiseForceScale = 10.f;
+	tModule.NoiseForceTerm = 0.3f;
+	
+	// Render 
+	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::RENDER] = 1;
+	tModule.VelocityAlignment = 1; // 속도에 따른 방향 정렬
+	tModule.AlphaBasedLife = 0; // 0 : off, 1 : NomrlizedAge, 2: Age
+	tModule.AlphaMaxAge = 2.f;
+	
+	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::DRAG] = 1;
+	tModule.DragTime = 1.f;
+
+	wstring wPath = L"texture\\particle\\diceSummon.png";
+	pObject->SetName(L"ParticleObject");
+	m_SpawnParticle->SetParticleModule(tModule);
+	m_SpawnParticle->SetParticleTexture(CAssetMgr::GetInst()->Load<CTexture>(wPath, wPath));
+
+	//CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObject, 6);
+	OBJECT->AddChild(pObject);
 }
 
 void CDiceScript::tick()
 {
+
+	//if (OBJECT->GetChild().size() == 0)
+	//	OBJECT->AddChild(m_SpawnParticle->GetOwner());
+
 	if (m_IsGrowing)
 	{
 		m_fScaleSize += 5.f * DT;
+		if (m_fScaleSize > 0.5f)
+			m_SpawnParticle->SetActivate(false);
 
 		if (m_fScaleSize > 1.f)
 		{

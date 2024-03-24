@@ -87,6 +87,7 @@ void CFieldScript::begin()
 
 			// 프리팹 객체화
 			CGameObject* pDice = pDicePref->Instantiate();
+			OBJECT->AddChild(pDice);
 
 			// 행렬 위치에 따른 Pos 설정(z : 500)
 			Vec3 dicePos = Vec3(((int)i - 2) * 62, ((int)j - 2) * 62 + 120, -500);
@@ -107,7 +108,6 @@ void CFieldScript::begin()
 			DiceScript->SetDiceType(DICE::NONE);
 
 			// AddObject
-			OBJECT->AddChild(pDice);
 
 #pragma endregion
 

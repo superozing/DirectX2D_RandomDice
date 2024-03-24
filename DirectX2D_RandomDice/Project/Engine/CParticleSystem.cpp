@@ -13,7 +13,7 @@
 CParticleSystem::CParticleSystem()
 	: CRenderComponent(COMPONENT_TYPE::PARTICLESYSTEM)
 	, m_ParticleBuffer(nullptr)
-	, m_MaxParticleCount(1000)
+	, m_MaxParticleCount(5000)
 	, m_IsActivate(false)
 {
 	// 전용 메쉬와 전용 재질 사용

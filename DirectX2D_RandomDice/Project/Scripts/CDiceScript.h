@@ -61,30 +61,32 @@ private:
 	// 음...아니면 bool 값으로 주사위 자리 활성화 여부를 둘까...?
 
 
-	CFieldScript* m_OwnerField;
+	CFieldScript*       m_OwnerField;
 
 
-	DICE		m_Dice;			// 주사위 종류
-	DICE_INFO	m_Info;			// 주사위 종류에 따른 주사위 정보
+	DICE		        m_Dice;			// 주사위 종류
+	DICE_INFO	        m_Info;			// 주사위 종류에 따른 주사위 정보
 
-	UINT		m_DiceScale;	// 주사위의 눈금 수 (등급)
-	UINT		m_CurMarkerIdx; // 현재 어떤 눈금에게 attack() 을 호출할 지 인덱스 값
-	vector<int> m_VecMarker;	/*나중에 눈금 구조체가 들어가는 벡터*/
+	UINT		        m_DiceScale;	// 주사위의 눈금 수 (등급)
+	UINT		        m_CurMarkerIdx; // 현재 어떤 눈금에게 attack() 을 호출할 지 인덱스 값
+	vector<int>         m_VecMarker;	/*나중에 눈금 구조체가 들어가는 벡터*/
 
-	bool		m_Buff[2];		// 이 주사위가 받고 있는 버프
+	bool		        m_Buff[2];		// 이 주사위가 받고 있는 버프
 
 
-	float		m_finalDamage;		// 버프, 디버프를 포함한 데미지
-	float		m_finalAttackSpeed; // 버프, 디버프를 포함한 공격속도
+	float		        m_finalDamage;		// 버프, 디버프를 포함한 데미지
+	float		        m_finalAttackSpeed; // 버프, 디버프를 포함한 공격속도
 	
 
-	UINT		m_DiceRow;
-	UINT		m_DiceCol;
+	UINT		        m_DiceRow;
+	UINT		        m_DiceCol;
 
     // 생성 효과
-    Vec3        m_vSrcScale;
-    float       m_fScaleSize;
-    bool        m_IsGrowing;
+    Vec3                m_vSrcScale;
+    float               m_fScaleSize;
+    bool                m_IsGrowing;
+
+    CParticleSystem*    m_SpawnParticle;
 
 
 public:
