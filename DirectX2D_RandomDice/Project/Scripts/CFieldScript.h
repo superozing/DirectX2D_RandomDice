@@ -28,7 +28,7 @@ class CFieldScript :
 {
 private:
 
-    UINT                    m_CurRound;
+    UINT                    m_CurWave;
 
     class CDiceScript*      m_DiceField[5][3]; // CDiceScript를 가진 CGameObject의 2차원 배열
 
@@ -61,8 +61,8 @@ private:
     float                   m_EnemyHPUpdateTimer;
 
     // 라운드에 따라 달라지는 값 들
-    float                   m_EnemySpawnRate[5] = { 0.7, 1, 1, 1.2, 1.5 };
-    int                     m_EnemyHPArr[5] = { 100, 1000, 2000, 5000, 9000 };
+    float                   m_EnemySpawnRate[10] = { 0, 0.7, 1, 1, 1.2, 1.5, 1.7, 2, 2.2, 2.5 };
+    int                     m_EnemyHPArr[10] = { 0, 100, 1000, 2000, 5000, 9000, 25000, 50000, 100000, 200000 };
 
     // Debug
     bool                    AutoSpawnEnemy;
@@ -94,6 +94,7 @@ public:
 
     UINT GetSummonSP() const { return m_SummonSP; }
 
+    UINT GetCurWave() const { return m_CurWave; }
 
 
     void AddCurSP(int _addSP) { m_SP += _addSP; }

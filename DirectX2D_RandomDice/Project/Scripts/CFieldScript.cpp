@@ -17,11 +17,12 @@ CFieldScript::CFieldScript()
 	:CScript(FIELDSCRIPT)
 	, AutoSpawnEnemy(true)
 	, m_SummonSP(10)
-	, m_SP(200)
+	, m_SP(100)
 	, m_MaxEnemyHP(0)
 	, m_gen(m_rd())
 	, m_XDis(0, 4)
 	, m_YDis(0, 2)
+	, m_CurWave(1)
 {
 }
 
@@ -339,7 +340,7 @@ void CFieldScript::begin()
 	//==================
 	// Debug
 	//==================
-	AddScriptParam(SCRIPT_PARAM::INT, "Cur Round", &m_CurRound);
+	AddScriptParam(SCRIPT_PARAM::INT, "Cur Round", &m_CurWave);
 	AddScriptParam(SCRIPT_PARAM::INT, "Enemy Auto Spawn", &AutoSpawnEnemy);
 	AddScriptParam(SCRIPT_PARAM::INT, "DEFAULT Enemy Spawn Count", &m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnemySpawnCount);
 	AddScriptParam(SCRIPT_PARAM::INT, "BIG Enemy Spawn Count", &m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnemySpawnCount);
@@ -354,7 +355,7 @@ void CFieldScript::tick()
 	// AccSpawnCoolDown
 	for (UINT i = 0; i < (UINT)ENEMY_TYPE::END; ++i)
 	{
-		m_AccSpawnCoolDown[i] -= m_EnemySpawnRate[m_CurRound] * DT;
+		m_AccSpawnCoolDown[i] -= m_EnemySpawnRate[m_CurWave] * DT;
 
 		// m_SpawnEnemyCheck의 쿨다운 감소
 		m_SpawnEnemyCheck[i].CoolDown -= DT;
@@ -393,7 +394,7 @@ void CFieldScript::tick()
 
 	if (m_EnemyHPUpdateTimer > 5.f)
 	{
-		m_MaxEnemyHP += m_EnemyHPArr[m_CurRound];
+		m_MaxEnemyHP += m_EnemyHPArr[m_CurWave];
 		m_EnemyHPUpdateTimer = 0.f;
 	}
 
@@ -430,6 +431,7 @@ void CFieldScript::tick()
 
 		// 체력 설정
 		SpawnEnemy.pEnemyScript->SetEnemyHealth(m_MaxEnemyHP);
+		SpawnEnemy.pEnemyScript->SetField(this);
 
 		// 2. EnemyList에 삽입
 		m_EnemyList.push_back(SpawnEnemy);
@@ -458,6 +460,7 @@ void CFieldScript::tick()
 
 		// 체력 설정
 		SpawnEnemy.pEnemyScript->SetEnemyHealth(m_MaxEnemyHP);
+		SpawnEnemy.pEnemyScript->SetField(this);
 
 		// 2. EnemyList에 삽입
 		m_EnemyList.push_back(SpawnEnemy);
@@ -486,6 +489,7 @@ void CFieldScript::tick()
 		
 		// 체력 설정
 		SpawnEnemy.pEnemyScript->SetEnemyHealth(m_MaxEnemyHP * 5);
+		SpawnEnemy.pEnemyScript->SetField(this);
 		
 		// 2. EnemyList에 삽입
 		m_EnemyList.push_back(SpawnEnemy);
@@ -531,8 +535,7 @@ void CFieldScript::tick()
 
 		Vec3 Pos(0.f, 0.f, 600.f);
 
-		if (pEScript->GetEnemyType() == ENEMY_TYPE::BIG)
-			Pos.z -= 1;
+
 
 		if (MoveProgress <= 31.f) // 왼 쪽 라인에 위치
 		{
@@ -560,6 +563,12 @@ void CFieldScript::tick()
 			Pos.x += XLineLen * ((MoveProgress - 31.f) / 38.f);
 		}
 
+		if (pEScript->GetEnemyType() == ENEMY_TYPE::BIG)
+			Pos.z += 2;
+
+		if (pEScript->GetEnemyType() == ENEMY_TYPE::SPEED)
+			Pos.z -= 2;
+
 		pObject->Transform()->SetRelativePos(Pos);
 
 
@@ -570,7 +579,9 @@ void CFieldScript::tick()
 		if (!pEScript->IsEndDeathParticle())
 		{
 			if (ThisEnemyIsDead)
+			{
 				pEScript->PlayDeathParticle();
+			}
 			else
 			{
 
