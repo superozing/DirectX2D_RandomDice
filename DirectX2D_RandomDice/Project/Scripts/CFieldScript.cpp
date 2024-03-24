@@ -12,13 +12,16 @@
 
 
 
+
 CFieldScript::CFieldScript()
 	:CScript(FIELDSCRIPT)
 	, AutoSpawnEnemy(true)
 	, m_SummonSP(10)
 	, m_MaxEnemyHP(0)
+	, m_gen(m_rd())
+	, m_XDis(0, 4)
+	, m_YDis(0, 2)
 {
-	
 }
 
 CFieldScript::~CFieldScript()
@@ -99,7 +102,7 @@ void CFieldScript::begin()
 			DiceScript->SetDiceXY(i + 1, j + 1);
 
 			// 주사위 종류과 정보 설정 
-			DiceScript->SetDiceType(DICE(i));
+			DiceScript->SetDiceType(DICE::NONE);
 
 			// AddObject
 			OBJECT->AddChild(pDice);
@@ -627,7 +630,27 @@ void CFieldScript::tick()
 
 void CFieldScript::SummonDice()
 {
+	if (m_CurDiceCount >= 15) // 추가적으로 나중에 SP가 없을 경우에도 return을 해주어야 한다.
+		return;
+
+	// 소환 SP 증가
 	m_SummonSP += 10;
+
+
+	CDiceScript* pDice = nullptr;
+
+	// 랜덤한 빈 필드 공간 찾기
+	while (true)
+	{
+		pDice = GetRandomDice();
+		if (pDice != nullptr && pDice->GetDice() == DICE::NONE)
+			break;
+	}
+
+	// 나중에는 덱 중에 골라서 넣어주어야 한다.
+	pDice->SetDiceType(DICE(m_XDis(m_gen) + 1));
+
+	++m_CurDiceCount;
 }
 
 void CFieldScript::SpawnDice(UINT _LOW, UINT _COL)

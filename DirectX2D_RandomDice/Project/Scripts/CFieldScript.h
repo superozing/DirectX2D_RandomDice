@@ -2,6 +2,7 @@
 #include <Engine\CScript.h>
 #include "CDiceAttackScript.h"
 #include "CEnemyScript.h"
+#include <random>
 
 // EnemyScript를 조금 더 빠르게 참조하기 위해서 구조체 사용
 struct ENEMY_PAIR
@@ -31,6 +32,8 @@ private:
 
     class CDiceScript*      m_DiceField[5][3]; // CDiceScript를 가진 CGameObject의 2차원 배열
 
+    UINT                    m_CurDiceCount;
+
     list<ENEMY_PAIR>        m_EnemyList;
 
     // 공격 우선 순위에 해당하는 적 포인터 모음
@@ -52,22 +55,33 @@ private:
 
 
     // 적 체력 관련
-    int                    m_MaxEnemyHP;
+    int                     m_MaxEnemyHP;
     float                   m_EnemyHPUpdateTimer;
 
     // 라운드에 따라 달라지는 값 들
     float                   m_EnemySpawnRate[5] = { 0.7, 1, 1, 1.2, 1.5 };
-    int                    m_EnemyHPArr[5] = { 100, 1000, 2000, 5000, 9000 };
+    int                     m_EnemyHPArr[5] = { 100, 1000, 2000, 5000, 9000 };
 
     // Debug
     bool                    AutoSpawnEnemy;
+
+
+    // random
+    std::random_device      m_rd;
+    std::mt19937            m_gen;
+    std::uniform_int_distribution<UINT> m_XDis;
+    std::uniform_int_distribution<UINT> m_YDis;
 
 private: // EnemyPos 계산 용도의 GameObject*
     CGameObject* m_EnemyGate1;
     CGameObject* m_Line2;
     CGameObject* m_EnemyGate2;
 
-
+    CDiceScript* GetRandomDice() 
+    {
+        // 0 ~ 4, 0 ~ 2
+        return m_DiceField[m_XDis(m_gen)][m_YDis(m_gen)];
+    }
 
 
 public:
