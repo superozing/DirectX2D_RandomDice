@@ -36,6 +36,12 @@ void CFontMgr::init()
 	if (FAILED(m_pFW1Factory->CreateFontWrapper(DEVICE, L"Maplestory", &m_pFontWrapper[(UINT)FONT_TYPE::MAPLE])))
 		assert(NULL);
 
+	if (FAILED(m_pFW1Factory->CreateFontWrapper(DEVICE, L"Alba Super", &m_pFontWrapper[(UINT)FONT_TYPE::ALBA_SUPER])))
+		assert(NULL);
+
+	if (FAILED(m_pFW1Factory->CreateFontWrapper(DEVICE, L"Alba Matter", &m_pFontWrapper[(UINT)FONT_TYPE::ALBA_MATTER])))
+		assert(NULL);
+
 }
 
 void CFontMgr::DrawFont(const wchar_t* _pStr, float _fPosX, float _fPosY, float _fFontSize

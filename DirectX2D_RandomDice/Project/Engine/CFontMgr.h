@@ -17,6 +17,8 @@ enum class FONT_TYPE
 {
     ARIAL,
     MAPLE,
+    ALBA_SUPER,
+    ALBA_MATTER,
     END
 };
 
