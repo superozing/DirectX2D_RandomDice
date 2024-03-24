@@ -340,7 +340,8 @@ void CFieldScript::begin()
 	//==================
 	// Debug
 	//==================
-	AddScriptParam(SCRIPT_PARAM::INT, "Cur Round", &m_CurWave);
+	AddScriptParam(SCRIPT_PARAM::INT, "Cur Wave", &m_CurWave);
+	AddScriptParam(SCRIPT_PARAM::INT, "Cur SP", &m_SP);
 	AddScriptParam(SCRIPT_PARAM::INT, "Enemy Auto Spawn", &AutoSpawnEnemy);
 	AddScriptParam(SCRIPT_PARAM::INT, "DEFAULT Enemy Spawn Count", &m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnemySpawnCount);
 	AddScriptParam(SCRIPT_PARAM::INT, "BIG Enemy Spawn Count", &m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnemySpawnCount);
