@@ -42,12 +42,15 @@ private:
     FONTINFO                m_fInfo1;
     FONTINFO                m_fInfo2;
 
+
+
+    UINT                    m_SummonSP;
+
+
+
+
     // Debug
     bool                    AutoSpawnEnemy;
-
-
-
-
 
 private: // EnemyPos 계산 용도의 GameObject*
     CGameObject* m_EnemyGate1;
@@ -63,6 +66,7 @@ public:
 
     ENEMY_PAIR GetTargetEnemy(ATTACK_PRIORITY attack_priority) const { return m_AttackPriority[(UINT)attack_priority]; }
 
+    UINT GetSummonSP() const { return m_SummonSP; }
 
 
 public:

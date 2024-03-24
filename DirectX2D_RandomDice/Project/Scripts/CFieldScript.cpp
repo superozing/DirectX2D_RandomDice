@@ -15,6 +15,7 @@
 CFieldScript::CFieldScript()
 	:CScript(FIELDSCRIPT)
 	, AutoSpawnEnemy(true)
+	, m_SummonSP(10)
 {
 	
 }
@@ -27,6 +28,7 @@ CFieldScript::~CFieldScript()
 
 void CFieldScript::begin()
 {
+	CDiceScript::InitDicePath();
 
 
 	// 예외 처리
@@ -96,7 +98,7 @@ void CFieldScript::begin()
 			DiceScript->SetDiceXY(i + 1, j + 1);
 
 			// 주사위 종류과 정보 설정 
-			DiceScript->SetDiceType(DICE(i + 1));
+			DiceScript->SetDiceType(DICE(i));
 
 			// AddObject
 			OBJECT->AddChild(pDice);
@@ -338,7 +340,7 @@ void CFieldScript::tick()
 	//==================
 	// Spawn Enemy Check
 	//==================
-
+	m_DiceField;
 	for (UINT i = 0; i < (UINT)ENEMY_TYPE::END; ++i)
 	{
 		m_AccSpawnCoolDown[i] -= DT;
@@ -568,8 +570,7 @@ void CFieldScript::tick()
 
 void CFieldScript::SummonDice()
 {
-	int i = 0;
-	i = 2;
+	m_SummonSP += 10;
 }
 
 void CFieldScript::SpawnDice(UINT _LOW, UINT _COL)

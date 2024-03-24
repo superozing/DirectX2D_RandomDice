@@ -60,10 +60,11 @@ private:
 	// if DICE == NONE일 경우, 현재 필드 칸 위에 주사위가 존재하지 않음. 이 경우 아무 행동도 하지 않아요.
 	// 음...아니면 bool 값으로 주사위 자리 활성화 여부를 둘까...?
 
+
 	CFieldScript* m_OwnerField;
 
 
-	DICE		Dice;			// 주사위 종류
+	DICE		m_Dice;			// 주사위 종류
 	DICE_INFO	m_Info;			// 주사위 종류에 따른 주사위 정보
 
 	UINT		m_DiceScale;	// 주사위의 눈금 수 (등급)
@@ -86,7 +87,13 @@ private:
 
 
 public:
-	DICE GetDice() const { return Dice; }
+    // 전역 세팅 함수
+    static vector<wstring> DicePath;
+    static void InitDicePath();
+
+
+
+	DICE GetDice() const { return m_Dice; }
 
 
 	float GetFinalDamage() { return m_finalDamage; }
@@ -104,6 +111,8 @@ public:
 public:
 	virtual void SaveToFile(FILE* _File) {  }
 	virtual void LoadFromFile(FILE* _File) {  }
+
+
 
 public:
 	
