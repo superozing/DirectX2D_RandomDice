@@ -27,7 +27,7 @@ class CEnemyScript :
 private:
 
     // 필드
-    //CFieldScript*       m_OwnerField;
+    class CFieldScript*       m_OwnerField;
     
     // 적 종류와 정보
     ENEMY_TYPE        m_EnemyType;
@@ -70,6 +70,7 @@ public:
 
 
     void SetEnemyHealth(int _Health) { m_CurHealth = _Health; }
+    void SetField(CFieldScript* _Field) { m_OwnerField = _Field; }
     int GetEnemyHealth() const { return m_CurHealth; }
 
 protected:

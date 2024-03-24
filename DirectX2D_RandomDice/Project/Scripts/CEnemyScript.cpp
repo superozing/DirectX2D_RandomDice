@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "CEnemyScript.h"
+#include "CFieldScript.h"
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
 
@@ -97,7 +98,16 @@ void CEnemyScript::PlayDeathParticle()
 	//OBJECT->Transform()->SetRelativeScale(Vec3(0, 0, 0));
 
 	if (m_DeathParticleTimer == -1.f)
+	{
 		m_DeathParticleTimer = 0.f;
+
+		int AddSP = 10 * m_OwnerField->GetCurWave();
+
+		if (m_EnemyType == ENEMY_TYPE::BIG)
+			AddSP *= 5;
+
+		m_OwnerField->AddCurSP(AddSP);
+	}
 }
 
 void CEnemyScript::SetEnemyType(ENEMY_TYPE _Enemytype)
