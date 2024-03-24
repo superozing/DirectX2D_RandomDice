@@ -487,6 +487,9 @@ void CFieldScript::tick()
 
 		Vec3 Pos(0.f, 0.f, 600.f);
 
+		if (pEScript->GetEnemyType() == ENEMY_TYPE::BIG)
+			Pos.z -= 1;
+
 		if (MoveProgress <= 31.f) // 왼 쪽 라인에 위치
 		{
 			Pos = Line1StartPos;
@@ -528,7 +531,7 @@ void CFieldScript::tick()
 			{
 				// 체력 폰트의 위치 설정
 				m_fInfo.fPosX = Pos.x + (vResol.x / 2);
-				m_fInfo.fPosY = -Pos.y + (vResol.y / 2) - 5;
+				m_fInfo.fPosY = -Pos.y + (vResol.y / 2) + 15;
 
 				// 체력 폰트의 문자열 설정
 				m_fInfo.WStr = to_wstring(pEScript->GetEnemyHealth());
