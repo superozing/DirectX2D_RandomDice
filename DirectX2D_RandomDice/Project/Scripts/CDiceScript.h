@@ -74,16 +74,17 @@ private:
 	bool		m_Buff[2];		// 이 주사위가 받고 있는 버프
 
 
-
-
 	float		m_finalDamage;		// 버프, 디버프를 포함한 데미지
 	float		m_finalAttackSpeed; // 버프, 디버프를 포함한 공격속도
 	
 
-
-
 	UINT		m_DiceRow;
 	UINT		m_DiceCol;
+
+    // 생성 효과
+    Vec3        m_vSrcScale;
+    float       m_fScaleSize;
+    bool        m_IsGrowing;
 
 
 public:
@@ -96,8 +97,8 @@ public:
 	DICE GetDice() const { return m_Dice; }
 
 
-	float GetFinalDamage() { return m_finalDamage; }
-	float GetFinalAttackSpeed() { return m_finalAttackSpeed; }
+    float GetFinalDamage() const { return m_finalDamage; }
+    float GetFinalAttackSpeed() const { return m_finalAttackSpeed; }
 
 	void SetDiceType(DICE _Dice);
 	void SetDiceInfo(DICE _Dice);
@@ -108,6 +109,7 @@ public:
 	void SetField(CFieldScript* _field) { m_OwnerField = _field; }
 
 	virtual void begin() override;
+	virtual void tick() override;
 public:
 	virtual void SaveToFile(FILE* _File) {  }
 	virtual void LoadFromFile(FILE* _File) {  }

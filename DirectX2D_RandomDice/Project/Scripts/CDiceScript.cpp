@@ -6,6 +6,7 @@ vector<wstring> CDiceScript::DicePath;
 
 CDiceScript::CDiceScript()
 	:CScript(DICESCRIPT)
+	,m_fScaleSize(1.f)
 {
 
 }
@@ -27,11 +28,12 @@ void CDiceScript::SetDiceType(DICE _Dice)
 
 	if (m_Dice == DICE::NONE)
 	{
-		OBJECT->Transform()->SetRelativeScale(Vec3(0.f, 0.f, 1.f));
+		m_fScaleSize = 0.f;
+		m_IsGrowing = false;
 		return;
 	}
 
-	OBJECT->Transform()->SetRelativeScale(Vec3(90.f, 90.f, 1.f));
+	m_IsGrowing = true;
 
 	wstring wstrPath = DicePath[(UINT)m_Dice];
 
@@ -65,7 +67,7 @@ void CDiceScript::begin()
 
 	if (OBJECT->Transform() != nullptr)
 	{
-
+		m_vSrcScale = Vec3(90.f, 90.f, 1.f);
 
 	}
 
@@ -75,6 +77,25 @@ void CDiceScript::begin()
 
 
 	}
+}
+
+void CDiceScript::tick()
+{
+	if (m_IsGrowing)
+	{
+		m_fScaleSize += 5.f * DT;
+
+		if (m_fScaleSize > 1.f)
+		{
+			m_fScaleSize = 1.f;
+			m_IsGrowing = false;
+		}
+	}
+	OBJECT->Transform()->SetRelativeScale(m_vSrcScale * m_fScaleSize);
+
+
+	OBJECT->GetRenderComponent()->GetDynamicMaterial()
+		->SetScalarParam(SCALAR_PARAM::FLOAT_0, m_fScaleSize);
 }
 
 void CDiceScript::InitDicePath()
