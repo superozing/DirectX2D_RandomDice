@@ -17,6 +17,8 @@ private:
 public:
     void SetGameObject(CGameObject* _Object);
     CGameObject* Instantiate();
+    CGameObject* GetProtoObj() { return m_ProtoObj; }
+
 
     CLONE_DISABLE(CPrefab);
 public:
