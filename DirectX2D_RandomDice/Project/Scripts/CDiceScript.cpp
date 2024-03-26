@@ -93,7 +93,7 @@ void CDiceScript::begin()
 	
 	tModule.vSpawnColor = Vec4(1.f, 1.f, 1.f, 0.6f);
 	tModule.vSpawnMinScale = Vec4(10.f, 10.f, 1.f, 1.f);
-	tModule.vSpawnMaxScale = Vec4(10.f, 10.f, 1.f, 1.f);
+	tModule.vSpawnMaxScale = Vec4(20.f, 20.f, 1.f, 1.f);
 	
 	tModule.MinLife = 0.7f;
 	tModule.MaxLife = 1.f;

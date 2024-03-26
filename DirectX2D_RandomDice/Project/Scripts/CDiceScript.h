@@ -94,6 +94,7 @@ public:
     static vector<wstring> DicePath;
     static void InitDicePath();
 
+    static wstring GetDicePath(DICE _Dice) { return DicePath[(UINT)_Dice]; }
 
 
 	DICE GetDice() const { return m_Dice; }
