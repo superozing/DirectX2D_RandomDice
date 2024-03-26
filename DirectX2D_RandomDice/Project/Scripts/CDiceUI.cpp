@@ -73,6 +73,26 @@ void CDiceUI::begin()
 	m_pUI->SetDeletage((CEntity*)this, (DelegateFunc)&CDiceUI::ClickLevelUp);
 
 
+	// SP 이미지 출력을 위해...
+	CGameObject* pObj = new CGameObject;
+
+	OBJECT->AddChild(pObj);
+
+	pObj->AddComponent(new CTransform);
+	pObj->Transform()->SetRelativePos(Vec3(-18.f, -19.f, -10.f));
+	pObj->Transform()->SetRelativeScale(Vec3(20.f, 20.f, 1.f));
+	
+	pObj->AddComponent(new CMeshRender);
+	wstrPath = L"AlphaBlendMtrl";
+	pObj->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(wstrPath));
+	
+	wstrPath = L"RectMesh";
+	pObj->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(wstrPath));
+
+	wstrPath = L"texture\\Battle\\icon_sp_1.png";
+	pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0
+		, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
+
 
 
 	//==================
@@ -105,6 +125,8 @@ void CDiceUI::begin()
 // 4. 백그라운드 이미지(더미 오브젝트): 오른 쪽 위에 백그라운드
 //		1) 파티클 뿜는 오브젝트
 // 	    2) 주사위의 눈금 개수 나타낼 폰트
+ 
+
 // 5. 백그라운드 이미지(더미 오브젝트):(SP) <- 이거.
 }
 
@@ -149,7 +171,13 @@ void CDiceUI::ClickLevelUp()
 
 	UINT CurLV = m_pField->GetCurDiceLevel(m_Dice);
 	if (CurLV == 5)
+	{
 		m_FDiceLevel.WStr = L"MAX";
+		OBJECT->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.7f);
+		m_FSP2.Color = FONT_RGBA(200, 200, 200, 255);
+		m_FDiceLevel.Color = FONT_RGBA(200, 200, 200, 255);
+
+	}
 	else
 		m_FDiceLevel.WStr = L"LV." + to_wstring(CurLV);
 }
