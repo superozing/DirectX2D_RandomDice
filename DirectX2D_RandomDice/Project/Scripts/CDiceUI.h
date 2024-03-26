@@ -42,6 +42,7 @@ public:
     void SetDice(DICE _dice) { m_Dice = _dice; }
     void SetDeckIdx(UINT _idx) { m_DeckIdx = _idx; }
 
+    void SetField(CFieldScript* _pField) { m_pField = _pField; }
     
 public:
     virtual void SaveToFile(FILE* _File) {}
