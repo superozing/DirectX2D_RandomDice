@@ -79,7 +79,7 @@ void CEnemyScript::begin()
 	m_pParticleObject->AddComponent(m_ParticleSystem);
 
 	// 파티클 오브젝트의 파티클 시스템 세팅
-	wstring strPath = L"texture\\particle\\smokeparticle.png";
+	wstring strPath = L"texture\\particle\\cloud4.png";
 	m_ParticleSystem->SetParticleModule(m_EnemyInfo.DeathParticleModule);
 	m_ParticleSystem->SetParticleTexture(CAssetMgr::GetInst()->Load<CTexture>(strPath, strPath));
 
