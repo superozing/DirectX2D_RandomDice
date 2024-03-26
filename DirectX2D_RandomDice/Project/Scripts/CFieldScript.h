@@ -112,6 +112,8 @@ public:
     void SummonDice();
     void SpawnDice(UINT _LOW, UINT _COL);
 
+    // 주사위 레벨 업
+    void DiceLevelUp(DICE _dice) {}
 
 
 

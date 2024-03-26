@@ -8,6 +8,7 @@
 #include <Engine/CDevice.h>
 
 #include "CDiceScript.h"
+#include "CDiceUI.h"
 #include "CEnemyGateScript.h"
 
 
@@ -103,8 +104,6 @@ void CFieldScript::begin()
 
 			// 스크립트 가져와서 저장
 			CDiceScript* DiceScript = m_DiceField[i][j] = pDice->GetScript<CDiceScript>();
-
-			DiceScript->begin();
 
 			// 주사위 스크립트와 쌍방으로 연결
 			DiceScript->SetField(this);
@@ -342,6 +341,33 @@ void CFieldScript::begin()
 	m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::DEFAULT] = 4.f;
 	m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::SPEED] = 7.f;
 	m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::BIG] = 13.f;
+
+
+
+	//===================
+	// CDiceUI 덱 정보 세팅
+	//===================
+
+	for (UINT i = 0; i < 5; ++i)
+	{
+		// 새 자식 오브젝트 생성
+		pObj = new CGameObject;
+		OBJECT->AddChild(pObj);
+
+		// DiceUI 추가
+		CDiceUI* pDiceUI = new CDiceUI;
+		pObj->AddComponent(pDiceUI);
+		pObj->SetName(L"DiceUI_" + to_wstring(i));
+
+		// begin에서 필요한 정보 세팅
+		pDiceUI->SetDice(m_Deck[i]);
+		pDiceUI->SetDeckIdx(i);
+
+	}
+
+
+
+
 
 
 
