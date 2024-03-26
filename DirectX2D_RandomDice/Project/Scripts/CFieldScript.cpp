@@ -28,11 +28,11 @@ CFieldScript::CFieldScript()
 
 	// 나중에는 여기서 초기화하면 안된다.
 
-	m_Deck[0] = DICE::ARROW;
-	m_Deck[1] = DICE::BROKEN;
-	m_Deck[2] = DICE::CRITICAL;
-	m_Deck[3] = DICE::ENERGY;
-	m_Deck[4] = DICE::GAMBLE;
+	m_Deck[0] = DICE(1);
+	m_Deck[1] = DICE(2);
+	m_Deck[2] = DICE(3);
+	m_Deck[3] = DICE(4);
+	m_Deck[4] = DICE(5);
 }
 
 CFieldScript::~CFieldScript()
@@ -362,7 +362,7 @@ void CFieldScript::begin()
 		// begin에서 필요한 정보 세팅
 		pDiceUI->SetDice(m_Deck[i]);
 		pDiceUI->SetDeckIdx(i);
-
+		pDiceUI->SetField(this);
 	}
 
 
@@ -673,6 +673,35 @@ void CFieldScript::tick()
 	}
 
 
+}
+
+
+UINT CFieldScript::DiceLevelUp(DICE _dice, UINT _idx)
+{
+	if (m_DiceLevel[_idx] == 5)
+		return 0;
+
+	// 모든 주사위를 순회하면서 _dice와 같은 유형의 주사위를 싹 가져오기
+	
+	// 해당 주사위들에게 레벨업 함수 호출
+
+
+
+	// 주사위 레벨업
+	// 올라간 비용 인덱스 반환
+	return m_LevelUpSP[++m_DiceLevel[_idx] - 1];
+}
+
+UINT CFieldScript::GetCurDiceLevel(DICE _dice) const
+{
+	int i = 0;
+	for (; i <= 5; ++i)
+	{
+		if (i == 5)
+			return 0;
+		if (m_Deck[i] == _dice)
+			return m_DiceLevel[i];
+	}
 }
 
 void CFieldScript::SummonDice()

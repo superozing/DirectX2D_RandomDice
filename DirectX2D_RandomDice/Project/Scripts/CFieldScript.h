@@ -29,6 +29,8 @@ class CFieldScript :
 private:
 
     enum class DICE         m_Deck[5]; // 배열인데 왜 모르냐->Dice를 몰라서.
+    UINT                    m_DiceLevel[5] = { 1, 1, 1, 1, 1 }; // 현재 덱에 있는 주사위들의 레벨
+    UINT                    m_LevelUpSP[5] = { 100, 200, 400, 700, 0 }; // 레벨업에 드는 SP 비용
 
     UINT                    m_CurWave;
 
@@ -112,9 +114,11 @@ public:
     void SummonDice();
     void SpawnDice(UINT _LOW, UINT _COL);
 
-    // 주사위 레벨 업
-    void DiceLevelUp(DICE _dice) {}
+    // 주사위 레벨 업(반환으로 "다음 레벨업 비용")
+    UINT DiceLevelUp(DICE _dice, UINT _idx);
 
+    // 현재 주사위의 레벨을 반환해줌. 만약 해당 주사위가 레벨에 없을 경우 0을 반환해요.
+    UINT GetCurDiceLevel(DICE _dice) const;
 
 
 
