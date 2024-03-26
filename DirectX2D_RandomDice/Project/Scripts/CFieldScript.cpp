@@ -681,6 +681,9 @@ UINT CFieldScript::DiceLevelUp(DICE _dice, UINT _idx)
 	if (m_DiceLevel[_idx] == 5)
 		return 0;
 
+	if (m_LevelUpSP[m_DiceLevel[_idx] - 1] > m_SP)
+		return m_LevelUpSP[m_DiceLevel[_idx] - 1];
+
 	// 모든 주사위를 순회하면서 _dice와 같은 유형의 주사위를 싹 가져오기
 	
 	// 해당 주사위들에게 레벨업 함수 호출
@@ -688,6 +691,8 @@ UINT CFieldScript::DiceLevelUp(DICE _dice, UINT _idx)
 
 
 	// 주사위 레벨업
+	m_SP -= m_LevelUpSP[m_DiceLevel[_idx] - 1];
+
 	// 올라간 비용 인덱스 반환
 	return m_LevelUpSP[++m_DiceLevel[_idx] - 1];
 }
