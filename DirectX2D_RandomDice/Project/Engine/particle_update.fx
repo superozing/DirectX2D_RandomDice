@@ -107,6 +107,23 @@ void CS_ParticleUpdate(uint3 id : SV_DispatchThreadID)
                         float3 vDir = -normalize(Particle.vLocalPos.xyz);
                         Particle.vVelocity.xyz = vDir * clamp(vRand[2], Module.MinSpeed, Module.MaxSpeed);
                     }
+                    if (2 == Module.AddVelocityType)
+                    {
+                        // Module.FixedAngle을 사용하여 방향을 얻습니다.
+                        float fixedAngle = Module.FixedAngle;
+    
+                        // 60분법에서 라디안으로 변환합니다.
+                        float angleInRadians = fixedAngle * (PI / 180.0);
+
+                        // Module.FixedDirection을 사용하여 방향 벡터를 얻습니다.
+                        float3 vDir = float3(cos(angleInRadians), sin(angleInRadians), 0.0);
+
+                        // 최소 및 최대 속도를 사용하여 랜덤한 속도 스케일을 적용합니다.
+                        float speedScale = clamp(vRand[2], Module.MinSpeed, Module.MaxSpeed);
+
+                        // 최종 속도를 계산하고 vVelocity.xyz에 저장합니다.
+                        Particle.vVelocity.xyz = vDir * speedScale;
+                    }
                 }
                 else
                 {
