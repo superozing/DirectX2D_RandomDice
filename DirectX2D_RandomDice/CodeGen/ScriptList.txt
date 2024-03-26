@@ -6,6 +6,7 @@ CDiceBuffScript
 CDiceMergeScript
 CDiceScaleScript
 CDiceScript
+CDiceUI
 CEnemyGateScript
 CEnemyScript
 CExternScript

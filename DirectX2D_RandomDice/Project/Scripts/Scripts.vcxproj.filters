@@ -73,6 +73,9 @@
     <ClInclude Include="CSPBarScript.h">
       <Filter>Scripts\SPBar</Filter>
     </ClInclude>
+    <ClInclude Include="CDiceUI.h">
+      <Filter>Scripts\DiceUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -146,6 +149,9 @@
     </ClCompile>
     <ClCompile Include="CSPBarScript.cpp">
       <Filter>Scripts\SPBar</Filter>
+    </ClCompile>
+    <ClCompile Include="CDiceUI.cpp">
+      <Filter>Scripts\DiceUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
