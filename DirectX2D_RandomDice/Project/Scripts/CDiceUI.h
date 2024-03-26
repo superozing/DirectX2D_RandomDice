@@ -19,7 +19,8 @@ private:
     FONTINFO            m_FSP1;
     FONTINFO            m_FSP2;
 
-    FONTINFO            m_FDiceEyeCount;
+    FONTINFO            m_FDiceEyeCount1;
+    FONTINFO            m_FDiceEyeCount2;
     
     FONTINFO            m_FDiceLevel;
 
