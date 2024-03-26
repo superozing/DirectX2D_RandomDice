@@ -65,6 +65,16 @@ void CDiceScript::SetDiceXY(UINT _DiceRow, UINT _DiceCol)
 
 }
 
+void CDiceScript::PlayLevelUp()
+{
+	// 해야 할 일.
+	// 1. LevelUp 텍스트 이미지 띄우도록 만들기
+	// 2. 파티클 "위로" 방출
+
+	m_LevelUpParticle->SetActivate(true);
+	m_LevelUpParticleTimer = 0.15f;
+}
+
 void CDiceScript::begin()
 {
 	if (OBJECT == nullptr)
@@ -80,9 +90,11 @@ void CDiceScript::begin()
 	CGameObject* pObject = new CGameObject;
 	pObject->AddComponent(new CTransform);
 	pObject->Transform()->SetRelativePos(Vec3(0.f, 0.f, -500.f));
+	OBJECT->AddChild(pObject);
 
 	m_SpawnParticle = new CParticleSystem;
 	pObject->AddComponent(m_SpawnParticle);
+
 
 	tParticleModule tModule;
 
@@ -92,7 +104,7 @@ void CDiceScript::begin()
 	tModule.SpaceType = 1;
 	
 	tModule.vSpawnColor = Vec4(1.f, 1.f, 1.f, 0.6f);
-	tModule.vSpawnMinScale = Vec4(10.f, 10.f, 1.f, 1.f);
+	tModule.vSpawnMinScale = Vec4(20.f, 20.f, 1.f, 1.f);
 	tModule.vSpawnMaxScale = Vec4(20.f, 20.f, 1.f, 1.f);
 	
 	tModule.MinLife = 0.7f;
@@ -100,7 +112,7 @@ void CDiceScript::begin()
 	tModule.MinMass = 1.f;
 	tModule.MaxMass = 1.f;
 	tModule.SpawnShape = 0; // 0 : Sphere, 1 : Box
-	tModule.Radius = 40.f;
+	tModule.Radius = 1.f;
 	tModule.SpawnRate = 100;
 	
 	// Add Velocity Module
@@ -108,7 +120,7 @@ void CDiceScript::begin()
 	tModule.AddVelocityType = 0; // 0 : From Center, 1: To Center, 2: Fix Direction
 	tModule.MinSpeed = 70;
 	tModule.MaxSpeed = 70;
-	
+
 	// Noise Force
 	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::NOISE_FORCE] = 1;
 	tModule.NoiseForceScale = 10.f;
@@ -128,15 +140,72 @@ void CDiceScript::begin()
 	m_SpawnParticle->SetParticleModule(tModule);
 	m_SpawnParticle->SetParticleTexture(CAssetMgr::GetInst()->Load<CTexture>(wPath, wPath));
 
-	//CLevelMgr::GetInst()->GetCurrentLevel()->AddObject(pObject, 6);
+
+	// 주사위 생성 파티클 모듈
+	pObject = new CGameObject;
+	pObject->AddComponent(new CTransform);
+	pObject->Transform()->SetRelativePos(Vec3(0.f, 0.f, -500.f));
 	OBJECT->AddChild(pObject);
+
+	m_LevelUpParticle = new CParticleSystem;
+	pObject->AddComponent(m_LevelUpParticle);
+
+	// 초기 모듈 세팅		
+	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::SPAWN] = 1;
+
+	tModule.SpaceType = 1;
+
+	tModule.vSpawnColor = Vec4(1.f, 1.f, 1.f, 0.6f);
+	tModule.vSpawnMinScale = Vec4(20.f, 20.f, 1.f, 1.f);
+	tModule.vSpawnMaxScale = Vec4(20.f, 20.f, 1.f, 1.f);
+
+	tModule.MinLife = 0.5f;
+	tModule.MaxLife = 0.5f;
+	tModule.MinMass = 1.f;
+	tModule.MaxMass = 1.f;
+	tModule.SpawnShape = 1; // 0 : Sphere, 1 : Box
+	tModule.vSpawnBoxScale = Vec4(60.f, 1.f, 60.f, 1.f);
+	tModule.SpawnRate = 50;
+
+	// Add Velocity Module
+	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::ADD_VELOCITY] = 1;
+	tModule.AddVelocityType = 2; // 0 : From Center, 1: To Center, 2: Fix Direction
+	tModule.MinSpeed = 200;
+	tModule.MaxSpeed = 200;
+	tModule.FixedAngle = 90.f;
+
+	// Noise Force
+	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::NOISE_FORCE] = 1;
+	tModule.NoiseForceScale = 10.f;
+	tModule.NoiseForceTerm = 0.3f;
+
+	// Render 
+	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::RENDER] = 1;
+	tModule.VelocityAlignment = 1; // 속도에 따른 방향 정렬
+	tModule.AlphaBasedLife = 0; // 0 : off, 1 : NomrlizedAge, 2: Age
+	tModule.AlphaMaxAge = 2.f;
+
+	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::DRAG] = 1;
+	tModule.DragTime = 1.f;
+
+	wPath = L"texture\\particle\\HardCircle.png";
+	pObject->SetName(L"ParticleObject2");
+	m_LevelUpParticle->SetParticleModule(tModule);
+	m_LevelUpParticle->SetParticleTexture(CAssetMgr::GetInst()->Load<CTexture>(wPath, wPath));
+	m_LevelUpParticle->SetActivate(false);
 }
 
 void CDiceScript::tick()
 {
-
-	//if (OBJECT->GetChild().size() == 0)
-	//	OBJECT->AddChild(m_SpawnParticle->GetOwner());
+	if (m_LevelUpParticleTimer > 0.f)
+	{
+		m_LevelUpParticleTimer -= DT;
+		if (m_LevelUpParticleTimer <= 0.f)
+		{
+			m_LevelUpParticleTimer = 0.f;
+			m_LevelUpParticle->SetActivate(false);
+		}
+	}
 
 	if (m_IsGrowing)
 	{

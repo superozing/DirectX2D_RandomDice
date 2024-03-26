@@ -122,7 +122,6 @@ void CEnemyGateScript::begin()
 	tModule.MinSpeed = 40;
 	tModule.MaxSpeed = 40;
 	tModule.FixedDirection;
-	tModule.FixedAngle = -XM_PI;
 
 	// Noise Force
 	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::NOISE_FORCE] = 1;

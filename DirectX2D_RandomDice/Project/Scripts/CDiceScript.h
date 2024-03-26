@@ -82,12 +82,13 @@ private:
 	UINT		        m_DiceCol;
 
     // 생성 효과
+    CParticleSystem*    m_SpawnParticle;
     Vec3                m_vSrcScale;
     float               m_fScaleSize;
     bool                m_IsGrowing;
 
-    CParticleSystem*    m_SpawnParticle;
-
+    CParticleSystem*    m_LevelUpParticle;
+    float               m_LevelUpParticleTimer;
 
 public:
     // 전역 세팅 함수
@@ -110,6 +111,9 @@ public:
 	void SetDiceXY(UINT _DiceRow, UINT _DiceCol);
 
 	void SetField(CFieldScript* _field) { m_OwnerField = _field; }
+
+
+    void PlayLevelUp();
 
 	virtual void begin() override;
 	virtual void tick() override;
