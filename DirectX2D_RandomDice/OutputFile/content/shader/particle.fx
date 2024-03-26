@@ -179,6 +179,9 @@ float4 PS_Particle(GS_OUT _in) : SV_Target
         }
     }
     
+    if (vOutColor.a < 0.2f)
+        discard;
+    
     return vOutColor;
 }
 
