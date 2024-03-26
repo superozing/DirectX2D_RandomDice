@@ -103,24 +103,25 @@ void CDiceUI::begin()
 	tModule.SpaceType = 0;
 
 	tModule.vSpawnColor = Vec4(1.f, 1.f, 1.f, 1.f);
-	tModule.vSpawnMinScale = Vec4(1.f, 1.f, 1.f, 1.f);
-	tModule.vSpawnMaxScale = Vec4(8.f, 8.f, 1.f, 1.f);
+	tModule.vSpawnMinScale = Vec4(8.f, 8.f, 8.f, 1.f);
+	tModule.vSpawnMaxScale = Vec4(14.f, 14.f, 14.f, 1.f);
 
 	tModule.MinLife = 1.f;
 	tModule.MaxLife = 1.f;
 	tModule.MinMass = 1.f;
 	tModule.MaxMass = 1.f;
-	tModule.SpawnShape = 0; // 0 : Sphere, 1 : Box
-	tModule.Radius = 15.f;
+	tModule.SpawnShape = 1; // 0 : Sphere, 1 : Box
+	tModule.Radius = 0.f;
+	tModule.vSpawnBoxScale = Vec4(20, 1, 20, 1);	// SpawnShape 가 Box 인 경우, Box 의 크기
 	tModule.SpawnRate = 2;
 
 	// Add Velocity Module
 	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::ADD_VELOCITY] = 1;
-	tModule.AddVelocityType = 0; // 0 : From Center, 1: To Center, 2: Fix Direction
-	tModule.MinSpeed = 10;
-	tModule.MaxSpeed = 10;
+	tModule.AddVelocityType = 2; // 0 : From Center, 1: To Center, 2: Fix Direction
+	tModule.MinSpeed = 30;
+	tModule.MaxSpeed = 30;
 	tModule.FixedDirection;
-	tModule.FixedAngle = -XM_PI;
+	tModule.FixedAngle = 90.f;
 
 	// Noise Force
 	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::NOISE_FORCE] = 1;
@@ -133,8 +134,8 @@ void CDiceUI::begin()
 	tModule.AlphaBasedLife = 0; // 0 : off, 1 : NomrlizedAge, 2: Age
 	tModule.AlphaMaxAge = 2.f;
 
-	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::DRAG] = 1;
-	tModule.DragTime = 1.f;
+	tModule.arrModuleCheck[(UINT)PARTICLE_MODULE::DRAG] = 0;
+	tModule.DragTime = 2.f;
 
 	//////
 	pObj = new CGameObject;
