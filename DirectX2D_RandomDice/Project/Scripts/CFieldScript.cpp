@@ -24,6 +24,14 @@ CFieldScript::CFieldScript()
 	, m_YDis(0, 2)
 	, m_CurWave(1)
 {
+
+	// 나중에는 여기서 초기화하면 안된다.
+
+	m_Deck[0] = DICE::ARROW;
+	m_Deck[1] = DICE::BROKEN;
+	m_Deck[2] = DICE::CRITICAL;
+	m_Deck[3] = DICE::ENERGY;
+	m_Deck[4] = DICE::GAMBLE;
 }
 
 CFieldScript::~CFieldScript()
@@ -665,7 +673,7 @@ void CFieldScript::SummonDice()
 	}
 
 	// 나중에는 덱 중에 골라서 넣어주어야 한다.
-	pDice->SetDiceType(DICE(m_XDis(m_gen) + 1));
+	pDice->SetDiceType(m_Deck[m_XDis(m_gen)]);
 
 	++m_CurDiceCount;
 }

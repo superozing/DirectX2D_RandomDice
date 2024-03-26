@@ -28,6 +28,8 @@ class CFieldScript :
 {
 private:
 
+    enum class DICE         m_Deck[5]; // 배열인데 왜 모르냐->Dice를 몰라서.
+
     UINT                    m_CurWave;
 
     class CDiceScript*      m_DiceField[5][3]; // CDiceScript를 가진 CGameObject의 2차원 배열
