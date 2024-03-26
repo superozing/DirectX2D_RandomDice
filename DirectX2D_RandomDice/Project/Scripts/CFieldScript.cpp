@@ -685,10 +685,19 @@ UINT CFieldScript::DiceLevelUp(DICE _dice, UINT _idx)
 		return m_LevelUpSP[m_DiceLevel[_idx] - 1];
 
 	// 모든 주사위를 순회하면서 _dice와 같은 유형의 주사위를 싹 가져오기
-	
-	// 해당 주사위들에게 레벨업 함수 호출
+	for (UINT i = 0; i < 5; ++i)
+	{
+		for (UINT j = 0; j < 3; ++j)
+		{
+			CDiceScript* pDice = m_DiceField[i][j];
 
-
+			if (pDice->GetDice() == _dice)
+			{
+				// 해당 주사위들에게 레벨업 함수 호출
+				pDice->PlayLevelUp();
+			}
+		}
+	}
 
 	// 주사위 레벨업
 	m_SP -= m_LevelUpSP[m_DiceLevel[_idx] - 1];
