@@ -29,7 +29,7 @@ CAnim::~CAnim()
 }
 
 void CAnim::finaltick()
-{	
+{
 	m_AccTime += DT;
 
 	if (m_vecFrm[m_CurFrmIdx].Duration < m_AccTime)
@@ -81,7 +81,7 @@ void CAnim::Create(CAnimator2D* _Animator, Ptr<CTexture> _Atlas, Vec2 _vLeftTop
 	for (int i = 0; i < _FrmCount; ++i)
 	{
 		tAnimFrm frm = {};
-				
+
 		frm.vSlice = Vec2(_vSliceSize.x / (float)_Atlas->GetWidth(), _vSliceSize.y / (float)_Atlas->GetHeight());
 
 		frm.vLeftTop = Vec2(_vLeftTop.x / (float)_Atlas->GetWidth() + frm.vSlice.x * i, _vLeftTop.y / (float)_Atlas->GetHeight());
@@ -90,7 +90,24 @@ void CAnim::Create(CAnimator2D* _Animator, Ptr<CTexture> _Atlas, Vec2 _vLeftTop
 		frm.Duration = 1.f / _FPS;
 
 		frm.vBackground = Vec2(_vBackground.x / (float)_Atlas->GetWidth(), _vBackground.y / (float)_Atlas->GetHeight());
-	
+
+
+		m_vecFrm.push_back(frm);
+	}
+}
+
+void CAnim::Create(CAnimator2D* _Animator, Ptr<CTexture> _Atlas, const vector<tAnimFrm> _vecFrm)
+{
+	m_Animator = _Animator;
+	m_AtlasTex = _Atlas;
+	for (int i = 0; i < _vecFrm.size(); ++i)
+	{
+		tAnimFrm frm = {};
+		frm.vSlice = Vec2(_vecFrm[i].vSlice.x / (float)_Atlas->GetWidth(), _vecFrm[i].vSlice.y / (float)_Atlas->GetHeight());
+		frm.vLeftTop = Vec2(_vecFrm[i].vLeftTop.x / (float)_Atlas->GetWidth(), _vecFrm[i].vLeftTop.y / (float)_Atlas->GetHeight());
+		frm.vOffset = Vec2(_vecFrm[i].vOffset.x / (float)_Atlas->GetWidth(), _vecFrm[i].vOffset.y / (float)_Atlas->GetHeight());
+		frm.Duration = _vecFrm[i].Duration;
+		frm.vBackground = Vec2(_vecFrm[i].vBackground.x / (float)_Atlas->GetWidth(), _vecFrm[i].vBackground.y / (float)_Atlas->GetHeight());
 
 		m_vecFrm.push_back(frm);
 	}
@@ -100,7 +117,7 @@ void CAnim::SaveToFile(FILE* _File)
 {
 	// 애니메이션 이름 저장
 	SaveWString(GetName(), _File);
-	
+
 	// 모든 프레임 정보 저장
 	size_t FrmSize = m_vecFrm.size();
 	fwrite(&FrmSize, sizeof(size_t), 1, _File);
@@ -116,7 +133,7 @@ void CAnim::LoadFromFile(FILE* _File)
 	wstring strName;
 	LoadWString(strName, _File);
 	SetName(strName);
-	
+
 	// 모든 프레임 정보 로드
 	size_t FrmSize = 0;
 	fread(&FrmSize, sizeof(size_t), 1, _File);

@@ -31,7 +31,7 @@ CAnimator2D::CAnimator2D(const CAnimator2D& _OriginAnimator)
 
 CAnimator2D::~CAnimator2D()
 {
-	Delete_Map(m_mapAnim);	
+	Delete_Map(m_mapAnim);
 }
 
 void CAnimator2D::finaltick()
@@ -56,7 +56,7 @@ void CAnimator2D::UpdateData()
 }
 
 void CAnimator2D::Clear()
-{	
+{
 	CAnim::Clear();
 }
 
@@ -66,9 +66,43 @@ void CAnimator2D::Create(const wstring& _strKey, Ptr<CTexture> _AltasTex, Vec2 _
 	CAnim* pAnim = FindAnim(_strKey);
 	assert(!pAnim);
 
-	pAnim = new CAnim;	
+
+	pAnim = new CAnim;
 	pAnim->Create(this, _AltasTex, _LeftTop, _vSliceSize, _OffsetSize, _Background, _FrmCount, _FPS);
+	pAnim->SetName(_strKey);
 	m_mapAnim.insert(make_pair(_strKey, pAnim));
+}
+
+void CAnimator2D::Create(const wstring& _strKey, CAnim* _Anim)
+{
+	CAnim* pAnim = FindAnim(_strKey);
+	assert(!pAnim);
+	_Anim->SetName(_strKey);
+	m_mapAnim.insert(make_pair(_strKey, _Anim));
+
+}
+
+void CAnimator2D::Create(const wstring& _strKey, Ptr<CTexture> _AltasTex, const vector<tAnimFrm>& _vecFrm)
+{
+	CAnim* pAnim = FindAnim(_strKey);
+	if (pAnim && _strKey == L"PreviewAnim")
+	{
+		m_mapAnim.erase(m_mapAnim.find(_strKey));
+		pAnim->Clear();
+	}
+	else
+		assert(!pAnim);
+
+	pAnim = new CAnim;
+	pAnim->Create(this, _AltasTex, _vecFrm);
+	pAnim->SetName(_strKey);
+	m_mapAnim.insert(make_pair(_strKey, pAnim));
+}
+void CAnimator2D::AnimDelete(const wstring& _strKey)
+{
+	//map<wstring, CAnim*>::iterator iter = m_mapAnim.find(_strKey);
+	//delete iter->second;
+	m_mapAnim.erase(_strKey);
 }
 
 CAnim* CAnimator2D::FindAnim(const wstring& _strKey)
@@ -103,7 +137,7 @@ void CAnimator2D::SaveToFile(FILE* _File)
 	{
 		pair.second->SaveToFile(_File);
 	}
-	
+
 	// 플레이 중이던 애니메이션의 키를 저장한다.
 	wstring PlayAnimName;
 
@@ -121,14 +155,14 @@ void CAnimator2D::LoadFromFile(FILE* _File)
 	// 애니메이션 개수 로드
 	size_t AnimCount = 0;
 	fread(&AnimCount, sizeof(size_t), 1, _File);
-		
+
 	for (size_t i = 0; i < AnimCount; ++i)
 	{
 		CAnim* pAnim = new CAnim;
 		pAnim->LoadFromFile(_File);
 
 		pAnim->m_Animator = this;
-		m_mapAnim.insert(make_pair(pAnim->GetName(), pAnim));		
+		m_mapAnim.insert(make_pair(pAnim->GetName(), pAnim));
 	}
 
 	// 플레이 중이던 애니메이션의 키를 불러온다

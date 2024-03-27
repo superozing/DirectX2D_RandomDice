@@ -18,7 +18,7 @@ class CAnim :
     public CEntity
 {
 private:
-    CAnimator2D*        m_Animator;
+    CAnimator2D* m_Animator;
 
     vector<tAnimFrm>    m_vecFrm;
     int                 m_CurFrmIdx;
@@ -27,6 +27,28 @@ private:
     Ptr<CTexture>       m_AtlasTex;
 
     float               m_AccTime;
+
+public:
+    vector<tAnimFrm> GetVecFrm()
+    {
+        return m_vecFrm;
+    }
+
+    void SetAnimFrm(vector<tAnimFrm> _vec)
+    {
+        m_vecFrm = _vec;
+    }
+
+    void SetAtlasTex(Ptr<CTexture> _tex)
+    {
+        m_AtlasTex = _tex;
+    }
+
+    void SetAnimator(CAnimator2D* _mator)
+    {
+        m_Animator = _mator;
+    }
+
 
 public:
     void finaltick();
@@ -44,6 +66,8 @@ public:
     void Create(CAnimator2D* _Animator, Ptr<CTexture> _Atlas, Vec2 _vLeftTop
         , Vec2 _vSliceSize, Vec2 _vOffset, Vec2 _vBackground, int _FrmCount, float _FPS);
 
+
+    void Create(CAnimator2D* _Animator, Ptr<CTexture> _Altas, const vector<tAnimFrm> _vecFrm);
 
     void SaveToFile(FILE* _File);
     void LoadFromFile(FILE* _File);
