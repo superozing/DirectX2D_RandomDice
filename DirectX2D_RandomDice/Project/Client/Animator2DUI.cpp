@@ -354,7 +354,8 @@ Ptr<CTexture> Animator2DUI::SetImageForMakeAnim()
 		}
 	}
 
-	Ptr<CTexture> curAtlasTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\" + fileName, L"texture\\" + fileName);
+	// 여기 잘 바꿔가면서 하면 되겠어요.
+	Ptr<CTexture> curAtlasTex = CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Atlas\\" + fileName, L"texture\\Atlas\\" + fileName);
 	return curAtlasTex;
 }
 
