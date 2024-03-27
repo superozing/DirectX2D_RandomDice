@@ -58,13 +58,10 @@ void TreeNode::render_update()
 			ImGui::EndDragDropTarget();
 		}
 
-		else
-		{
-			if ( KEY_RELEASED(KEY::LBTN) && ImGui::IsItemHovered(ImGuiHoveredFlags_None))
-			{
-				m_Owner->SetSelectedNode(this);
-			}
-		}
+		else if ( KEY_RELEASED(KEY::LBTN) && ImGui::IsItemHovered(ImGuiHoveredFlags_None))
+			m_Owner->SetSelectedNode(this);
+		else if (KEY_RELEASED(KEY::RBTN) && ImGui::IsItemHovered(ImGuiHoveredFlags_None))
+			m_Owner->SetRightClickedNode(this);
 
 		for (size_t i = 0; i < m_vecChildNode.size(); ++i)
 		{
@@ -92,6 +89,7 @@ void TreeNode::render_update()
 			}
 		}
 	}
+
 }
 
 
@@ -147,7 +145,11 @@ void TreeUI::render_update()
 			(m_SelectInst->*m_SelectFunc)((DWORD_PTR)m_Selected);
 		}
 	}
-
+	if (m_bRightClickEvent)
+	{
+		if (m_SelectInst && m_RightClickFunc)
+			(m_SelectInst->*m_RightClickFunc)();
+	}
 
 	// 드래그 대상을 특정 노드가 아닌 공중드랍 시킨 경우
 	if (KEY_RELEASED(KEY::LBTN) && m_DragNode && !m_DropNode)
@@ -171,8 +173,13 @@ void TreeUI::render_update()
 
 	m_bSelectEvent = false;
 	m_bDragDropEvent = false;
+	m_bRightClickEvent = false;
 }
-
+void TreeUI::SetRightClickedNode(TreeNode* _SelectNode)
+{
+	SetSelectedNode(_SelectNode);
+	m_bRightClickEvent = true;
+}
 TreeNode* TreeUI::AddTreeNode(TreeNode* _Parent, string _strName, DWORD_PTR _dwData)
 {
 	TreeNode* pNewNode = new TreeNode;

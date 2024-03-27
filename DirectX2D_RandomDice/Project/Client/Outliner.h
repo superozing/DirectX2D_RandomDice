@@ -11,12 +11,18 @@ class Outliner :
 {
 private:
     TreeUI*     m_Tree;
+    bool    m_bRightClick;
 
 public:
     virtual void render_update() override;
 
 public:
     void ResetCurrentLevel();
+public:
+    void OpenRightClickMenu() { m_bRightClick = true; }
+private:
+    void DrawRightClickMenu();
+    void DeleteObject();
 
 private:
     void AddObjectToTree(TreeNode* _Node, CGameObject* _Object);

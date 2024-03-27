@@ -16,7 +16,6 @@ private:
 
     bool                m_bFrame;
     bool                m_bSelected;
-
 public:
     void SetName(string& _Name) { m_Name = _Name; }    
     void SetFrame(bool _Frame) { m_bFrame = _Frame; }
@@ -68,11 +67,12 @@ private:
     UI*             m_DragDropInst;
     Delegate_2      m_DragDropFunc;
     bool            m_bDragDropEvent;
-
+    Delegate_0      m_RightClickFunc;
+    bool            m_bRightClickEvent;
 public:
     virtual void render_update() override;
-
 public:
+    void AddRightClickDelegate(UI* _Inst, Delegate_0 _pFunc) { m_SelectInst = _Inst; m_RightClickFunc = _pFunc; }
     TreeNode* GetRootNode() { return m_Root; }
     TreeNode* GetSelectedNode() { return m_Selected; }
 
@@ -97,7 +97,7 @@ private:
     void SetDragNode(TreeNode* _DragNode);
     void SetDropNode(TreeNode* _DropNode);
 
-
+    void SetRightClickedNode(TreeNode* _SelectNode);
 
 
 public:

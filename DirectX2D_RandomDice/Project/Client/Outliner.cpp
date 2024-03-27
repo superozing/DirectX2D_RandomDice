@@ -19,12 +19,21 @@ Outliner::Outliner()
 	m_Tree = new TreeUI("OutlinerTree");
 	m_Tree->ShowRootNode(false);
 	m_Tree->UseDragDrop(true);
+	m_Tree->AddRightClickDelegate(this, (Delegate_0)&Outliner::OpenRightClickMenu);
 
-	AddChildUI(m_Tree);
+	if (KEY_TAP(KEY::DEL))
+		DeleteObject();
+
+	if (m_bRightClick)
+	{
+		DrawRightClickMenu();
+	}
 
 	// 트리에 클릭 이벤트 등록
 	m_Tree->AddSelectDelegate(this, (Delegate_1)&Outliner::SelectObject);
 	m_Tree->AddDragDropDelegate(this, (Delegate_2)&Outliner::DragDropObject);
+
+	AddChildUI(m_Tree);
 
 	// 트리 내용을 현재 레벨의 물체들로 구성
 	ResetCurrentLevel();
@@ -50,6 +59,72 @@ void Outliner::render_update()
 			GamePlayStatic::DestroyGameObject(pSelectObj);
 		}
 	}
+	if (m_bRightClick)
+	{
+		DrawRightClickMenu();
+	}
+}
+
+void Outliner::DeleteObject()
+{
+	TreeNode* pNode = m_Tree->GetSelectedNode();
+
+	if (pNode)
+	{
+		CGameObject* pSelectObj = (CGameObject*)pNode->GetData();
+		GamePlayStatic::DestroyGameObject(pSelectObj);
+	}
+}
+
+void Outliner::DrawRightClickMenu()
+{
+	bool bHovered = false;
+
+	//if (ImGui::BeginPopupContextItem("##OutlinerRightClickPopup"))
+	if (ImGui::BeginPopupContextItem("##OutlinerRightClickPopup"))
+	{
+		if (ImGui::Selectable("Delete"))
+		{
+			DeleteObject();
+			m_bRightClick = false;
+		}
+		if (ImGui::IsItemHovered()) bHovered |= true;
+
+		if (ImGui::Selectable("Create Prefab"))
+		{
+			TreeNode* pNode = m_Tree->GetSelectedNode();
+
+			if (pNode)
+			{
+				// create prefab
+				CGameObject* pSelectObj = (CGameObject*)pNode->GetData();
+				Ptr<CPrefab> pPrefab = new CPrefab(pSelectObj->Clone(), false);
+				wstring strPath = L"prefab\\" + pSelectObj->GetName() + L".pref";
+				CAssetMgr::GetInst()->AddAsset(strPath, pPrefab.Get());
+
+				// save prefab
+				pPrefab->Save(strPath);
+			}
+
+			m_bRightClick = false;
+		}
+		if (ImGui::IsItemHovered()) bHovered |= true;
+
+		//if (ImGui::Selectable("Create Prefab")) {} //value = 0.0f;
+
+		if (ImGui::Selectable("Close"))
+		{
+			ImGui::CloseCurrentPopup();
+			m_bRightClick = false;
+		}
+
+		if (KEY_TAP(KEY::LBTN) && !bHovered)
+			m_bRightClick = false;
+
+		ImGui::EndPopup();
+	}
+
+	ImGui::OpenPopup("##OutlinerRightClickPopup", ImGuiPopupFlags_MouseButtonRight);
 }
 
 void Outliner::ResetCurrentLevel()
