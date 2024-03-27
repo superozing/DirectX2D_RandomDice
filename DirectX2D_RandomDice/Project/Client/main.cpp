@@ -78,17 +78,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     GetClientRect(hWnd, &rect);
 
     // window size, position
-    Vec2 WinSize = Vec2((float)rect.right, (float)rect.bottom);
+    Resolution = Vec2((float)rect.right, (float)rect.bottom);
     rect = { 0, 0, (int)WinSize.x, (int)WinSize.y };
     AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
     SetWindowPos(hWnd, nullptr, -10, 0, rect.right - rect.left, rect.bottom - rect.top, 0);
 #else
-    Vec2 WinSize = Vec2(1600, 900);
-    LONG_PTR style = GetWindowLongPtr(hWnd, GWL_STYLE);
-    style &= ~WS_OVERLAPPEDWINDOW;
-    style |= WS_POPUP;
-    SetWindowLongPtr(hWnd, GWL_STYLE, style);
-    SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED | SWP_SHOWWINDOW);
+    Resolution = Vec2(540.f, 960.f);
+    SetWindowPos(hWnd, HWND_TOP, 0, 0, Resolution.x, Resolution.y, SWP_FRAMECHANGED | SWP_SHOWWINDOW);
 #endif
 
     // window style
@@ -97,7 +93,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     BOOL SET_CAPTION_COLOR = SUCCEEDED(DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_CAPTION_COLOR, &DARK_COLOR, sizeof(DARK_COLOR)));
 
     // CEnigne init
-    if (FAILED(CEngine::GetInst()->init(hWnd, WinSize)))
+    if (FAILED(CEngine::GetInst()->init(hWnd, Resolution)))
     {
         MessageBox(nullptr, L"Failed to initialize CEngine", L"Faile to initialize", MB_OK);
         return 0;
