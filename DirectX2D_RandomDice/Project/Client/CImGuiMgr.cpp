@@ -328,8 +328,29 @@ void CImGuiMgr::render_copytex()
     ImGui::Image((void*)pCopyTex->GetSRV().Get(), ImVec2(Resolution.x * (RightBottom.x - LeftTopUv.x), Resolution.y * (RightBottom.y - LeftTopUv.y)), LeftTopUv, RightBottom);
 
 
-    ImGui::End();
 
+    // case: drop
+    if (ImGui::IsMouseReleased(0) && ImGui::BeginDragDropTarget())
+    {
+        if (m_Prefab.Get())
+        {
+            GamePlayStatic::SpawnGameObject(m_Prefab->Instantiate(), 0);
+        }
+
+        ImGui::EndDragDropTarget();
+    }
+
+    ImGui::End();
+}
+
+void CImGuiMgr::DragPrefab(DWORD_PTR _pref)
+{
+    Ptr<CAsset> pAsset = (CAsset*)_pref;
+
+    if (pAsset.Get() && pAsset->GetType() == ASSET_TYPE::PREFAB)
+    {
+        m_Prefab = (CPrefab*)pAsset.Get();
+    }
 }
 
 void CImGuiMgr::LoadLayerName()

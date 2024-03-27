@@ -22,12 +22,15 @@ private:
     HANDLE              m_hNotify;
 
     vector<string>     m_LayerName;
+    Ptr<CPrefab>                m_Prefab;
 
 public:
     void init(HWND _hMainWnd, ComPtr<ID3D11Device> _Device, ComPtr <ID3D11DeviceContext> _Context);
     void progress();
     void ApplyDefaultStyle();
 
+public:
+    void DragPrefab(DWORD_PTR _pref);
     void render_copytex();
 
 public:

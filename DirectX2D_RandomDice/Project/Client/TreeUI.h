@@ -22,7 +22,7 @@ public:
     void SetFrame(bool _Frame) { m_bFrame = _Frame; }
 
     const string& GetName() { return m_Name; }
-    DWORD_PTR GetData() { return m_Data; }
+    DWORD_PTR GetData() const { return m_Data; }
 
 private:
     void SetID(const string& _ID) { m_ID = _ID; }

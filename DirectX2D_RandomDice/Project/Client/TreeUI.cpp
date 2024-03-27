@@ -40,6 +40,12 @@ void TreeNode::render_update()
 
 			// Tree 에 자신이 Drag 된 노드임을 알린다.
 			m_Owner->SetDragNode(this);
+
+			// case: prefab drag
+			if (m_ParentNode->GetName() == "PREFAB")
+				CImGuiMgr::GetInst()->DragPrefab(m_Data);
+			else
+				CImGuiMgr::GetInst()->DragPrefab(DWORD_PTR(0));
 		}
 
 		else if (ImGui::BeginDragDropTarget())
