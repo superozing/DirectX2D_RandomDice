@@ -2,6 +2,7 @@
 #include "ParamUI.h"
 
 #include <Engine/CAssetMgr.h>
+#include <Engine/CTexture.h>
 
 #include "imgui.h"
 #include "ListUI.h"

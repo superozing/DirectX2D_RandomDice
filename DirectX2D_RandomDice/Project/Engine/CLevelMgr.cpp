@@ -50,7 +50,6 @@ void CLevelMgr::tick()
 	CCollisionMgr::GetInst()->tick();
 
 	// Render
-	CRenderMgr::GetInst()->tick();
 	CFontMgr::GetInst()->render();
 }
 

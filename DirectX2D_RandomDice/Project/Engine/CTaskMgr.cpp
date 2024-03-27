@@ -112,6 +112,7 @@ void CTaskMgr::tick()
 			CLevelMgr::GetInst()->ChangeLevel_Task(pNextLevel, State);
 
 			m_bCreateObject = true;
+			m_bChangeLevel = true;
 
 			break;
 		}
@@ -131,7 +132,8 @@ void CTaskMgr::tick()
 void CTaskMgr::Clear()
 {
 	m_bCreateObject = false;
-	
+	m_bChangeLevel = true;
+
 	// ¾ïÁö
 	if (1 == m_DeleteFrameCount)
 	{

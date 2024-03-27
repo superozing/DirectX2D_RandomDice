@@ -134,11 +134,22 @@ void CKeyMgr::tick()
 		m_vMousePos = Vec2((float)pt.x, (float)pt.y);
 
 		// 마우스 이동 방향
-		m_vMouseDrag = m_vMousePos - m_vMousePrevPos;
 
-		Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
+		m_vMouseDrag = m_vMousePos - m_vMousePrevPos;
+		Vec2 vResol;
+#ifndef _RELEASE_GAME
+		vResol = CDevice::GetInst()->GetGameResolution();
+		m_vMouseWorldPos.x = m_vMousePos.x - vResol.x / 2.f + 10;
+		m_vMouseWorldPos.y = -m_vMousePos.y + vResol.y / 2.f + 55;
+#endif
+#ifdef _RELEASE_GAME
+		vResol = CDevice::GetInst()->GetGameResolution();
 		m_vMouseWorldPos.x = m_vMousePos.x - vResol.x / 2.f;
 		m_vMouseWorldPos.y = -m_vMousePos.y + vResol.y / 2.f;
+
+
+#endif // _RELEASE_GAME
+
 
 
 #ifndef _RELEASE_GAME

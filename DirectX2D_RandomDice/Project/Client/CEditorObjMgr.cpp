@@ -29,7 +29,7 @@ void CEditorObjMgr::init()
 	pEditorCam->Camera()->LayerCheck(31, false);
 
 	// 잠시 ORTHOGRAPHIC으로 수정
-	pEditorCam->Camera()->SetProjType(PROJ_TYPE::PERSPECTIVE);
+	pEditorCam->Camera()->SetProjType(PROJ_TYPE::ORTHOGRAPHIC);
 	pEditorCam->Camera()->SetFOV(XM_PI / 2.f);
 	pEditorCam->Camera()->SetFar(100000.f);
 

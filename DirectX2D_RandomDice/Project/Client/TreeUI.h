@@ -5,7 +5,7 @@
 class TreeNode
 {
 private:
-    TreeUI*             m_Owner;
+    class TreeUI*             m_Owner;
 
     string              m_Name;
     string              m_ID;

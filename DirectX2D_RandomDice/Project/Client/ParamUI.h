@@ -2,6 +2,8 @@
 
 #include <Engine/CTexture.h>
 
+#include "CImGuiMgr.h"
+
 class ParamUI
 {
 private:

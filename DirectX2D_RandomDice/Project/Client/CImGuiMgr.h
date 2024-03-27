@@ -21,12 +21,18 @@ private:
 
     HANDLE              m_hNotify;
 
+    vector<string>     m_LayerName;
 
 public:
     void init(HWND _hMainWnd, ComPtr<ID3D11Device> _Device, ComPtr <ID3D11DeviceContext> _Context);
     void progress();
     void ApplyDefaultStyle();
 
+    void render_copytex();
+
+public:
+    const vector<string>& GetLayerName() { return m_LayerName; }
+    void LoadLayerName();
 private:
     void tick();
     void render();

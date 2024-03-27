@@ -34,6 +34,10 @@ void CRenderMgr::init()
 	m_vecNoiseTex[2]->UpdateData(14);
 	m_vecNoiseTex[2]->UpdateData_CS_SRV(14);
 	g_global.g_NoiseTexResolution = Vec2(m_vecNoiseTex[2]->GetWidth(), m_vecNoiseTex[2]->GetHeight());
+
+	// RenderTarget Copy Texture
+	m_RTCopyTex = CAssetMgr::GetInst()->CreateTexture(L"RTCopyTex", (UINT)vRenderResolution.x, (UINT)vRenderResolution.y
+		, DXGI_FORMAT_R8G8B8A8_UNORM, D3D11_BIND_SHADER_RESOURCE, D3D11_USAGE_DEFAULT);
 }
 
 void CRenderMgr::CopyRenderTargetToPostProcessTarget()

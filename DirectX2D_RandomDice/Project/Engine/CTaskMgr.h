@@ -10,13 +10,13 @@ enum class TASK_TYPE
 
 	// Param1 : Asset Adress 
 	ADD_ASSET,
-	
+
 	// Param1 : AssetType, Param2 : Asset Adress
-	DELETE_ASSET, 
+	DELETE_ASSET,
 
 	// Param1 : Level, Param2 : LEVEL_STATE
 	CHANGE_LEVELSTATE,
-		
+
 	// Param1 : Level Adress, Param2 : Next Level Start State
 	CHANGE_LEVEL,
 
@@ -48,7 +48,11 @@ private:
 	bool			m_bAssetChange;
 	int				m_DeleteFrameCount;
 
+	bool         m_bChangeLevel;
+
+
 public:
+	bool GetChangeLevel() { return m_bChangeLevel; }
 	void tick();
 	void AddTask(const tTask& _Task) { m_vecTask.push_back(_Task); }
 	bool GetObjectEvent() { return m_bCreateObject || m_bDeleteObject; }

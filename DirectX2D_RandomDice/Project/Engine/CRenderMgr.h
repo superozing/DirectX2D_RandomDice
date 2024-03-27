@@ -35,6 +35,14 @@ private:
     RENDER_FUNC             m_RenderFunc;
     bool                    m_isEditorMode;
 
+
+    // RenderTarget Copy Texture
+    Ptr<CTexture>           m_RTCopyTex;
+
+public:
+    Ptr<CTexture> GetRTCopyTex() { return m_RTCopyTex; }
+    void CopyRenderTargetToImGuiRenderTexture();
+
 public:
     void RegisterCamera(CCamera* _Cam, int _Idx);
     void AddDebugShapeInfo(const tDebugShapeInfo& _info) { m_DbgShapeInfo.push_back(_info); }

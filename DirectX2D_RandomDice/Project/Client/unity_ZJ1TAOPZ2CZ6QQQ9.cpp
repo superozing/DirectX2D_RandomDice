@@ -6,6 +6,9 @@
 #include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\AssetUI.cpp"
 
 
+#include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\CameraUI.cpp"
+
+
 #include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\CCameraMoveScript.cpp"
 
 

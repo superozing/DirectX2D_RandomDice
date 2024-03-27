@@ -3,12 +3,12 @@
 #include "Client.h"
 
 #include <crtdbg.h>
+#include <dwmapi.h>
 
 #include <Engine\global.h>
 #include <Engine\CEngine.h>
 #include <Engine\CDevice.h>
 #include <Engine/CPrefab.h>
-
 #include "CLevelSaveLoad.h"
 
 #ifdef _DEBUG
@@ -32,32 +32,38 @@
 #include "CEditorObjMgr.h"
 #include "CCreateTempLevel.h"
 
-// #define _RELEASE_GAME
-
-
 
 HINSTANCE   hInst;
 HWND        hWnd;
 
 static UINT g_ResizeWidth = 0, g_ResizeHeight = 0;
 
+// 전역 해상도
+Vec2        Resolution;
+
+
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+    _In_opt_ HINSTANCE hPrevInstance,
+    _In_ LPWSTR    lpCmdLine,
+    _In_ int       nCmdShow)
 {
+    // memory lick check
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    //_CrtSetBreakAlloc(433);
+    _CrtSetBreakAlloc(136);
 
     MyRegisterClass(hInstance);
 
+    // ------------------
+    // Init
+    // ------------------
     // 애플리케이션 초기화를 수행합니다:
-    if (!InitInstance (hInstance, nCmdShow))
+    if (!InitInstance(hInstance, nCmdShow))
     {
         return FALSE;
     }
@@ -65,30 +71,57 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
     MSG msg;
 
-    // CEngine 초기화 실패 -> 프로그램 종료
-    if (FAILED(CEngine::GetInst()->init(hWnd, Vec2(540, 960))))
+#ifdef _DEBUG
+    RECT rect = { 0,0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN) };
+    AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
+    SetWindowPos(hWnd, nullptr, 0, 0, rect.right - rect.left, rect.bottom - rect.top - 79, 0);
+    GetClientRect(hWnd, &rect);
+
+    // window size, position
+    Vec2 WinSize = Vec2((float)rect.right, (float)rect.bottom);
+    rect = { 0, 0, (int)WinSize.x, (int)WinSize.y };
+    AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
+    SetWindowPos(hWnd, nullptr, -10, 0, rect.right - rect.left, rect.bottom - rect.top, 0);
+#else
+    Vec2 WinSize = Vec2(1600, 900);
+    LONG_PTR style = GetWindowLongPtr(hWnd, GWL_STYLE);
+    style &= ~WS_OVERLAPPEDWINDOW;
+    style |= WS_POPUP;
+    SetWindowLongPtr(hWnd, GWL_STYLE, style);
+    SetWindowPos(hWnd, HWND_TOP, 0, 0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN), SWP_FRAMECHANGED | SWP_SHOWWINDOW);
+#endif
+
+    // window style
+    COLORREF DARK_COLOR = 0x00151515;
+    BOOL SET_BORDER_COLOR = SUCCEEDED(DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_BORDER_COLOR, &DARK_COLOR, sizeof(DARK_COLOR)));
+    BOOL SET_CAPTION_COLOR = SUCCEEDED(DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_CAPTION_COLOR, &DARK_COLOR, sizeof(DARK_COLOR)));
+
+    // CEnigne init
+    if (FAILED(CEngine::GetInst()->init(hWnd, WinSize)))
     {
-        MessageBox(nullptr, L"CEngine 초기화 실패", L"초기화 실패", MB_OK);
+        MessageBox(nullptr, L"Failed to initialize CEngine", L"Faile to initialize", MB_OK);
         return 0;
     }
-        
+
     CPrefab::GAMEOBJECT_SAVE = &CLevelSaveLoad::SaveGameObject;
-    CPrefab::GAMEOBJECT_LOAD = &CLevelSaveLoad::LoadGameObject;    
-    
+    CPrefab::GAMEOBJECT_LOAD = &CLevelSaveLoad::LoadGameObject;
+
 #ifndef _RELEASE_GAME
-    // 임시 레벨 생성
+    // create temp level
     CCreateTempLevel::Init();
     CCreateTempLevel::CreateTempLevel();
 
     // EditorObjectManager 초기화
     CEditorObjMgr::GetInst()->init();
 
-    // ImGui 초기화
+    // ImGUI init
     CImGuiMgr::GetInst()->init(hWnd, DEVICE, CONTEXT);
+
 #endif
 
-
-
+    // ------------------
+    // main loop
+    // ------------------
     while (true)
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -102,30 +135,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 DispatchMessage(&msg);
             }
         }
-
         else
         {
-            // Engine Update
+            // update
             CEngine::GetInst()->progress();
 
-
-
 #ifndef _RELEASE_GAME
-            // EditorObj
             CEditorObjMgr::GetInst()->progress();
-
-            // ImGui Update
             CImGuiMgr::GetInst()->progress();
 #endif
 
-            // Engine 및 ImGui 렌더링 최종 결과를 출력한다.
+            // Engine + ImGUI의 렌더링 최종 결과 present
             CDevice::GetInst()->Present();
-        }        
-    }  
+        }
+    }
 
-    return (int) msg.wParam;
+    return (int)msg.wParam;
 }
-
 
 
 //
