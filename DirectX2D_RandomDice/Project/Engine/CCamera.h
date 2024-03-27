@@ -40,17 +40,17 @@ private:
     vector<CGameObject*>    m_vecPostProcess;
 
 public:
-    PROJ_TYPE GetProjType() { return m_ProjType; }
+    PROJ_TYPE GetProjType() const { return m_ProjType; }
     void SetProjType(PROJ_TYPE _Type) { m_ProjType = _Type; }
 
-    float GetScale() { return m_Scale; }
+    float GetScale() const { return m_Scale; }
     void SetScale(float _Scale) { m_Scale = _Scale; }
 
-    float GetFOV() { return m_FOV; }
+    float GetFOV() const { return m_FOV; }
     void SetFOV(float _FOV) { m_FOV = _FOV; }
 
     void SetFar(float _Far) { m_Far = _Far; }
-    float GetFar() { return m_Far; }
+    float GetFar() const { return m_Far; }
 
     const Matrix& GetViewMat() { return m_matView; }
     const Matrix& GetProjMat() { return m_matProj; }
@@ -60,6 +60,12 @@ public:
     void LayerCheck(const wstring& _strLayerName, bool _bCheck);
     void LayerCheckAll() { m_LayerCheck = 0xffffffff; }
 
+
+    int GetPriority() const { return m_CameraPriority; }
+
+    // Layer 체크 확인
+    bool IsLayerCheck(UINT _LayerIdx) const;
+    bool IsLayerCheck(const wstring& _strLayerName) const;
 
 public:
     virtual void begin() override;

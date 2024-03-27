@@ -27,6 +27,7 @@ CCamera::CCamera()
 {
 	Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
 	m_AspectRatio = vResol.x / vResol.y;
+	//m_AspectRatio = 540.f / 960.f;
 }
 
 CCamera::~CCamera()
@@ -204,7 +205,7 @@ void CCamera::SaveToFile(FILE* _File)
 	fwrite(&m_FOV, sizeof(float), 1, _File);
 	fwrite(&m_Width, sizeof(float), 1, _File);
 	fwrite(&m_Scale, sizeof(float), 1, _File);
-	fwrite(&m_AspectRatio, sizeof(float), 1, _File);
+	//fwrite(&m_AspectRatio, sizeof(float), 1, _File);
 	fwrite(&m_Far, sizeof(float), 1, _File);
 	fwrite(&m_LayerCheck, sizeof(UINT), 1, _File);
 	fwrite(&m_CameraPriority, sizeof(int), 1, _File);
@@ -216,8 +217,29 @@ void CCamera::LoadFromFile(FILE* _File)
 	fread(&m_FOV, sizeof(float), 1, _File);
 	fread(&m_Width, sizeof(float), 1, _File);
 	fread(&m_Scale, sizeof(float), 1, _File);
-	fread(&m_AspectRatio, sizeof(float), 1, _File);
+	//fread(&m_AspectRatio, sizeof(float), 1, _File);
 	fread(&m_Far, sizeof(float), 1, _File);
 	fread(&m_LayerCheck, sizeof(UINT), 1, _File);
 	fread(&m_CameraPriority, sizeof(int), 1, _File);
+}
+
+bool CCamera::IsLayerCheck(UINT _LayerIdx) const
+{
+	return m_LayerCheck & (1 << _LayerIdx);
+}
+
+bool CCamera::IsLayerCheck(const wstring& _strLayerName) const
+{
+	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
+	CLayer* pLayer = pCurLevel->GetLayer(_strLayerName);
+
+	if (nullptr == pLayer)
+	{
+		MessageBoxA(nullptr, "레이어가 없습니다.", "IsLayerCheck Failed!", MB_OK);
+		return false;
+	}
+
+	int idx = pLayer->GetLayerIdx();
+
+	return IsLayerCheck(idx);
 }
