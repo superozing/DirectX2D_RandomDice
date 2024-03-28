@@ -102,7 +102,7 @@ void CDiceUI::begin()
 
 	tModule.SpaceType = 0;
 
-	tModule.vSpawnColor = Vec4(1.f, 1.f, 1.f, 1.f);
+	tModule.vSpawnColor = Vec4(CDiceScript::GetDiceColor(m_Dice) / 255.f, 1.f);
 	tModule.vSpawnMinScale = Vec4(8.f, 8.f, 8.f, 1.f);
 	tModule.vSpawnMaxScale = Vec4(14.f, 14.f, 14.f, 1.f);
 
@@ -221,8 +221,9 @@ void CDiceUI::begin()
 	m_FDiceEyeCount2.WStr = L"0";
 
 // 3. 폰트 : 레벨 나타낼.
-	// 나중에 색상을 주사위의 색상으로 맟춰주어야 한다.
-	m_FDiceLevel.Color = FONT_RGBA(255, 255, 255, 255);
+	Vec3 vDiceColor = CDiceScript::GetDiceColor(m_Dice);
+
+	m_FDiceLevel.Color = FONT_RGBA((UINT)vDiceColor.x, (UINT)vDiceColor.y, (UINT)vDiceColor.z, 255);
 	m_FDiceLevel.fFontSize = 22.f;
 	m_FDiceLevel.FontType = FONT_TYPE::EXO2;
 	m_FDiceLevel.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
