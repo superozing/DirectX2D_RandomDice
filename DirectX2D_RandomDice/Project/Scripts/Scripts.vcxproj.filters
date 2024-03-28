@@ -215,9 +215,6 @@
     <Filter Include="Memory Pool">
       <UniqueIdentifier>{9704712e-15b5-46bc-a464-0bcc8b7c19d5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Scripts\UI\SummonDiceBtn">
-      <UniqueIdentifier>{7a8676b5-c90e-47c6-a211-859bb982558f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Scripts\DiceUI">
       <UniqueIdentifier>{ebc51a9c-6844-4487-b9d5-2038a17bb5fd}</UniqueIdentifier>
     </Filter>

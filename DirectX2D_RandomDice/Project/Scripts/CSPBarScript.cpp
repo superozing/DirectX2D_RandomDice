@@ -80,16 +80,19 @@ void CSPBarScript::begin()
 	m_fInfo.fFontSize = 20.f;
 	m_fInfo.FontType = FONT_TYPE::MAPLE;
 	m_fInfo.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_fInfo.IsWorldPosRender = true;
 }
 
 void CSPBarScript::tick()
 {
 	Vec3 vPos = OBJECT->Transform()->GetWorldPos();
-	Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
 
 	// 체력 폰트의 위치 설정
-	m_fInfo.fPosX = vPos.x + (vResol.x / 2) + 10;
-	m_fInfo.fPosY = -vPos.y + (vResol.y / 2) - 10;
+	m_fInfo.fPosX = vPos.x;
+	m_fInfo.fPosY = vPos.y;
+
+	m_fInfo.WorldRenderOffset.x = 10;
+	m_fInfo.WorldRenderOffset.y = -10;
 
 	// 현재 SP를 필드 스크립트로부터 얻어오기
 	m_fInfo.WStr = to_wstring(m_pFieldScript->GetCurSP());

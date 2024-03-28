@@ -189,11 +189,13 @@ void CDiceUI::begin()
 	m_FSP1.fFontSize = 15.f;
 	m_FSP1.FontType = FONT_TYPE::ALBA_SUPER;
 	m_FSP1.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_FSP1.IsWorldPosRender = true;
 	  
 	m_FSP2.Color = FONT_RGBA(255, 255, 255, 255);
 	m_FSP2.fFontSize = 15.5f;
 	m_FSP2.FontType = FONT_TYPE::ALBA_MATTER;
 	m_FSP2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_FSP2.IsWorldPosRender = true;
 
 	// 레벨업SP 폰트의 문자열 설정
 	m_FSP1.WStr = L"100";
@@ -206,12 +208,14 @@ void CDiceUI::begin()
 	m_FDiceEyeCount1.fFontSize = 14.f;
 	m_FDiceEyeCount1.FontType = FONT_TYPE::ALBA_SUPER;
 	m_FDiceEyeCount1.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_FDiceEyeCount1.IsWorldPosRender = true;
 
 	// 2. 폰트 : 레벨업 비용
 	m_FDiceEyeCount2.Color = FONT_RGBA(255, 255, 255, 255);
 	m_FDiceEyeCount2.fFontSize = 14.2f;
 	m_FDiceEyeCount2.FontType = FONT_TYPE::ALBA_MATTER;
 	m_FDiceEyeCount2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_FDiceEyeCount2.IsWorldPosRender = true;
 
 	m_FDiceEyeCount1.WStr = L"0";
 	m_FDiceEyeCount2.WStr = L"0";
@@ -222,9 +226,13 @@ void CDiceUI::begin()
 	m_FDiceLevel.fFontSize = 22.f;
 	m_FDiceLevel.FontType = FONT_TYPE::EXO2;
 	m_FDiceLevel.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_FDiceLevel.IsWorldPosRender = true;
+
 	m_FDiceLevel.WStr = L"LV.1";
 
 
+
+	// 폰트 오프셋 설정
 
 
 }
@@ -238,22 +246,36 @@ void CDiceUI::tick()
 		m_fScaleSize = 1.f;
 
 	Vec3 vPos = OBJECT->Transform()->GetWorldPos();
-	Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
 
 	// 폰트의 위치 설정
-	m_FSP1.fPosX = vPos.x + (vResol.x / 2) + 12;
-	m_FSP1.fPosY = -vPos.y + (vResol.y / 2) + 4;
-	m_FSP2.fPosX = vPos.x + (vResol.x / 2) + 12;
-	m_FSP2.fPosY = -vPos.y + (vResol.y / 2) + 7;
+	m_FSP1.fPosX = vPos.x;
+	m_FSP1.fPosY = vPos.y;
+	m_FSP2.fPosX = vPos.x;
+	m_FSP2.fPosY = vPos.y;
 
+	m_FSP1.WorldRenderOffset.x = 12;
+	m_FSP1.WorldRenderOffset.y = 4;
+	m_FSP2.WorldRenderOffset.x = 12;
+	m_FSP2.WorldRenderOffset.y = 7;
 
-	m_FDiceEyeCount1.fPosX = vPos.x + (vResol.x / 2) + 30;
-	m_FDiceEyeCount1.fPosY = -vPos.y + (vResol.y / 2) - 47;
-	m_FDiceEyeCount2.fPosX = vPos.x + (vResol.x / 2) + 30;
-	m_FDiceEyeCount2.fPosY = -vPos.y + (vResol.y / 2) - 44;
+	///
 
-	m_FDiceLevel.fPosX = vPos.x + (vResol.x / 2);
-	m_FDiceLevel.fPosY = -vPos.y + (vResol.y / 2) - 25;
+	m_FDiceEyeCount1.fPosX = vPos.x;
+	m_FDiceEyeCount1.fPosY = vPos.y;
+	m_FDiceEyeCount2.fPosX = vPos.x;
+	m_FDiceEyeCount2.fPosY = vPos.y;
+
+	m_FDiceEyeCount1.WorldRenderOffset.x = 30;
+	m_FDiceEyeCount1.WorldRenderOffset.y = -47;
+	m_FDiceEyeCount2.WorldRenderOffset.x = 30;
+	m_FDiceEyeCount2.WorldRenderOffset.y = -44;
+
+	///
+
+	m_FDiceLevel.fPosX = vPos.x;
+	m_FDiceLevel.fPosY = vPos.y;
+
+	m_FDiceLevel.WorldRenderOffset.y = -25;
 
 	// 스케일 적용
 	OBJECT->Transform()->SetRelativeScale(m_vScale * m_fScaleSize);

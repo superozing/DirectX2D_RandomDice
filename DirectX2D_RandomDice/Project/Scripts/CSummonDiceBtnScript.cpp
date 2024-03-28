@@ -92,11 +92,13 @@ void CSummonDiceBtnScript::begin()
 	m_fInfo1.fFontSize = 12.f;
 	m_fInfo1.FontType = FONT_TYPE::ALBA_SUPER;
 	m_fInfo1.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_fInfo1.IsWorldPosRender = true;
 
 	m_fInfo2.Color = FONT_RGBA(255, 255, 255, 255);
 	m_fInfo2.fFontSize = 12.f;
 	m_fInfo2.FontType = FONT_TYPE::ALBA_MATTER;
 	m_fInfo2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_fInfo1.IsWorldPosRender = true;
 
 	// 체력 폰트의 문자열 설정
 	m_fInfo1.WStr = L"10";
@@ -128,13 +130,15 @@ void CSummonDiceBtnScript::tick()
 	OBJECT->Transform()->SetRelativeScale(m_vScale * m_fScaleSize);
 
 	Vec3 vPos = OBJECT->Transform()->GetWorldPos();
-	Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
 
 	// 체력 폰트의 위치 설정
-	m_fInfo1.fPosX = vPos.x + (vResol.x / 2);
-	m_fInfo1.fPosY = -vPos.y + (vResol.y / 2) + 9;
-	m_fInfo2.fPosX = vPos.x + (vResol.x / 2);
-	m_fInfo2.fPosY = -vPos.y + (vResol.y / 2) + 12;
+	m_fInfo1.fPosX = vPos.x;
+	m_fInfo1.fPosY = vPos.y;
+	m_fInfo1.WorldRenderOffset.y = 9;
+
+	m_fInfo2.fPosX = vPos.x;
+	m_fInfo2.fPosY = vPos.y;
+	m_fInfo2.WorldRenderOffset.y = 12;
 
 	// 폰트 매니저 출력에 추가
 	CFontMgr::GetInst()->AddRenderFont(m_fInfo2);

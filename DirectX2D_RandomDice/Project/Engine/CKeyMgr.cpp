@@ -49,7 +49,7 @@ void CKeyMgr::render()
 		}
 		else
 		{
-			CFontMgr::GetInst()->DrawFont(iter->OutputWStr.c_str(), vResol.x / 2 - 10.f, height, 15, FONT_RGBA(255, 255, 255, 255), FONT_TYPE::ARIAL);
+			CFontMgr::GetInst()->DrawFont(iter->OutputWStr.c_str(), vResol.x / 2 + 110.f, height, 15, FONT_RGBA(255, 255, 255, 255), FONT_TYPE::ARIAL);
 			height += 20;
 			++iter;
 		}

@@ -330,11 +330,13 @@ void CFieldScript::begin()
 	m_fInfo1.fFontSize = 15.f;
 	m_fInfo1.FontType = FONT_TYPE::ALBA_SUPER;
 	m_fInfo1.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_fInfo1.IsWorldPosRender = true;
 
 	m_fInfo2.Color = FONT_RGBA(255, 255, 255, 255);
 	m_fInfo2.fFontSize = 15.2f;
 	m_fInfo2.FontType = FONT_TYPE::ALBA_MATTER;
 	m_fInfo2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_fInfo2.IsWorldPosRender = true;
 
 
 	// 초기 스폰 타이밍 조절
@@ -625,10 +627,13 @@ void CFieldScript::tick()
 				//=========
 				
 				// 체력 폰트의 위치 설정
-				m_fInfo1.fPosX = Pos.x + (vResol.x / 2);
-				m_fInfo1.fPosY = -Pos.y + (vResol.y / 2) + 7;
-				m_fInfo2.fPosX = Pos.x + (vResol.x / 2);
-				m_fInfo2.fPosY = -Pos.y + (vResol.y / 2) + 10;
+				m_fInfo1.fPosX = Pos.x;
+				m_fInfo1.fPosY = Pos.y;
+				m_fInfo2.fPosX = Pos.x;
+				m_fInfo2.fPosY = Pos.y;
+
+				m_fInfo1.WorldRenderOffset.y = 7;
+				m_fInfo2.WorldRenderOffset.y = 10;
 
 				// 체력 폰트의 문자열 설정
 				UINT enemyHP = pEScript->GetEnemyHealth();

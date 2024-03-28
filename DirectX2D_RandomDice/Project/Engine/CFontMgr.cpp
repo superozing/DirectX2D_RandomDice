@@ -63,12 +63,19 @@ void CFontMgr::DrawFont(const wchar_t* _pStr, float _fPosX, float _fPosY, float 
 
 void CFontMgr::render()
 {
+	// 윈도우 해상도 가져오기
+	Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
+	vResol.x /= 2;
+	vResol.y /= 2;
+
 	for (auto& it : m_VecRenderFont)
 	{
 		if (it.IsWorldPosRender == true)
 		{
+			// WorldPos -> 윈도우 좌표계로 변환 후 폰트 그리기
 			DrawFont(it.WStr.c_str()
-				, it.fPosX + 270.f + it.WorldRenderOffset.x, -it.fPosY + 480.f + it.WorldRenderOffset.y
+				, it.fPosX + vResol.x + it.WorldRenderOffset.x
+				, -it.fPosY + vResol.y + it.WorldRenderOffset.y
 				, it.fFontSize, it.Color, it.FontType, it.TextFlag);
 		}
 		else
