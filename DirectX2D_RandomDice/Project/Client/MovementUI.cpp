@@ -13,7 +13,7 @@ MovementUI::~MovementUI()
 {
 }
 
-void TextBox(const char* text, float width = 150)
+void TextBox(const char* text, float width)
 {
 	string ID = "##TB_" + (string)text;
 	ImGui::BeginChild(ID.c_str(), ImVec2(width, 15));

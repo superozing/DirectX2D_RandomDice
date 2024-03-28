@@ -1,5 +1,9 @@
 #pragma once
 #include "ComponentUI.h"
+
+void TextBox(const char* text, float width = 150);
+
+
 class MovementUI :
     public ComponentUI
 {

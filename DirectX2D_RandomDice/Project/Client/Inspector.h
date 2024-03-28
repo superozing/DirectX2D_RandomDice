@@ -31,6 +31,8 @@ public:
     virtual void tick() override;
     virtual void render_update() override;
 
+    void DrawLayerUI();
+
 public:
     void SetTargetObject(CGameObject* _Object);
     void SetTargetAsset(Ptr<CAsset> _Asset);

@@ -34,6 +34,8 @@ public:
     virtual void finaltick();
     void render();
 
+    int ChangeLayer(int _Idx);
+
 public:
     void AddComponent(CComponent* _Comonent);
     CComponent* GetComponent(COMPONENT_TYPE _Type) { return m_arrCom[(UINT)_Type]; }        
