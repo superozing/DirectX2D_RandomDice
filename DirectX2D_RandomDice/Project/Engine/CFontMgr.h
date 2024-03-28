@@ -32,6 +32,9 @@ struct FONTINFO
     UINT                Color;      // 폰트의 색상. FONT_RGBA 매크로 함수를 사용하세요.
     FONT_TYPE           FontType;   // 폰트 타입. 어떤 폰트를 사용할 것인지
     FW1_TEXT_FLAG       TextFlag = FW1_RESTORESTATE;    // 텍스트 플래그. FW1_RESTORESTATE FW1_CENTER 자주 사용함
+
+    bool                IsWorldPosRender = false;
+    Vec2                WorldRenderOffset;
 };
 
 class CFontMgr :

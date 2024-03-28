@@ -64,7 +64,18 @@ void CFontMgr::DrawFont(const wchar_t* _pStr, float _fPosX, float _fPosY, float 
 void CFontMgr::render()
 {
 	for (auto& it : m_VecRenderFont)
-		DrawFont(it.WStr.c_str(), it.fPosX, it.fPosY, it.fFontSize, it.Color, it.FontType, it.TextFlag);
+	{
+		if (it.IsWorldPosRender == true)
+		{
+			DrawFont(it.WStr.c_str()
+				, it.fPosX + 270.f + it.WorldRenderOffset.x, -it.fPosY + 480.f + it.WorldRenderOffset.y
+				, it.fFontSize, it.Color, it.FontType, it.TextFlag);
+		}
+		else
+		{
+			DrawFont(it.WStr.c_str(), it.fPosX, it.fPosY, it.fFontSize, it.Color, it.FontType, it.TextFlag);
+		}
+	}
 
 	m_VecRenderFont.clear();
 }
