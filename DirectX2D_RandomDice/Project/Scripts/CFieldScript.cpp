@@ -43,7 +43,7 @@ CFieldScript::~CFieldScript()
 
 void CFieldScript::begin()
 {
-	CDiceScript::InitDicePath();
+	CDiceScript::InitDice();
 
 
 	// 예외 처리

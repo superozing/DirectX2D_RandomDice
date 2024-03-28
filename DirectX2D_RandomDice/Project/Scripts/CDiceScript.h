@@ -66,6 +66,7 @@ private:
 
 	DICE		        m_Dice;			// 주사위 종류
 	DICE_INFO	        m_Info;			// 주사위 종류에 따른 주사위 정보
+    Vec3                m_DiceColor;    // 주사위 눈금 색상
 
 	UINT		        m_DiceScale;	// 주사위의 눈금 수 (등급)
 	UINT		        m_CurMarkerIdx; // 현재 어떤 눈금에게 attack() 을 호출할 지 인덱스 값
@@ -83,19 +84,29 @@ private:
 
     // 생성 효과
     CParticleSystem*    m_SpawnParticle;
+    tParticleModule     tSpawnModule;
     Vec3                m_vSrcScale;
     float               m_fScaleSize;
     bool                m_IsGrowing;
 
     CParticleSystem*    m_LevelUpParticle;
+    tParticleModule     tLevelUpModule;
     float               m_LevelUpParticleTimer;
+
+
+
 
 public:
     // 전역 세팅 함수
+    static void InitDice();
+
     static vector<wstring> DicePath;
     static void InitDicePath();
-
     static wstring GetDicePath(DICE _Dice) { return DicePath[(UINT)_Dice]; }
+
+    static vector<Vec3> DiceColor;
+    static void InitDiceColor();
+    static Vec3 GetDiceColor(DICE _Dice) { return DiceColor[(UINT)_Dice]; }
 
 
 	DICE GetDice() const { return m_Dice; }
