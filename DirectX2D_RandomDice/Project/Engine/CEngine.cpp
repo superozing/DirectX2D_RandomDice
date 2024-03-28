@@ -79,11 +79,11 @@ void CEngine::progress()
 
 	CRenderMgr::GetInst()->tick();
 
-	CTimeMgr::GetInst()->render();
-
-	//CRenderMgr::GetInst()->CopyRenderTargetToImGuiRenderTexture();
+	// Render
+	CFontMgr::GetInst()->render();
 
 #ifndef _RELEASE_GAME
+	CTimeMgr::GetInst()->render();
 	CKeyMgr::GetInst()->render();
 #endif
 	// GC

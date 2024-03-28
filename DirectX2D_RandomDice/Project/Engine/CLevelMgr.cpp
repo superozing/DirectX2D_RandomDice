@@ -49,8 +49,7 @@ void CLevelMgr::tick()
 	// 충돌 처리
 	CCollisionMgr::GetInst()->tick();
 
-	// Render
-	CFontMgr::GetInst()->render();
+
 }
 
 void CLevelMgr::ChangeLevel(CLevel* _NextLevel, LEVEL_STATE _NextLevelStartState)
