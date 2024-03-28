@@ -24,15 +24,16 @@ CFieldScript::CFieldScript()
 	, m_XDis(0, 4)
 	, m_YDis(0, 2)
 	, m_CurWave(1)
+	, IsInvincible(false)
 {
 
 	// 나중에는 여기서 초기화하면 안된다.
 
-	m_Deck[0] = DICE(1);
-	m_Deck[1] = DICE(2);
-	m_Deck[2] = DICE(3);
-	m_Deck[3] = DICE(4);
-	m_Deck[4] = DICE(5);
+	m_Deck[0] = DICE(15);
+	m_Deck[1] = DICE(4);
+	m_Deck[2] = DICE(5);
+	m_Deck[3] = DICE(8);
+	m_Deck[4] = DICE(12);
 }
 
 CFieldScript::~CFieldScript()
@@ -378,10 +379,11 @@ void CFieldScript::begin()
 	//==================
 	AddScriptParam(SCRIPT_PARAM::INT, "Cur Wave", &m_CurWave);
 	AddScriptParam(SCRIPT_PARAM::INT, "Cur SP", &m_SP);
-	AddScriptParam(SCRIPT_PARAM::INT, "Enemy Auto Spawn", &AutoSpawnEnemy);
 	AddScriptParam(SCRIPT_PARAM::INT, "DEFAULT Enemy Spawn Count", &m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnemySpawnCount);
 	AddScriptParam(SCRIPT_PARAM::INT, "BIG Enemy Spawn Count", &m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnemySpawnCount);
 	AddScriptParam(SCRIPT_PARAM::INT, "SPEED Enemy Spawn Count", &m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::SPEED].EnemySpawnCount);
+	AddScriptParam(SCRIPT_PARAM::INT, "Enemy Auto Spawn", &AutoSpawnEnemy);
+	AddScriptParam(SCRIPT_PARAM::INT, "IsInvincible", &IsInvincible);
 
 
 }

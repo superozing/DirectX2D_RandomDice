@@ -223,13 +223,21 @@ void CDiceUI::begin()
 // 3. 폰트 : 레벨 나타낼.
 	Vec3 vDiceColor = CDiceScript::GetDiceColor(m_Dice);
 
-	m_FDiceLevel.Color = FONT_RGBA((UINT)vDiceColor.x, (UINT)vDiceColor.y, (UINT)vDiceColor.z, 255);
-	m_FDiceLevel.fFontSize = 22.f;
-	m_FDiceLevel.FontType = FONT_TYPE::EXO2;
-	m_FDiceLevel.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
-	m_FDiceLevel.IsWorldPosRender = true;
+	m_FDiceLevel1.Color = FONT_RGBA((UINT)vDiceColor.x, (UINT)vDiceColor.y, (UINT)vDiceColor.z, 255);
+	m_FDiceLevel1.fFontSize = 22.f;
+	m_FDiceLevel1.FontType = FONT_TYPE::EXO2;
+	m_FDiceLevel1.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_FDiceLevel1.IsWorldPosRender = true;
 
-	m_FDiceLevel.WStr = L"LV.1";
+	m_FDiceLevel1.WStr = L"LV.1";
+
+	m_FDiceLevel2.Color = FONT_RGBA(255, 255, 255, 255);
+	m_FDiceLevel2.fFontSize = 22.f;
+	m_FDiceLevel2.FontType = FONT_TYPE::EXO2;
+	m_FDiceLevel2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_FDiceLevel2.IsWorldPosRender = true;
+
+	m_FDiceLevel2.WStr = L"LV.1";
 
 
 
@@ -273,10 +281,16 @@ void CDiceUI::tick()
 
 	///
 
-	m_FDiceLevel.fPosX = vPos.x;
-	m_FDiceLevel.fPosY = vPos.y;
+	m_FDiceLevel1.fPosX = vPos.x;
+	m_FDiceLevel1.fPosY = vPos.y;
 
-	m_FDiceLevel.WorldRenderOffset.y = -25;
+	m_FDiceLevel1.WorldRenderOffset.y = -25;
+
+	m_FDiceLevel2.fPosX = vPos.x;
+	m_FDiceLevel2.fPosY = vPos.y;
+
+	m_FDiceLevel2.WorldRenderOffset.x = 1;
+	m_FDiceLevel2.WorldRenderOffset.y = -24;
 
 	// 스케일 적용
 	OBJECT->Transform()->SetRelativeScale(m_vScale * m_fScaleSize);
@@ -286,7 +300,8 @@ void CDiceUI::tick()
 	CFontMgr::GetInst()->AddRenderFont(m_FSP1);
 	CFontMgr::GetInst()->AddRenderFont(m_FDiceEyeCount2);
 	CFontMgr::GetInst()->AddRenderFont(m_FDiceEyeCount1);
-	CFontMgr::GetInst()->AddRenderFont(m_FDiceLevel);
+	CFontMgr::GetInst()->AddRenderFont(m_FDiceLevel2);
+	CFontMgr::GetInst()->AddRenderFont(m_FDiceLevel1);
 }									   
 
 void CDiceUI::ClickLevelUp()
@@ -301,14 +316,18 @@ void CDiceUI::ClickLevelUp()
 	UINT CurLV = m_pField->GetCurDiceLevel(m_Dice);
 	if (CurLV == 5)
 	{
-		m_FDiceLevel.WStr = L"MAX";
+		m_FDiceLevel1.WStr = L"MAX";
+		m_FDiceLevel2.WStr = L"MAX";
+		m_FDiceLevel1.Color = FONT_RGBA(100, 100, 100, 255);
 		OBJECT->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::FLOAT_0, 0.7f);
 		m_FSP2.Color = FONT_RGBA(200, 200, 200, 255);
-		m_FDiceLevel.Color = FONT_RGBA(200, 200, 200, 255);
 
 	}
 	else
-		m_FDiceLevel.WStr = L"LV." + to_wstring(CurLV);
+	{
+		m_FDiceLevel1.WStr = L"LV." + to_wstring(CurLV);
+		m_FDiceLevel2.WStr = L"LV." + to_wstring(CurLV);
+	}
 }
 
 #undef OBJECT

@@ -22,7 +22,8 @@ private:
     FONTINFO            m_FDiceEyeCount1;
     FONTINFO            m_FDiceEyeCount2;
     
-    FONTINFO            m_FDiceLevel;
+    FONTINFO            m_FDiceLevel1;
+    FONTINFO            m_FDiceLevel2;
 
     CMeshRender*        m_DiceEyeBG;
     CMeshRender*        m_SPImg;
