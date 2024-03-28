@@ -48,6 +48,9 @@ int CPrefab::Save(const wstring& _strRelativePath)
 	FILE* pFile = nullptr;
 	_wfopen_s(&pFile, strContentPath.c_str(), L"wb");
 
+	if (nullptr == pFile)
+		return E_FAIL;
+
 	GAMEOBJECT_SAVE(m_ProtoObj, pFile);
 
 	fclose(pFile);

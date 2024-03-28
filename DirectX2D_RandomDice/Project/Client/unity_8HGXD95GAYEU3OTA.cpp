@@ -42,6 +42,9 @@
 #include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\Content.cpp"
 
 
+#include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\MovementUI.cpp"
+
+
 #include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\ScriptUI.cpp"
 
 
@@ -61,7 +64,4 @@
 
 
 #include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\imgui_draw.cpp"
-
-
-#include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\imgui_impl_dx11.cpp"
 

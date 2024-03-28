@@ -55,7 +55,6 @@ extern const char* ASSET_TYPE_STRING[(UINT)ASSET_TYPE::END];
 enum class COMPONENT_TYPE
 {
 	TRANSFORM,	// 오브젝트의 위치,크기,회전
-
 	COLLIDER2D,	// 2차원 충돌체
 	COLLIDER3D, // 3차원 충돌체
 
@@ -76,6 +75,8 @@ enum class COMPONENT_TYPE
 	SKYBOX,
 	DECAL,
 	LANDSCAPE,
+
+	MOVEMENT,
 
 	END,
 

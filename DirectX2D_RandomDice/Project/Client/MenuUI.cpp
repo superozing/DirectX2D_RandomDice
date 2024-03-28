@@ -216,6 +216,9 @@ void MenuUI::GameObject()
 
                 if (inspector->GetTargetObject()->StateMachine() == nullptr)
                     if (ImGui::MenuItem("StateMachine")) inspector->GetTargetObject()->AddComponent(new CStateMachine);
+
+                if (inspector->GetTargetObject()->Movement() == nullptr)
+                    if (ImGui::MenuItem("Movement")) inspector->GetTargetObject()->AddComponent(new CMovement);
             }
 
             ImGui::EndMenu();

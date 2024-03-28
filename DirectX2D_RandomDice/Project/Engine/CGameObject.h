@@ -40,6 +40,7 @@ public:
     CRenderComponent* GetRenderComponent() { return m_RenderCom; }
 
     GET_COMPONENT(Transform, TRANSFORM);
+    GET_COMPONENT(Movement, MOVEMENT);
     GET_COMPONENT(MeshRender, MESHRENDER);
     GET_COMPONENT(Camera, CAMERA);
     GET_COMPONENT(StateMachine, STATEMACHINE);
@@ -47,7 +48,6 @@ public:
     GET_COMPONENT(Animator2D, ANIMATOR2D);
     GET_COMPONENT(Light2D, LIGHT2D);
     GET_COMPONENT(TileMap, TILEMAP);
-
 
 
     int GetLayerIdx() { return m_iLayerIdx; }

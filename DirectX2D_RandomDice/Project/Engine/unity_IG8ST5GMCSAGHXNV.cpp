@@ -1,5 +1,8 @@
 #include "pch.h"
 
+#include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Engine\CRenderMgr.cpp"
+
+
 #include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Engine\CRenderMgr_Init.cpp"
 
 

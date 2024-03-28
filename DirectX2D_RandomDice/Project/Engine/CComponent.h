@@ -28,6 +28,7 @@ public:
     CGameObject* GetOwner() { return m_Owner; }
 
     GET_OTHER_COMPONENT(Transform);
+    GET_OTHER_COMPONENT(Movement);
     GET_OTHER_COMPONENT(MeshRender);
     GET_OTHER_COMPONENT(Camera);
     GET_OTHER_COMPONENT(Collider2D);
