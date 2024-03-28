@@ -65,7 +65,7 @@ private:
     float                   m_EnemyHPUpdateTimer;
 
     // 라운드에 따라 달라지는 값 들
-    float                   m_EnemySpawnRate[10] = { 0, 0.7, 1, 1, 1.2, 1.5, 1.7, 2, 2.2, 2.5 };
+    float                   m_EnemySpawnRate[10] = { 0.f, 0.7f, 1.f, 1.f, 1.2f, 1.5f, 1.7f, 2.f, 2.2f, 2.5f };
     int                     m_EnemyHPArr[10] = { 0, 100, 1000, 2000, 5000, 9000, 25000, 50000, 100000, 200000 };
 
     // Debug

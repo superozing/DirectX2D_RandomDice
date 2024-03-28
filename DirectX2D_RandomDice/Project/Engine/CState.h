@@ -10,7 +10,7 @@ class CState :
 {
 private:
     CFSM*       m_FSM;
-
+    const UINT              m_StateType;
 public:
     virtual void finaltick() = 0;
     virtual void Enter() = 0;
@@ -24,9 +24,13 @@ protected:
 
 
 public:
+    UINT GetStateType() const { return m_StateType; }
+    virtual void SaveToFile(FILE* _File) {}
+    virtual void LoadFromFile(FILE* _File) {}
+    
+public:
     CLONE_DISABLE(CState);
-
-    CState();
+    CState(UINT StateType);
     ~CState();
 
     friend class CFSM;

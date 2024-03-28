@@ -144,7 +144,10 @@ Ptr<T> CAssetMgr::Load(const wstring& _strKey, const wstring& _strRelativePath)
     wstring strFilePath = CPathMgr::GetContentPath();
     strFilePath += _strRelativePath;
 
-    pAsset = new T;
+    if constexpr (std::is_same_v<CFSM, T>)
+        pAsset = new CFSM(nullptr);
+    else
+        pAsset = new T;
     if (FAILED(pAsset->Load(strFilePath)))
     {
         MessageBox(nullptr, strFilePath.c_str(), L"에셋 로딩 실패", MB_OK);

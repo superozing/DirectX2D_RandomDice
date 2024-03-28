@@ -21,9 +21,6 @@
 #include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\CGameObjectEx.cpp"
 
 
-#include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\CIdleState.cpp"
-
-
 #include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\CImGuiMgr.cpp"
 
 
@@ -48,9 +45,6 @@
 #include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\ScriptUI.cpp"
 
 
-#include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\CTraceState.cpp"
-
-
 #include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\FSMUI.cpp"
 
 
@@ -64,4 +58,7 @@
 
 
 #include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\imgui_draw.cpp"
+
+
+#include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\imgui_impl_dx11.cpp"
 

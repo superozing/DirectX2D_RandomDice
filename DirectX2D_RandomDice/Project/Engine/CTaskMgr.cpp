@@ -8,6 +8,7 @@
 
 #include "CAssetMgr.h"
 #include "CRenderMgr.h"
+#include "CStateMachine.h"
 
 CTaskMgr::CTaskMgr()
 	: m_bCreateObject(false)
@@ -123,6 +124,15 @@ void CTaskMgr::tick()
 		case TASK_TYPE::DISCONNECT_PARENT:
 
 			break;
+		case TASK_TYPE::CHANGE_STATE:
+		{
+			// Param1: Parent Object    |   Param2: Next State
+			CGameObject* pObj = (CGameObject*)m_vecTask[i].Param_1;
+			CState* pNextState = (CState*)m_vecTask[i].Param_2;
+			pObj->StateMachine()->GetDynamicFSM()->ChangeState_proc(pNextState);
+
+			break;
+		}
 		}
 	}
 

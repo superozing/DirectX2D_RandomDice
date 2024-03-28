@@ -110,15 +110,6 @@
     <Filter Include="02. UI\3. Inspector\AssetUI\PrefabUI">
       <UniqueIdentifier>{5f425b92-227e-4bd3-80e6-55fa84006494}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04. State">
-      <UniqueIdentifier>{3df16819-3a6a-412d-a6d6-f397c2a9cb97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. State\IdleState">
-      <UniqueIdentifier>{2ba982d6-080f-41a1-84d1-9987dca9d35b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="04. State\TraceState">
-      <UniqueIdentifier>{c25d39ad-0bb4-4f56-9ee2-e43b64dfaff8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="02. UI\3. Inspector\AssetUI\FSMUI">
       <UniqueIdentifier>{47761983-a947-4c20-9926-ca87e22c583c}</UniqueIdentifier>
     </Filter>
@@ -258,12 +249,6 @@
     </ClInclude>
     <ClInclude Include="PrefabUI.h">
       <Filter>02. UI\3. Inspector\AssetUI\PrefabUI</Filter>
-    </ClInclude>
-    <ClInclude Include="CIdleState.h">
-      <Filter>04. State\IdleState</Filter>
-    </ClInclude>
-    <ClInclude Include="CTraceState.h">
-      <Filter>04. State\TraceState</Filter>
     </ClInclude>
     <ClInclude Include="FSMUI.h">
       <Filter>02. UI\3. Inspector\AssetUI\FSMUI</Filter>
@@ -406,12 +391,6 @@
     </ClCompile>
     <ClCompile Include="PrefabUI.cpp">
       <Filter>02. UI\3. Inspector\AssetUI\PrefabUI</Filter>
-    </ClCompile>
-    <ClCompile Include="CIdleState.cpp">
-      <Filter>04. State\IdleState</Filter>
-    </ClCompile>
-    <ClCompile Include="CTraceState.cpp">
-      <Filter>04. State\TraceState</Filter>
     </ClCompile>
     <ClCompile Include="FSMUI.cpp">
       <Filter>02. UI\3. Inspector\AssetUI\FSMUI</Filter>

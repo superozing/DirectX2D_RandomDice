@@ -9,6 +9,7 @@
 #include <Engine/CTimeMgr.h>
 
 CTraceState::CTraceState()
+	: CState(STATE_TYPE::TRACESTATE)
 {
 }
 

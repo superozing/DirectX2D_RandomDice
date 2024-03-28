@@ -99,7 +99,7 @@ void CFieldScript::begin()
 			OBJECT->AddChild(pDice);
 
 			// 행렬 위치에 따른 Pos 설정(z : 500)
-			Vec3 dicePos = Vec3(((int)i - 2) * 62, ((int)j - 2) * 62 + 120, -500);
+			Vec3 dicePos = Vec3(((float)i - 2) * 62, ((float)j - 2) * 62 + 120, -500);
 			pDice->Transform()->SetRelativePos(dicePos);
 
 			// 스크립트 가져와서 저장
@@ -721,6 +721,8 @@ UINT CFieldScript::GetCurDiceLevel(DICE _dice) const
 		if (m_Deck[i] == _dice)
 			return m_DiceLevel[i];
 	}
+
+	return 0;
 }
 
 void CFieldScript::SummonDice()

@@ -23,6 +23,12 @@
 #pragma comment(lib, "Scripts\\Scripts.lib")
 #endif
 
+#ifdef _DEBUG
+#pragma comment(lib, "States\\States_d.lib")
+#else
+#pragma comment(lib, "States\\States.lib")
+#endif
+
 
 #include "imgui.h"
 #include "imgui_impl_win32.h"

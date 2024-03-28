@@ -6,6 +6,7 @@
 #include <Engine/CTransform.h>
 
 CIdleState::CIdleState()
+	: CState(IDLESTATE)
 {
 }
 

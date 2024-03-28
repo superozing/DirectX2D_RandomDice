@@ -25,6 +25,9 @@ enum class TASK_TYPE
 
 	// Param1 : Parent Object, Param2 : Child Object
 	DISCONNECT_PARENT,
+
+	// Param1: Parent Object    |   Param2: Next State
+	CHANGE_STATE,
 };
 
 struct tTask

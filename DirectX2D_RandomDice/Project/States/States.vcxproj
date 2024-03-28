@@ -19,35 +19,35 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{cfd3d109-220e-4fb8-befd-4f55e8d3024f}</ProjectGuid>
-    <RootNamespace>Client</RootNamespace>
+    <ProjectGuid>{02b302cc-ee3f-474c-b44e-6fb7276b8eb4}</ProjectGuid>
+    <RootNamespace>States</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <EnableUnitySupport>true</EnableUnitySupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -73,13 +73,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)OutputFile\bin\</OutDir>
+    <OutDir>$(SolutionDir)External\Library\States\</OutDir>
     <TargetName>$(ProjectName)_d</TargetName>
     <ExternalIncludePath>$(SolutionDir)External\Include\;$(ExternalIncludePath)</ExternalIncludePath>
     <LibraryPath>$(SolutionDir)External\Library\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)OutputFile\bin\</OutDir>
+    <OutDir>$(SolutionDir)External\Library\States\</OutDir>
     <ExternalIncludePath>$(SolutionDir)External\Include\;$(ExternalIncludePath)</ExternalIncludePath>
     <LibraryPath>$(SolutionDir)External\Library\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
@@ -87,11 +87,14 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -101,11 +104,14 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -115,18 +121,26 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <MinFilesInUnityFile>10</MinFilesInUnityFile>
       <MaxFilesInUnityFile>20</MaxFilesInUnityFile>
       <UnityFilesDirectory>$(ProjectDir)</UnityFilesDirectory>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PreBuildEvent>
+      <Command>cd $(SolutionDir)
+call StatesCopy.bat
+cd $(SolutionDir)StateCodeGen\
+call CodeGen.exe</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -134,123 +148,49 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_RELEASE_GAME;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <PrecompiledHeader>Create</PrecompiledHeader>
+      <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <MinFilesInUnityFile>10</MinFilesInUnityFile>
       <MaxFilesInUnityFile>20</MaxFilesInUnityFile>
       <UnityFilesDirectory>$(ProjectDir)</UnityFilesDirectory>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>
+      </SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <PreBuildEvent>
+      <Command>cd $(SolutionDir)
+call StatesCopy.bat
+cd $(SolutionDir)StateCodeGen\
+call CodeGen.exe</Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Animator2DUI.h" />
-    <ClInclude Include="AssetUI.h" />
-    <ClInclude Include="CameraUI.h" />
-    <ClInclude Include="CCameraMoveScript.h" />
-    <ClInclude Include="CCreateTempLevel.h" />
-    <ClInclude Include="CEditorObjMgr.h" />
-    <ClInclude Include="CGameObjectEx.h" />
-    <ClInclude Include="CImGuiMgr.h" />
-    <ClInclude Include="CLevelSaveLoad.h" />
-    <ClInclude Include="Client.h" />
-    <ClInclude Include="Collider2DUI.h" />
-    <ClInclude Include="ComponentUI.h" />
-    <ClInclude Include="ComputeShaderUI.h" />
-    <ClInclude Include="Content.h" />
-    <ClInclude Include="MovementUI.h" />
-    <ClInclude Include="ScriptUI.h" />
+    <ClInclude Include="CIdleState.h" />
+    <ClInclude Include="CStateMgr.h" />
+    <ClInclude Include="CTestState.h" />
+    <ClInclude Include="CTraceState.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="FSMUI.h" />
-    <ClInclude Include="GraphicsShaderUI.h" />
-    <ClInclude Include="imconfig.h" />
-    <ClInclude Include="imgui.h" />
-    <ClInclude Include="imgui_impl_dx11.h" />
-    <ClInclude Include="imgui_impl_win32.h" />
-    <ClInclude Include="imgui_internal.h" />
-    <ClInclude Include="imstb_rectpack.h" />
-    <ClInclude Include="imstb_textedit.h" />
-    <ClInclude Include="imstb_truetype.h" />
-    <ClInclude Include="Inspector.h" />
-    <ClInclude Include="Light2DUI.h" />
-    <ClInclude Include="ListUI.h" />
-    <ClInclude Include="MaterialUI.h" />
-    <ClInclude Include="MenuUI.h" />
-    <ClInclude Include="MeshDataUI.h" />
-    <ClInclude Include="MeshRenderUI.h" />
-    <ClInclude Include="MeshUI.h" />
-    <ClInclude Include="Outliner.h" />
-    <ClInclude Include="ParamUI.h" />
     <ClInclude Include="pch.h" />
-    <ClInclude Include="PrefabUI.h" />
-    <ClInclude Include="Resource.h" />
-    <ClInclude Include="SoundUI.h" />
-    <ClInclude Include="targetver.h" />
-    <ClInclude Include="TextureUI.h" />
-    <ClInclude Include="TransformUI.h" />
-    <ClInclude Include="TreeUI.h" />
-    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Animator2DUI.cpp" />
-    <ClCompile Include="AssetUI.cpp" />
-    <ClCompile Include="CameraUI.cpp" />
-    <ClCompile Include="CCameraMoveScript.cpp" />
-    <ClCompile Include="CCreateTempLevel.cpp" />
-    <ClCompile Include="CEditorObjMgr.cpp" />
-    <ClCompile Include="CGameObjectEx.cpp" />
-    <ClCompile Include="CImGuiMgr.cpp" />
-    <ClCompile Include="CLevelSaveLoad.cpp" />
-    <ClCompile Include="Collider2DUI.cpp" />
-    <ClCompile Include="ComponentUI.cpp" />
-    <ClCompile Include="ComputeShaderUI.cpp" />
-    <ClCompile Include="Content.cpp" />
-    <ClCompile Include="MovementUI.cpp" />
-    <ClCompile Include="ScriptUI.cpp" />
-    <ClCompile Include="FSMUI.cpp" />
-    <ClCompile Include="GraphicsShaderUI.cpp" />
-    <ClCompile Include="imgui.cpp" />
-    <ClCompile Include="imgui_demo.cpp" />
-    <ClCompile Include="imgui_draw.cpp" />
-    <ClCompile Include="imgui_impl_dx11.cpp" />
-    <ClCompile Include="imgui_impl_win32.cpp" />
-    <ClCompile Include="imgui_tables.cpp" />
-    <ClCompile Include="imgui_widgets.cpp" />
-    <ClCompile Include="Inspector.cpp" />
-    <ClCompile Include="Inspector_init.cpp" />
-    <ClCompile Include="Light2DUI.cpp" />
-    <ClCompile Include="ListUI.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="MaterialUI.cpp" />
-    <ClCompile Include="MenuUI.cpp" />
-    <ClCompile Include="MeshDataUI.cpp" />
-    <ClCompile Include="MeshRenderUI.cpp" />
-    <ClCompile Include="MeshUI.cpp" />
-    <ClCompile Include="Outliner.cpp" />
-    <ClCompile Include="ParamUI.cpp" />
+    <ClCompile Include="CIdleState.cpp" />
+    <ClCompile Include="CStateMgr.cpp" />
+    <ClCompile Include="CTestState.cpp" />
+    <ClCompile Include="CTraceState.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="PrefabUI.cpp" />
-    <ClCompile Include="SoundUI.cpp" />
-    <ClCompile Include="TextureUI.cpp" />
-    <ClCompile Include="TransformUI.cpp" />
-    <ClCompile Include="TreeUI.cpp" />
-    <ClCompile Include="UI.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Client.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="Client.ico" />
-    <Image Include="small.ico" />
+    <ClCompile Include="States.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

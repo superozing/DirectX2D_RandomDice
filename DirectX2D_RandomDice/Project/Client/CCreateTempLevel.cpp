@@ -26,8 +26,8 @@
 #include <Engine/CPrefab.h>
 #include <Engine/CFSM.h>
 
-#include "CIdleState.h"
-#include "CTraceState.h"
+//#include "CIdleState.h"
+//#include "CTraceState.h"
 
 
 void CCreateTempLevel::Init()
@@ -54,12 +54,12 @@ void CCreateTempLevel::Init()
 	*/
 
 	// 임시 FSM 객체 에셋 하나 생성하기
-	Ptr<CFSM>	pFSM = new CFSM(true);
+	//Ptr<CFSM>	pFSM = new CFSM(true);
 
-	pFSM->AddState(L"IdleState", new CIdleState);
-	pFSM->AddState(L"TraceState", new CTraceState);
+	//pFSM->AddState(L"IdleState", new CIdleState);
+	//pFSM->AddState(L"TraceState", new CTraceState);
 
-	CAssetMgr::GetInst()->AddAsset<CFSM>(L"NormalMonsterFSM", pFSM.Get());
+	//CAssetMgr::GetInst()->AddAsset<CFSM>(L"NormalMonsterFSM", pFSM.Get());
 }
 
 void CCreateTempLevel::CreateTempLevel()
