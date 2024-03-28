@@ -67,6 +67,9 @@ public:
     bool IsLayerCheck(UINT _LayerIdx) const;
     bool IsLayerCheck(const wstring& _strLayerName) const;
 
+    //  인자로 들어오는 값은 카메라 기준 Diff 벡터
+    Vec2 GetWorldPosInWindow(Vec2 _Diff);
+
 public:
     virtual void begin() override;
     virtual void finaltick() override;

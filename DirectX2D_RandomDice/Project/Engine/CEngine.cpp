@@ -40,9 +40,9 @@ int CEngine::init(HWND _hWnd, Vec2 _vResolution)
 	m_hMainWnd = _hWnd;
 	m_vResolution = _vResolution;
 
-	// RECT rt = { 0, 0, (int)m_vResolution.x, (int)m_vResolution.y };
-	// AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, false);
-	// SetWindowPos(m_hMainWnd, nullptr, 10, 10, rt.right - rt.left, rt.bottom - rt.top, 0);
+	RECT rt = { 0, 0, (int)m_vResolution.x, (int)m_vResolution.y };
+	AdjustWindowRect(&rt, WS_OVERLAPPEDWINDOW, false);
+	SetWindowPos(m_hMainWnd, nullptr, 10, 10, rt.right - rt.left, rt.bottom - rt.top, 0);
 
 	if (FAILED(CDevice::GetInst()->init(m_hMainWnd, m_vResolution)))
 	{
@@ -81,7 +81,7 @@ void CEngine::progress()
 
 	CTimeMgr::GetInst()->render();
 
-	CRenderMgr::GetInst()->CopyRenderTargetToImGuiRenderTexture();
+	//CRenderMgr::GetInst()->CopyRenderTargetToImGuiRenderTexture();
 
 #ifndef _RELEASE_GAME
 	CKeyMgr::GetInst()->render();

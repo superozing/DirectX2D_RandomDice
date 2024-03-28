@@ -2,6 +2,7 @@
 #include "CTimeMgr.h"
 
 #include "CEngine.h"
+#include "CDevice.h"
 #include "CKeyMgr.h"
 #include "CFontMgr.h"
 
@@ -65,6 +66,10 @@ void CTimeMgr::tick()
 
 void CTimeMgr::render()
 {
+	Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
+
+	vResol.x /= 2;
+
 	// 폰트 출력
-	CFontMgr::GetInst()->DrawFont(m_szText, 300.f, 300.f, 16, FONT_RGBA(255, 30, 30, 255), FONT_TYPE::ARIAL);
+	CFontMgr::GetInst()->DrawFont(m_szText, vResol.x - 240.f, 70.f, 16, FONT_RGBA(255, 30, 30, 255), FONT_TYPE::ARIAL);
 }

@@ -37,15 +37,19 @@ private:
 
 
     // RenderTarget Copy Texture
-    Ptr<CTexture>           m_RTCopyTex;
+    //Ptr<CTexture>           m_RTCopyTex;
 
 public:
-    Ptr<CTexture> GetRTCopyTex() { return m_RTCopyTex; }
-    void CopyRenderTargetToImGuiRenderTexture();
+    //Ptr<CTexture> GetRTCopyTex() { return m_RTCopyTex; }
+    //void CopyRenderTargetToImGuiRenderTexture();
 
 public:
     void RegisterCamera(CCamera* _Cam, int _Idx);
     void AddDebugShapeInfo(const tDebugShapeInfo& _info) { m_DbgShapeInfo.push_back(_info); }
+
+    CCamera* GetEditorCamera() { return m_EditorCam; }
+    const vector<CCamera*>& GetCameras() { return m_vecCam; }
+    bool IsEditorMode() { return m_isEditorMode; }
 
     void SetDebugPosition(bool _OnOff) { m_DebugPosition = _OnOff; }
     bool IsDebugPosition() { return m_DebugPosition ; }

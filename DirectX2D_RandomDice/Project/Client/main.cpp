@@ -3,12 +3,12 @@
 #include "Client.h"
 
 #include <crtdbg.h>
-#include <dwmapi.h>
 
 #include <Engine\global.h>
 #include <Engine\CEngine.h>
 #include <Engine\CDevice.h>
 #include <Engine/CPrefab.h>
+
 #include "CLevelSaveLoad.h"
 
 #ifdef _DEBUG
@@ -32,36 +32,30 @@
 #include "CEditorObjMgr.h"
 #include "CCreateTempLevel.h"
 
+// #define _RELEASE_GAME
+
+
 
 HINSTANCE   hInst;
 HWND        hWnd;
 
 static UINT g_ResizeWidth = 0, g_ResizeHeight = 0;
 
-// 전역 해상도
-Vec2        Resolution;
-
-
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
-
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
     _In_ LPWSTR    lpCmdLine,
     _In_ int       nCmdShow)
 {
-    // memory lick check
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    _CrtSetBreakAlloc(136);
+    //_CrtSetBreakAlloc(433);
 
     MyRegisterClass(hInstance);
 
-    // ------------------
-    // Init
-    // ------------------
     // 애플리케이션 초기화를 수행합니다:
     if (!InitInstance(hInstance, nCmdShow))
     {
@@ -71,53 +65,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_CLIENT));
     MSG msg;
 
-#ifdef _DEBUG
-    RECT rect = { 0,0, GetSystemMetrics(SM_CXSCREEN), GetSystemMetrics(SM_CYSCREEN) };
-    AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
-    SetWindowPos(hWnd, nullptr, 0, 0, rect.right - rect.left, rect.bottom - rect.top - 79, 0);
-    GetClientRect(hWnd, &rect);
-
-    // window size, position
-    Resolution = Vec2((float)rect.right, (float)rect.bottom);
-    rect = { 0, 0, (int)WinSize.x, (int)WinSize.y };
-    AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
-    SetWindowPos(hWnd, nullptr, -10, 0, rect.right - rect.left, rect.bottom - rect.top, 0);
-#else
-    Resolution = Vec2(540.f, 960.f);
-    SetWindowPos(hWnd, HWND_TOP, 0, 0, Resolution.x, Resolution.y, SWP_FRAMECHANGED | SWP_SHOWWINDOW);
-#endif
-
-    // window style
-    COLORREF DARK_COLOR = 0x00151515;
-    BOOL SET_BORDER_COLOR = SUCCEEDED(DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_BORDER_COLOR, &DARK_COLOR, sizeof(DARK_COLOR)));
-    BOOL SET_CAPTION_COLOR = SUCCEEDED(DwmSetWindowAttribute(hWnd, DWMWINDOWATTRIBUTE::DWMWA_CAPTION_COLOR, &DARK_COLOR, sizeof(DARK_COLOR)));
-
-    // CEnigne init
-    if (FAILED(CEngine::GetInst()->init(hWnd, Resolution)))
+    // CEngine 초기화 실패 -> 프로그램 종료
+    if (FAILED(CEngine::GetInst()->init(hWnd, Vec2(540, 960))))
     {
-        MessageBox(nullptr, L"Failed to initialize CEngine", L"Faile to initialize", MB_OK);
+        MessageBox(nullptr, L"CEngine 초기화 실패", L"초기화 실패", MB_OK);
         return 0;
     }
 
-    CPrefab::GAMEOBJECT_SAVE = &CLevelSaveLoad::SaveGameObject;
-    CPrefab::GAMEOBJECT_LOAD = &CLevelSaveLoad::LoadGameObject;
+    // CPrefab::GAMEOBJECT_SAVE = &CLevelSaveLoad::SaveGameObject;
+    // CPrefab::GAMEOBJECT_LOAD = &CLevelSaveLoad::LoadGameObject;
 
 #ifndef _RELEASE_GAME
-    // create temp level
+    // 임시 레벨 생성
     CCreateTempLevel::Init();
     CCreateTempLevel::CreateTempLevel();
 
     // EditorObjectManager 초기화
     CEditorObjMgr::GetInst()->init();
 
-    // ImGUI init
+    // ImGui 초기화
     CImGuiMgr::GetInst()->init(hWnd, DEVICE, CONTEXT);
-
 #endif
 
-    // ------------------
-    // main loop
-    // ------------------
+
+
     while (true)
     {
         if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
@@ -131,23 +102,30 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                 DispatchMessage(&msg);
             }
         }
+
         else
         {
-            // update
+            // Engine Update
             CEngine::GetInst()->progress();
 
+
+
 #ifndef _RELEASE_GAME
+            // EditorObj
             CEditorObjMgr::GetInst()->progress();
+
+            // ImGui Update
             CImGuiMgr::GetInst()->progress();
 #endif
 
-            // Engine + ImGUI의 렌더링 최종 결과 present
+            // Engine 및 ImGui 렌더링 최종 결과를 출력한다.
             CDevice::GetInst()->Present();
         }
     }
 
     return (int)msg.wParam;
 }
+
 
 
 //
@@ -161,17 +139,17 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
     wcex.cbSize = sizeof(WNDCLASSEX);
 
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc    = WndProc;
-    wcex.cbClsExtra     = 0;
-    wcex.cbWndExtra     = 0;
-    wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CLIENT));
-    wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = nullptr; //MAKEINTRESOURCEW(IDC_CLIENT);
-    wcex.lpszClassName  = L"MyWindow";
-    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+    wcex.style = CS_HREDRAW | CS_VREDRAW;
+    wcex.lpfnWndProc = WndProc;
+    wcex.cbClsExtra = 0;
+    wcex.cbWndExtra = 0;
+    wcex.hInstance = hInstance;
+    wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_CLIENT));
+    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    wcex.lpszMenuName = nullptr; //MAKEINTRESOURCEW(IDC_CLIENT);
+    wcex.lpszClassName = L"MyWindow";
+    wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
     return RegisterClassExW(&wcex);
 }
@@ -188,20 +166,20 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
+    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   hWnd = CreateWindowW(L"MyWindow", L"Client", WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+    hWnd = CreateWindowW(L"MyWindow", L"Client", WS_OVERLAPPEDWINDOW,
+        CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
 
-   if (!hWnd)
-   {
-      return FALSE;
-   }
+    if (!hWnd)
+    {
+        return FALSE;
+    }
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+    ShowWindow(hWnd, nCmdShow);
+    UpdateWindow(hWnd);
 
-   return TRUE;
+    return TRUE;
 }
 
 
@@ -215,33 +193,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     switch (message)
     {
     case WM_COMMAND:
+    {
+        int wmId = LOWORD(wParam);
+        // 메뉴 선택을 구문 분석합니다:
+        switch (wmId)
         {
-            int wmId = LOWORD(wParam);
-            // 메뉴 선택을 구문 분석합니다:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
+        case IDM_ABOUT:
+            DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+            break;
+        case IDM_EXIT:
+            DestroyWindow(hWnd);
+            break;
+        default:
+            return DefWindowProc(hWnd, message, wParam, lParam);
         }
-        break;
+    }
+    break;
     case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-            EndPaint(hWnd, &ps);
-        }
-        break;
+    {
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(hWnd, &ps);
+        // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+        EndPaint(hWnd, &ps);
+    }
+    break;
     case WM_DESTROY:
         PostQuitMessage(0);
-        break;   
+        break;
     case WM_DPICHANGED:
         if (ImGui::GetIO().ConfigFlags & ImGuiConfigFlags_DpiEnableScaleViewports)
         {

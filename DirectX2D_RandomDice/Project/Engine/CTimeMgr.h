@@ -20,11 +20,11 @@ private:
 	wchar_t			m_szText[256];
 
 public:
-	float GetDeltaTime() { return (float)m_DeltaTime; }
-	double GetDeltaTime_d() { return m_DeltaTime; }
+	float GetDeltaTime() const { return (float)m_DeltaTime; }
+	double GetDeltaTime_d() const { return m_DeltaTime; }
 
-	float GetEngineDeltaTime() { return (float)m_EngineDeltaTime; }
-	double GetEngineDeltaTime_d() { return m_EngineDeltaTime; }
+	float GetEngineDeltaTime() const { return (float)m_EngineDeltaTime; }
+	double GetEngineDeltaTime_d() const { return m_EngineDeltaTime; }
 
 	void LockDeltaTime(bool _Lock) { m_bLock = _Lock; }
 

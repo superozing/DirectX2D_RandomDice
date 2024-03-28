@@ -31,7 +31,7 @@ public:
 
 public:
     void DragPrefab(DWORD_PTR _pref);
-    void render_copytex();
+    //void render_copytex();
 
 public:
     const vector<string>& GetLayerName() { return m_LayerName; }

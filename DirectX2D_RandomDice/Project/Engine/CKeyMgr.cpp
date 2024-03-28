@@ -35,7 +35,10 @@ CKeyMgr::~CKeyMgr()
 #ifndef _RELEASE_GAME
 void CKeyMgr::render()
 {
+	Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
+
 	int height = 80;
+
 	for (auto iter = m_mouseClick.begin(); iter != m_mouseClick.end(); )
 	{
 		iter->AccTime += DT_ENGINE;
@@ -46,7 +49,7 @@ void CKeyMgr::render()
 		}
 		else
 		{
-			CFontMgr::GetInst()->DrawFont(iter->OutputWStr.c_str(), 10.f, height, 15, FONT_RGBA(255, 255, 255, 255), FONT_TYPE::ARIAL);
+			CFontMgr::GetInst()->DrawFont(iter->OutputWStr.c_str(), vResol.x / 2 - 10.f, height, 15, FONT_RGBA(255, 255, 255, 255), FONT_TYPE::ARIAL);
 			height += 20;
 			++iter;
 		}
@@ -136,21 +139,10 @@ void CKeyMgr::tick()
 		// 마우스 이동 방향
 
 		m_vMouseDrag = m_vMousePos - m_vMousePrevPos;
-		Vec2 vResol;
-#ifndef _RELEASE_GAME
-		vResol = CDevice::GetInst()->GetGameResolution();
-		m_vMouseWorldPos.x = m_vMousePos.x - vResol.x / 2.f + 10;
-		m_vMouseWorldPos.y = -m_vMousePos.y + vResol.y / 2.f + 55;
-#endif
-#ifdef _RELEASE_GAME
-		vResol = CDevice::GetInst()->GetGameResolution();
+		Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
+
 		m_vMouseWorldPos.x = m_vMousePos.x - vResol.x / 2.f;
 		m_vMouseWorldPos.y = -m_vMousePos.y + vResol.y / 2.f;
-
-
-#endif // _RELEASE_GAME
-
-
 
 #ifndef _RELEASE_GAME
 		if (KEY_TAP(KEY::LBTN))

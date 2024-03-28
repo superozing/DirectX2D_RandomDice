@@ -21,7 +21,6 @@ private:
 
 	HWND							m_hRenderWnd;
 	Vec2							m_vRenderResolution;
-	Vec2							m_vGameResolution = Vec2(540, 960);
 
 	CConstBuffer*					m_arrCB[(UINT)CB_TYPE::END];
 
@@ -40,7 +39,6 @@ public:
 	ID3D11DeviceContext* GetContext() { return m_Context.Get(); }
 	CConstBuffer* GetConstBuffer(CB_TYPE _type) { return m_arrCB[(UINT)_type]; }
 	Vec2 GetRenderResolution() const { return m_vRenderResolution; }
-	Vec2 GetGameResolution() const { return m_vGameResolution; }
 
 	ComPtr<ID3D11RasterizerState> GetRSState(RS_TYPE _Type) { return m_arrRS[(UINT)_Type]; }
 	ComPtr<ID3D11DepthStencilState> GetDSState(DS_TYPE _Type) { return m_arrDS[(UINT)_Type]; }

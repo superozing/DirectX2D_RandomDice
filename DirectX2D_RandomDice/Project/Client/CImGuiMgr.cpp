@@ -192,7 +192,7 @@ void CImGuiMgr::tick()
     ImGui_ImplDX11_NewFrame();
     ImGui_ImplWin32_NewFrame();
     ImGui::NewFrame();
-    ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
+    //ImGui::DockSpaceOverViewport(ImGui::GetMainViewport());
 
     if (CTaskMgr::GetInst()->GetChangeLevel())
     {
@@ -219,7 +219,7 @@ void CImGuiMgr::render()
         pair.second->render();
     }
 
-    render_copytex();
+    //render_copytex();
 
     // Rendering
     ImGui::Render();
@@ -293,55 +293,55 @@ void CImGuiMgr::observe_content()
     }
 }
 
-void CImGuiMgr::render_copytex()
-{
-    ImGui::Begin("Viewport##GameWindow");
-
-
-    Vec2 RenderResolution = CDevice::GetInst()->GetRenderResolution();
-    ImVec2 RenderResol = { RenderResolution.x,RenderResolution.y };
-    Ptr<CTexture> pCopyTex = CRenderMgr::GetInst()->GetRTCopyTex();
-
-    // 현재 크기
-    ImVec2 contentSize = ImGui::GetContentRegionAvail();
-
-    Vec2 vResolution = CDevice::GetInst()->GetRenderResolution();
-    ImVec2 Resolution = { vResolution.x,vResolution.y };
-
-    ImVec2 LeftTopUv;
-    LeftTopUv.x = ((vResolution.x - contentSize.x) / 2.f) / Resolution.x;
-    LeftTopUv.y = ((vResolution.y - contentSize.y) / 2.f) / Resolution.y;
-
-    ImVec2 RightBottom;
-    RightBottom.x = 1.f - LeftTopUv.x;
-    RightBottom.y = 1.f - LeftTopUv.y;
-
-    // Image 위치 기록
-    ImVec2 windowPos = ImGui::GetCursorScreenPos();
-    ImVec2 windowSize = ImVec2(Resolution.x * (RightBottom.x - LeftTopUv.x), Resolution.y * (RightBottom.y - LeftTopUv.y));
-    Inspector* pInspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");
-
-    //pInspector->GetObjController()->SetStartPos(windowPos);
-    //pInspector->GetObjController()->SetViewportSize(windowSize);
-    
-    // Image 출력
-    ImGui::Image((void*)pCopyTex->GetSRV().Get(), ImVec2(Resolution.x * (RightBottom.x - LeftTopUv.x), Resolution.y * (RightBottom.y - LeftTopUv.y)), LeftTopUv, RightBottom);
-
-
-
-    // case: drop
-    if (ImGui::IsMouseReleased(0) && ImGui::BeginDragDropTarget())
-    {
-        if (m_Prefab.Get())
-        {
-            GamePlayStatic::SpawnGameObject(m_Prefab->Instantiate(), 0);
-        }
-
-        ImGui::EndDragDropTarget();
-    }
-
-    ImGui::End();
-}
+//void CImGuiMgr::render_copytex()
+//{
+//    ImGui::Begin("Viewport##GameWindow");
+//
+//
+//    Vec2 RenderResolution = CDevice::GetInst()->GetRenderResolution();
+//    ImVec2 RenderResol = { RenderResolution.x,RenderResolution.y };
+//    Ptr<CTexture> pCopyTex = CRenderMgr::GetInst()->GetRTCopyTex();
+//
+//    // 현재 크기
+//    ImVec2 contentSize = ImGui::GetContentRegionAvail();
+//
+//    Vec2 vResolution = CDevice::GetInst()->GetRenderResolution();
+//    ImVec2 Resolution = { vResolution.x,vResolution.y };
+//
+//    ImVec2 LeftTopUv;
+//    LeftTopUv.x = ((vResolution.x - contentSize.x) / 2.f) / Resolution.x;
+//    LeftTopUv.y = ((vResolution.y - contentSize.y) / 2.f) / Resolution.y;
+//
+//    ImVec2 RightBottom;
+//    RightBottom.x = 1.f - LeftTopUv.x;
+//    RightBottom.y = 1.f - LeftTopUv.y;
+//
+//    // Image 위치 기록
+//    ImVec2 windowPos = ImGui::GetCursorScreenPos();
+//    ImVec2 windowSize = ImVec2(Resolution.x * (RightBottom.x - LeftTopUv.x), Resolution.y * (RightBottom.y - LeftTopUv.y));
+//    Inspector* pInspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");
+//
+//    //pInspector->GetObjController()->SetStartPos(windowPos);
+//    //pInspector->GetObjController()->SetViewportSize(windowSize);
+//    
+//    // Image 출력
+//    ImGui::Image((void*)pCopyTex->GetSRV().Get(), ImVec2(Resolution.x * (RightBottom.x - LeftTopUv.x), Resolution.y * (RightBottom.y - LeftTopUv.y)), LeftTopUv, RightBottom);
+//
+//
+//
+//    // case: drop
+//    if (ImGui::IsMouseReleased(0) && ImGui::BeginDragDropTarget())
+//    {
+//        if (m_Prefab.Get())
+//        {
+//            GamePlayStatic::SpawnGameObject(m_Prefab->Instantiate(), 0);
+//        }
+//
+//        ImGui::EndDragDropTarget();
+//    }
+//
+//    ImGui::End();
+//}
 
 void CImGuiMgr::DragPrefab(DWORD_PTR _pref)
 {

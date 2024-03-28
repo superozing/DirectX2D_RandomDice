@@ -85,7 +85,17 @@ void CCamera::SetCameraPriority(int _Priority)
 	m_CameraPriority = _Priority;
 }
 
+Vec2 CCamera::GetWorldPosInWindow(Vec2 _Diff)
+{
+	Vec3 Center = Transform()->GetWorldPos();
 
+	Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
+	Vec2 vWinSize = Vec2(vResol.x * m_Scale, (vResol.x / m_AspectRatio) * m_Scale);
+
+	Vec2 MouseWorldPos = Vec2(Center.x + _Diff.x * m_Scale, Center.y + _Diff.y * m_Scale);
+
+	return MouseWorldPos;
+}
 
 void CCamera::LayerCheck(UINT _LayerIdx, bool _bCheck)
 {	

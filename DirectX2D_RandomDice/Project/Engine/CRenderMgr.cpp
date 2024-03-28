@@ -20,6 +20,12 @@ CRenderMgr::CRenderMgr()
 	, m_RenderFunc(nullptr)
 	, m_isEditorMode(true)
 {	
+#ifdef _DEBUG
+	m_isEditorMode = true;
+#else
+	m_isEditorMode = false;
+#endif
+
 	m_RenderFunc = &CRenderMgr::render_play;
 }
 
@@ -189,9 +195,9 @@ void CRenderMgr::RegisterCamera(CCamera* _Cam, int _Idx)
 	m_vecCam[_Idx] = _Cam;
 }
 
-void CRenderMgr::CopyRenderTargetToImGuiRenderTexture()
-{
-	Ptr<CTexture> pRTTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"RenderTargetTex");
-	CONTEXT->CopyResource(m_RTCopyTex->GetTex2D().Get(), pRTTex->GetTex2D().Get());
-
-}
+//void CRenderMgr::CopyRenderTargetToImGuiRenderTexture()
+//{
+//	Ptr<CTexture> pRTTex = CAssetMgr::GetInst()->FindAsset<CTexture>(L"RenderTargetTex");
+//	CONTEXT->CopyResource(m_RTCopyTex->GetTex2D().Get(), pRTTex->GetTex2D().Get());
+//
+//}
