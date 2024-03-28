@@ -33,6 +33,13 @@ void CEnemyScript::tick()
 	// 자신의 진행도를 갱신함
 	m_MoveProgress += m_EnemyInfo.MoveSpeed * DT;
 
+	if (m_fScale > 1.05f)
+		m_Minus = -1;
+	if (m_fScale < 0.95f)
+		m_Minus = 1;
+
+	m_fScale += m_Minus * 0.15f * DT;
+
 	// 사망 파티클 출력
 	if (m_ParticleSystem != nullptr && m_DeathParticleTimer != -1.f)
 	{
@@ -47,6 +54,8 @@ void CEnemyScript::tick()
 			m_ParticleSystem->SetActivate(false);
 		}
 	}
+
+	OBJECT->Transform()->SetRelativeScale(Vec3(m_vScale.x, m_vScale.y * m_fScale, m_vScale.z));
 }
 
 void CEnemyScript::begin()
@@ -68,6 +77,9 @@ void CEnemyScript::begin()
 	OBJECT->MeshRender()->GetDynamicMaterial();
 	OBJECT->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_EnemyInfo.MonTex);
 	OBJECT->Transform()->SetRelativeScale(m_EnemyInfo.MonScale);
+
+	// vScale 세팅
+	m_vScale = m_EnemyInfo.MonScale;
 
 	// 파티클 오브젝트 생성
 	m_pParticleObject = new CGameObject;

@@ -47,7 +47,10 @@ private:
 
     bool                EndDeathParticle;
 
-    
+    // 크기 조절
+    Vec3                m_vScale;
+    int                 m_Minus = 1;
+    float               m_fScale = 1;
 
 
 
