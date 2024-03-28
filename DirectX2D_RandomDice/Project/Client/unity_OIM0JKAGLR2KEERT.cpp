@@ -1,8 +1,5 @@
 #include "pch.h"
 
-#include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\imgui_impl_win32.cpp"
-
-
 #include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\imgui_tables.cpp"
 
 
@@ -49,6 +46,9 @@
 
 
 #include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\SoundUI.cpp"
+
+
+#include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\StateMachineUI.cpp"
 
 
 #include "C:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\TextureUI.cpp"

@@ -19,6 +19,7 @@ void Inspector::CreateChildUI()
 #include "PrefabUI.h"
 #include "CameraUI.h"
 #include "MovementUI.h"
+#include "StateMachineUI.h"
 
 void Inspector::CreateComponentUI()
 {
@@ -50,7 +51,9 @@ void Inspector::CreateComponentUI()
 	m_arrComUI[(UINT)COMPONENT_TYPE::MOVEMENT]->Deactivate();
 	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::MOVEMENT]);
 
-
+	m_arrComUI[(UINT)COMPONENT_TYPE::STATEMACHINE] = new StateMachineUI;
+	m_arrComUI[(UINT)COMPONENT_TYPE::STATEMACHINE]->Deactivate();
+	AddChildUI(m_arrComUI[(UINT)COMPONENT_TYPE::STATEMACHINE]);
 }
 
 #include "TextureUI.h"

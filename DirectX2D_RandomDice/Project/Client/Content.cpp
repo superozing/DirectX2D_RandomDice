@@ -117,6 +117,9 @@ void Content::ReloadContent()
 		case ASSET_TYPE::SOUND:
 			CAssetMgr::GetInst()->Load<CSound>(m_vecAssetFileName[i], m_vecAssetFileName[i]);
 			break;
+		case ASSET_TYPE::FSM:
+			CAssetMgr::GetInst()->Load<CFSM>(m_vecAssetFileName[i], m_vecAssetFileName[i]);
+			break;
 		}		
 	}
 
@@ -227,6 +230,8 @@ ASSET_TYPE Content::GetAssetTypeByExt(const path& _relativePath)
 		return ASSET_TYPE::MESH;
 	if (_relativePath.extension() == L".mesh")
 		return ASSET_TYPE::MESH;
+	if (_relativePath.extension() == L".fsm")
+		return ASSET_TYPE::FSM;
 
 	return ASSET_TYPE::END;
 }

@@ -122,6 +122,9 @@
     <Filter Include="02. UI\3. Inspector\ComponentUI\Movement">
       <UniqueIdentifier>{bd35f05b-5e0d-4737-b209-6a7cb7bdc3de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. UI\3. Inspector\ComponentUI\StateMachine">
+      <UniqueIdentifier>{ac503031-2202-4122-9710-6e1d7de5da60}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -261,6 +264,9 @@
     </ClInclude>
     <ClInclude Include="MovementUI.h">
       <Filter>02. UI\3. Inspector\ComponentUI\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="StateMachineUI.h">
+      <Filter>02. UI\3. Inspector\ComponentUI\StateMachine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +409,9 @@
     </ClCompile>
     <ClCompile Include="MovementUI.cpp">
       <Filter>02. UI\3. Inspector\ComponentUI\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="StateMachineUI.cpp">
+      <Filter>02. UI\3. Inspector\ComponentUI\StateMachine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

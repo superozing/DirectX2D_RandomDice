@@ -392,7 +392,38 @@ void MenuUI::Asset()
             ImGui::EndMenu();
 
         }
+        if (ImGui::BeginMenu("Create New FSM"))
+        {
+            static char textBuffer[256] = "";
+            ImGui::InputText("##CreateFSMName", textBuffer, IM_ARRAYSIZE(textBuffer));
 
+            if (ImGui::Button("create"))
+            {
+                Ptr<CFSM> pFSM = new CFSM(nullptr, false);
+
+                // 경로 설정
+                wchar_t szPath[255] = {};
+                string strFSMPath = textBuffer;
+                wstring wstrFSMPath = ToWString(strFSMPath);
+
+                wstring FilePath = CPathMgr::GetContentPath();
+                swprintf_s(szPath, L"FSM\\%s.fsm", wstrFSMPath.c_str());
+
+                if (exists(FilePath + szPath))
+                {
+                    int value = MessageBoxA(nullptr, "FSM 이미 존재합니다. \n덮어쓰시겠습니까?", "Material Already Exist!", MB_YESNO);
+                    if (value == IDYES)
+                    {
+                        pFSM->Save(szPath);
+                    }
+                }
+                else
+                {
+                    pFSM->Save(szPath);
+                }
+            }
+            ImGui::EndMenu(); // Set Go Name
+        }
         Inspector* inspector = (Inspector*)CImGuiMgr::GetInst()->FindUI("##Inspector");
         CMaterial* target = dynamic_cast<CMaterial*>(inspector->GetTargetAsset().Get());
         if (target != nullptr)
