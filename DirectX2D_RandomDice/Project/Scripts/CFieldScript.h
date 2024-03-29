@@ -68,9 +68,12 @@ private:
     float                   m_EnemySpawnRate[10] = { 0.f, 0.7f, 1.f, 1.f, 1.2f, 1.5f, 1.7f, 2.f, 2.2f, 2.5f };
     int                     m_EnemyHPArr[10] = { 0, 100, 1000, 2000, 5000, 9000, 25000, 50000, 100000, 200000 };
 
+    // 플레이어 HP
+    int                     m_PlayerHP = 3;
+
     // Debug
     bool                    AutoSpawnEnemy;
-
+    int                    IsInvincible;
 
     // random
     std::random_device      m_rd;
@@ -106,7 +109,18 @@ public:
     void AddCurSP(int _addSP) { m_SP += _addSP; }
     int  GetCurSP() const { return m_SP; }
     
+    int GetPlayerHP() const { return m_PlayerHP; }
 
+    void SetPlayerHP(int _HP) 
+    { 
+        if (IsInvincible)
+            return;
+
+        m_PlayerHP = _HP; 
+
+        if (m_PlayerHP < 0)
+            m_PlayerHP = 0;
+    }
 
 public:
 
