@@ -76,6 +76,9 @@
     <ClInclude Include="CDiceUI.h">
       <Filter>Scripts\DiceUI</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayerHP.h">
+      <Filter>Scripts\PlayerHP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -153,6 +156,9 @@
     <ClCompile Include="CDiceUI.cpp">
       <Filter>Scripts\DiceUI</Filter>
     </ClCompile>
+    <ClCompile Include="CPlayerHP.cpp">
+      <Filter>Scripts\PlayerHP</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -223,6 +229,9 @@
     </Filter>
     <Filter Include="Scripts\SPBar">
       <UniqueIdentifier>{4d8e83dd-4f05-42a4-acd2-a418dcfe0996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\PlayerHP">
+      <UniqueIdentifier>{e67195e0-d6dd-4de8-ad0e-55976a940764}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

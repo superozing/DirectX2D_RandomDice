@@ -13,6 +13,7 @@ CExternScript
 CFieldScript
 CMissileScript
 CMonsterScript
+CPlayerHP
 CPlayerScript
 CRotateScript
 CSPBarScript
