@@ -114,9 +114,13 @@ void CEnemyScript::PlayDeathParticle()
 		m_DeathParticleTimer = 0.f;
 
 		int AddSP = 10 * m_OwnerField->GetCurWave();
-
+		m_OwnerField->SetPlayerHP(m_OwnerField->GetPlayerHP() - 1);
+		
 		if (m_EnemyType == ENEMY_TYPE::BIG)
+		{
 			AddSP *= 5;
+			m_OwnerField->SetPlayerHP(m_OwnerField->GetPlayerHP() - 1); // 빅 몬스터일 경우, 체력 2개 빼주기
+		}
 
 		m_OwnerField->AddCurSP(AddSP);
 	}
