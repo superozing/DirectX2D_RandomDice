@@ -611,6 +611,11 @@ void CFieldScript::tick()
 		pObject->Transform()->SetRelativePos(Pos);
 
 
+		// DamageCheck
+		if (pEScript->GetEnemyHealth() <= 0)
+			ThisEnemyIsDead = true;
+
+
 		//==================
 		// Check Enemy Dead
 		//==================

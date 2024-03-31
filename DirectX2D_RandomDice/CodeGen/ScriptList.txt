@@ -4,6 +4,8 @@ CDefaultEnemyScript
 CDiceAttackScript
 CDiceBuffScript
 CDiceMergeScript
+CDiceScale
+CDiceScaleProjectile
 CDiceScaleScript
 CDiceScript
 CDiceUI
