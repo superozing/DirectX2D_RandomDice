@@ -107,14 +107,16 @@ void CEnemyScript::begin()
 
 void CEnemyScript::PlayDeathParticle()
 {
-	//OBJECT->Transform()->SetRelativeScale(Vec3(0, 0, 0));
-
+	// m_DeathParticleTimer의 초기 값은 -1이다.
 	if (m_DeathParticleTimer == -1.f)
 	{
 		m_DeathParticleTimer = 0.f;
 
 		int AddSP = 10 * m_OwnerField->GetCurWave();
-		m_OwnerField->SetPlayerHP(m_OwnerField->GetPlayerHP() - 1);
+
+		// 체력이 전부 떨어져서 죽었는가? 아니면 라인의 끝에 도달해서 죽었는가?
+		if (m_CurHealth > 0)
+			m_OwnerField->SetPlayerHP(m_OwnerField->GetPlayerHP() - 1);
 		
 		if (m_EnemyType == ENEMY_TYPE::BIG)
 		{
