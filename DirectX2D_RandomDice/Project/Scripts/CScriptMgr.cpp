@@ -7,6 +7,8 @@
 #include "CDiceAttackScript.h"
 #include "CDiceBuffScript.h"
 #include "CDiceMergeScript.h"
+#include "CDiceScale.h"
+#include "CDiceScaleProjectile.h"
 #include "CDiceScaleScript.h"
 #include "CDiceScript.h"
 #include "CDiceUI.h"
@@ -32,6 +34,8 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CDiceAttackScript");
 	_vec.push_back(L"CDiceBuffScript");
 	_vec.push_back(L"CDiceMergeScript");
+	_vec.push_back(L"CDiceScale");
+	_vec.push_back(L"CDiceScaleProjectile");
 	_vec.push_back(L"CDiceScaleScript");
 	_vec.push_back(L"CDiceScript");
 	_vec.push_back(L"CDiceUI");
@@ -64,6 +68,10 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CDiceBuffScript;
 	if (L"CDiceMergeScript" == _strScriptName)
 		return new CDiceMergeScript;
+	if (L"CDiceScale" == _strScriptName)
+		return new CDiceScale;
+	if (L"CDiceScaleProjectile" == _strScriptName)
+		return new CDiceScaleProjectile;
 	if (L"CDiceScaleScript" == _strScriptName)
 		return new CDiceScaleScript;
 	if (L"CDiceScript" == _strScriptName)
@@ -120,6 +128,12 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::DICEMERGESCRIPT:
 		return new CDiceMergeScript;
+		break;
+	case (UINT)SCRIPT_TYPE::DICESCALE:
+		return new CDiceScale;
+		break;
+	case (UINT)SCRIPT_TYPE::DICESCALEPROJECTILE:
+		return new CDiceScaleProjectile;
 		break;
 	case (UINT)SCRIPT_TYPE::DICESCALESCRIPT:
 		return new CDiceScaleScript;
@@ -199,6 +213,14 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::DICEMERGESCRIPT:
 		return L"CDiceMergeScript";
+		break;
+
+	case SCRIPT_TYPE::DICESCALE:
+		return L"CDiceScale";
+		break;
+
+	case SCRIPT_TYPE::DICESCALEPROJECTILE:
+		return L"CDiceScaleProjectile";
 		break;
 
 	case SCRIPT_TYPE::DICESCALESCRIPT:

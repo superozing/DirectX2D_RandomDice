@@ -6,6 +6,9 @@
 #include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\AssetUI.cpp"
 
 
+#include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\CameraUI.cpp"
+
+
 #include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\CCameraMoveScript.cpp"
 
 
@@ -16,9 +19,6 @@
 
 
 #include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\CGameObjectEx.cpp"
-
-
-#include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\CIdleState.cpp"
 
 
 #include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\CImGuiMgr.cpp"
@@ -39,10 +39,10 @@
 #include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\Content.cpp"
 
 
+#include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\MovementUI.cpp"
+
+
 #include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\ScriptUI.cpp"
-
-
-#include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\CTraceState.cpp"
 
 
 #include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\FSMUI.cpp"
@@ -61,4 +61,7 @@
 
 
 #include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\imgui_impl_dx11.cpp"
+
+
+#include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\imgui_impl_win32.cpp"
 

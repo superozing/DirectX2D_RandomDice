@@ -33,6 +33,9 @@
 #include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Engine\CMeshRender.cpp"
 
 
+#include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Engine\CMovement.cpp"
+
+
 #include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Engine\CParticleSystem.cpp"
 
 
@@ -46,7 +49,4 @@
 
 
 #include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Engine\CRenderComponent.cpp"
-
-
-#include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Engine\CRenderMgr.cpp"
 

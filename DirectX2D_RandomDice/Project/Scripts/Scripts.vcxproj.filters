@@ -79,6 +79,12 @@
     <ClInclude Include="CPlayerHP.h">
       <Filter>Scripts\PlayerHP</Filter>
     </ClInclude>
+    <ClInclude Include="CDiceScale.h">
+      <Filter>Scripts\DiceScale</Filter>
+    </ClInclude>
+    <ClInclude Include="CDiceScaleProjectile.h">
+      <Filter>Scripts\DiceScale\DiceScaleProjectile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -159,6 +165,12 @@
     <ClCompile Include="CPlayerHP.cpp">
       <Filter>Scripts\PlayerHP</Filter>
     </ClCompile>
+    <ClCompile Include="CDiceScale.cpp">
+      <Filter>Scripts\DiceScale</Filter>
+    </ClCompile>
+    <ClCompile Include="CDiceScaleProjectile.cpp">
+      <Filter>Scripts\DiceScale\DiceScaleProjectile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -232,6 +244,12 @@
     </Filter>
     <Filter Include="Scripts\PlayerHP">
       <UniqueIdentifier>{e67195e0-d6dd-4de8-ad0e-55976a940764}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\DiceScale">
+      <UniqueIdentifier>{a6681121-fa4f-4c92-8ae6-65911051a3e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\DiceScale\DiceScaleProjectile">
+      <UniqueIdentifier>{3031b547-4d23-41d6-b18f-99fabb3f6bce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
