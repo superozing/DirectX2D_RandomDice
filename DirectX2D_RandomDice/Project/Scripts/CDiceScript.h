@@ -1,6 +1,7 @@
 #pragma once
 #include <Engine/CScript.h>
 #include "CFieldScript.h"
+#include "CDiceScale.h"
 
 enum class DICE
 {
@@ -68,9 +69,9 @@ private:
 	DICE_INFO	        m_Info;			// 주사위 종류에 따른 주사위 정보
     Vec3                m_DiceColor;    // 주사위 눈금 색상
 
-	UINT		        m_DiceScale;	// 주사위의 눈금 수 (등급)
-	UINT		        m_CurMarkerIdx; // 현재 어떤 눈금에게 attack() 을 호출할 지 인덱스 값
-	vector<int>         m_VecMarker;	/*나중에 눈금 구조체가 들어가는 벡터*/
+	UINT		                m_DiceScale;	// 주사위의 눈금 수 (등급)
+	UINT		                m_CurDiceScaleIdx; // 현재 어떤 눈금에게 attack() 을 호출할 지 인덱스 값
+	vector<CDiceScale>          m_VecDiceScale;	
 
 	bool		        m_Buff[2];		// 이 주사위가 받고 있는 버프
 

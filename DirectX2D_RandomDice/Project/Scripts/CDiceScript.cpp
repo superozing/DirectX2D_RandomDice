@@ -79,6 +79,9 @@ void CDiceScript::PlayLevelUp()
 
 	m_LevelUpParticle->SetActivate(true);
 	m_LevelUpParticleTimer = 0.15f;
+
+	m_fScaleSize = 0.f;
+	m_IsGrowing = true;
 }
 
 void CDiceScript::begin()
