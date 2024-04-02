@@ -59,16 +59,18 @@ void CPlayerHP::begin()
 		m_HPTex[i] = CAssetMgr::GetInst()->Load<CTexture>(wPath, wPath);
 	}
 
-
+	// 기본 텍스쳐 이미지 바인딩
 	OBJECT->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_HPTex[3]);
-
-
-
 
 }
 
 void CPlayerHP::tick()
 {
+
+	//if (m_pField->GetPlayerHP() == 0)
+	// 만약 PlayerHP가 0일 경우, 게임을 종료시켜주어야 한다.
+	// 나중에 추가해보아요.
+
 	// 현재 Field의 PlayerHP에 맞는 텍스쳐 바인딩
 	OBJECT->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_HPTex[m_pField->GetPlayerHP()]);
 }

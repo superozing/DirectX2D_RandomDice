@@ -73,9 +73,12 @@ public:
     bool IsEndDeathParticle() const { return EndDeathParticle; }
 
 
-    void SetEnemyHealth(int _Health) { m_CurHealth = _Health; }
     void SetField(CFieldScript* _Field) { m_OwnerField = _Field; }
+
     int GetEnemyHealth() const { return m_CurHealth; }
+    void SetEnemyHealth(int _Health) { m_CurHealth = _Health; }
+    
+    void AddDamage(int _Dmg) { m_CurHealth -= _Dmg; }
 
 protected:
     virtual void SetEnemyType(ENEMY_TYPE _Enemytype);
