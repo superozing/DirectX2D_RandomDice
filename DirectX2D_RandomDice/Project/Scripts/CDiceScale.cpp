@@ -39,9 +39,9 @@ void CDiceScale::Attack()
 	auto pPScript = new CDiceScaleProjectile;
 	pProjectile->AddComponent(pPScript);
 
-
-	//pPScript->SetField
-
+	// 필드 설정해주기
+	pPScript->SetField(m_pField);
+	pPScript->SetColor(m_vDiceColor);
 
 
 }
