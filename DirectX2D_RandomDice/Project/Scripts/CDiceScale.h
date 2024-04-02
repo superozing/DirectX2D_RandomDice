@@ -26,9 +26,10 @@ private:
     // 공격 우선 순위
     ATTACK_PRIORITY             m_AttackPriority;
 
-    // 이 눈금이 쏜 투사체 리스트. 만약 타겟 오브젝트가 바뀌었다면 날아가던 파티클을 전부 없애주어야 한다.
+    // 이 눈금이 쏜 투사체 리스트. 만약 타겟 오브젝트가 바뀌었다면 날아가던 투사체를 전부 없애주어야 한다.
     // 그래서 리스트로 모아놓기
-    list<CDiceScaleProjectile>  m_ProjectileList;
+    //   + 리스트로 관리하기보다는, 투사체 스스로 판단하는게 가장 좋아보인다.
+    // list<CDiceScaleProjectile>  m_ProjectileList;
     
 
     // 추사위 색상(투사체 색상 위해)
@@ -38,16 +39,15 @@ private:
     CEnemyScript*               m_pTargetEnemy;
 
     // 필드
-    CFieldScript*               m_pFieldEnemy;
+    CFieldScript*               m_pField;
 
 public:
     // 투사체 만들어서 타겟 오브젝트에게 공격
     void Attack();
 
     void SetDiceScript(CDiceScript* _OwnerDice) { m_pOwnerDiceScript = _OwnerDice; }
-
-
-    void ClearDiceScale();
+    
+    void SetField(CFieldScript* _OwnerField) { m_pField = _OwnerField; }
 
 
 public:

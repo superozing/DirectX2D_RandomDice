@@ -52,7 +52,7 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 		pObj->AddComponent(m_VecDiceScale[i]);
 		
 		m_VecDiceScale[i]->SetDiceScript(this);
-		
+		m_VecDiceScale[i]->SetField(m_OwnerField);
 		
 		OBJECT->AddChild(pObj);
 	}

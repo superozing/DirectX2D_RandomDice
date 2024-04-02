@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "CDiceScaleProjectile.h"
 
+void CDiceScaleProjectile::StopProjectile()
+{
+}
+
 CDiceScaleProjectile::CDiceScaleProjectile()
 	: CScript(DICESCALEPROJECTILE)
 {
@@ -13,9 +17,4 @@ CDiceScaleProjectile::CDiceScaleProjectile(const CDiceScaleProjectile& _Origin)
 
 CDiceScaleProjectile::~CDiceScaleProjectile()
 {
-}
-
-void CDiceScaleProjectile::StopProjectile()
-{
-	
 }

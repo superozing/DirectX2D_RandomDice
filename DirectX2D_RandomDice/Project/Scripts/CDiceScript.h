@@ -69,7 +69,7 @@ private:
     // 눈금
 	UINT		                m_DiceScale;	// 주사위의 눈금 수 (등급)
 	UINT		                m_CurDiceScaleIdx; // 현재 어떤 눈금에게 attack() 을 호출할 지 인덱스 값
-	vector<CDiceScale*>         m_VecDiceScale;	
+	vector<class CDiceScale*>         m_VecDiceScale;	
     float                       m_AttackTimer;
 
     // 주사위 오브젝트의 위치
