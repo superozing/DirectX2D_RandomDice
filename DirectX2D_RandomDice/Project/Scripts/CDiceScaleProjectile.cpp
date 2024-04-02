@@ -14,3 +14,8 @@ CDiceScaleProjectile::CDiceScaleProjectile(const CDiceScaleProjectile& _Origin)
 CDiceScaleProjectile::~CDiceScaleProjectile()
 {
 }
+
+void CDiceScaleProjectile::StopProjectile()
+{
+	
+}

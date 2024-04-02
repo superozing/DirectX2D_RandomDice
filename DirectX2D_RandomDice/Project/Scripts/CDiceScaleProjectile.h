@@ -14,7 +14,24 @@ private:
     // 음.. 얘는 조금 다른 쉐이더를 사용해야 해요.
     // Vec4로 색상 인자를 넣어주어야 해요
 
-    class CDiceScale* m_pDiceScale;
+    class CDiceScale*       m_pDiceScale;
+    class CEnemyScript*     m_pTargetEnemy;
+
+public:
+
+    void SetTargetEnemy(CEnemyScript* _pEnemy)
+    {
+        m_pTargetEnemy = _pEnemy;
+    }
+    CEnemyScript* GetTargetEnemy()
+    {
+        return m_pTargetEnemy;
+    }
+
+    // 투사체 중단 함수
+    void StopProjectile();
+
+
 
 
 

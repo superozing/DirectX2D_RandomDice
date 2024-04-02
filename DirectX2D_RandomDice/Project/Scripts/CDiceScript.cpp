@@ -23,13 +23,90 @@ CDiceScript::~CDiceScript()
 
 #define OBJECT GetOwner()
 
-void CDiceScript::SetDiceType(DICE _Dice)
+void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 {
+	// 모든 눈금 오브젝트 부수기
+	for (UINT i = 0; i < m_DiceScale; ++i)
+		GamePlayStatic::DestroyGameObject(m_VecDiceScale[i]->GetOwner());
+
+	m_VecDiceScale.clear();
+
+	m_DiceScale = _DiceScale;
+
+	m_VecDiceScale.resize(m_DiceScale);
+
+	// 새로 눈금 수에 따른 눈금 할당하기
+	for (UINT i = 0; i < m_DiceScale; ++i)
+	{
+		CGameObject* pObj = new CGameObject;
+		pObj->AddComponent(new CTransform);
+		pObj->Transform()->SetRelativeScale(Vec3(5.f, 5.f, 1.f));
+
+		// MeshRender Set
+		pObj->AddComponent(new CMeshRender);
+		pObj->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+		pObj->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"AlphaBlendMtrl"));
+		pObj->MeshRender()->GetDynamicMaterial();
+
+		m_VecDiceScale[i] = new CDiceScale;
+		
+		pObj->AddComponent(m_VecDiceScale[i]);
+		OBJECT->AddChild(pObj);
+	}
+
+	// 눈금 수에 따른 눈금들의 위치 세팅
+	switch (m_DiceScale)
+	{
+	case 1:
+	{
+		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
+		break;
+	}
+	case 2:
+	{
+
+		break;
+	}
+	case 3:
+	{
+
+		break;
+	}
+	case 4:
+	{
+
+		break;
+	}
+	case 5:
+	{
+
+		break;
+	}
+	case 6:
+	{
+
+		break;
+	}
+	case 7:
+	{
+
+		break;
+	}
+	default:
+		break;
+	}
+
+
+
+
+
+	m_fScaleSize = 0.f;
+	m_IsGrowing = true;
+
 	m_Dice = _Dice;
 
 	if (m_Dice == DICE::NONE)
 	{
-		m_fScaleSize = 0.f;
 		m_IsGrowing = false;
 		return;
 	}
@@ -206,6 +283,10 @@ void CDiceScript::begin()
 
 void CDiceScript::tick()
 {
+	//==============
+	// Set Transform
+	//==============
+
 	if (m_LevelUpParticleTimer > 0.f)
 	{
 		m_LevelUpParticleTimer -= DT;
@@ -228,8 +309,8 @@ void CDiceScript::tick()
 			m_IsGrowing = false;
 		}
 	}
-	OBJECT->Transform()->SetRelativeScale(m_vSrcScale * m_fScaleSize);
 
+	OBJECT->Transform()->SetRelativeScale(m_vSrcScale * m_fScaleSize);
 
 	OBJECT->GetRenderComponent()->GetDynamicMaterial()
 		->SetScalarParam(SCALAR_PARAM::FLOAT_0, m_fScaleSize);
@@ -241,7 +322,7 @@ void CDiceScript::tick()
 	//============
 
 	// 만약 공격 시간이 왔을 경우
-	if (m_AttackTimer > 1.f / m_finalAttackSpeed)
+	if (m_AttackTimer > (1.f / m_finalAttackSpeed))
 	{
 		// 현재 공격 차례인 눈금에게 Attack()을 호출하기
 		m_VecDiceScale[m_CurDiceScaleIdx]->Attack();
@@ -253,6 +334,8 @@ void CDiceScript::tick()
 		if (m_DiceScale <= m_CurDiceScaleIdx)
 			m_CurDiceScaleIdx = 0;
 
+		// 타이머 초기화
+		m_AttackTimer -= (1.f / m_finalAttackSpeed);
 	}
 
 

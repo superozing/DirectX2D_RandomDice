@@ -58,44 +58,44 @@ class CDiceScript
 	:public CScript
 {
 private:
-	// if DICE == NONE일 경우, 현재 필드 칸 위에 주사위가 존재하지 않음. 이 경우 아무 행동도 하지 않아요.
-	// 음...아니면 bool 값으로 주사위 자리 활성화 여부를 둘까...?
+    // 필드
+	CFieldScript*               m_OwnerField;
 
+    // 주사위 정보
+	DICE		                m_Dice;			// 주사위 종류
+	DICE_INFO	                m_Info;			// 주사위 종류에 따른 주사위 정보
+    Vec3                        m_DiceColor;    // 주사위 눈금 색상
 
-	CFieldScript*       m_OwnerField;
-
-
-	DICE		        m_Dice;			// 주사위 종류
-	DICE_INFO	        m_Info;			// 주사위 종류에 따른 주사위 정보
-    Vec3                m_DiceColor;    // 주사위 눈금 색상
-
+    // 눈금
 	UINT		                m_DiceScale;	// 주사위의 눈금 수 (등급)
 	UINT		                m_CurDiceScaleIdx; // 현재 어떤 눈금에게 attack() 을 호출할 지 인덱스 값
-	vector<CDiceScale*>          m_VecDiceScale;	
-    float               m_AttackTimer;
+	vector<CDiceScale*>         m_VecDiceScale;	
+    float                       m_AttackTimer;
 
-	bool		        m_Buff[2];		// 이 주사위가 받고 있는 버프
-
-
-	float		        m_finalDamage;		// 버프, 디버프를 포함한 데미지
-	float		        m_finalAttackSpeed; // 버프, 디버프를 포함한 공격속도
-	
-
-	UINT		        m_DiceRow;
-	UINT		        m_DiceCol;
+    // 주사위 오브젝트의 위치
+	UINT		                m_DiceRow;
+	UINT		                m_DiceCol;
 
     // 생성 효과
-    CParticleSystem*    m_SpawnParticle;
-    tParticleModule     tSpawnModule;
-    Vec3                m_vSrcScale;
-    float               m_fScaleSize;
-    bool                m_IsGrowing;
+    CParticleSystem*            m_SpawnParticle;
+    tParticleModule             tSpawnModule;
+    Vec3                        m_vSrcScale;
+    float                       m_fScaleSize;
+    bool                        m_IsGrowing;
 
-    CParticleSystem*    m_LevelUpParticle;
-    tParticleModule     tLevelUpModule;
-    float               m_LevelUpParticleTimer;
+    // 레벨업 효과
+    CParticleSystem*            m_LevelUpParticle;
+    tParticleModule             tLevelUpModule;
+    float                       m_LevelUpParticleTimer;
 
 
+    // 적용 데미지와 공격 속도
+	bool		                m_Buff[2];		// 이 주사위가 받고 있는 버프
+
+
+	float		                m_finalDamage;		// 버프, 디버프를 포함한 데미지
+	float		                m_finalAttackSpeed; // 버프, 디버프를 포함한 공격속도
+    
 
 
 public:
@@ -117,7 +117,7 @@ public:
     float GetFinalDamage() const { return m_finalDamage; }
     float GetFinalAttackSpeed() const { return m_finalAttackSpeed; }
 
-	void SetDiceType(DICE _Dice);
+	void SetDiceType(DICE _Dice, UINT _DiceScale = 1);
 	void SetDiceInfo(DICE _Dice);
 
 
@@ -128,18 +128,19 @@ public:
 
     void PlayLevelUp();
 
+
+
+
+public:
 	virtual void begin() override;
 	virtual void tick() override;
+
 public:
 	virtual void SaveToFile(FILE* _File) {  }
 	virtual void LoadFromFile(FILE* _File) {  }
 
-
-
 public:
-	
 	CLONE(CDiceScript);
-
 	CDiceScript();
 	~CDiceScript();
 

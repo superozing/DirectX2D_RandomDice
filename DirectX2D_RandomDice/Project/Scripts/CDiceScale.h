@@ -47,6 +47,8 @@ public:
     void SetDiceScript(CDiceScript* _OwnerDice) { m_pOwnerDiceScript = _OwnerDice; }
 
 
+    void ClearDiceScale();
+
 
 public:
     virtual void SaveToFile(FILE* _File) {}
