@@ -27,14 +27,14 @@ void CDiceScale::Attack()
 	// 일단은 프리팹을 사용하지 말자.
 	
 	CGameObject* pProjectile = new CGameObject;
-
+	pProjectile->SetName(L"Projectile");
 	GamePlayStatic::SpawnGameObject(pProjectile, 7);
 
 	pProjectile->AddComponent(new CTransform);
 	
 	// 투사체의 출발 지점을 현재 눈금으로 지정
 	pProjectile->Transform()->SetRelativePos(Transform()->GetWorldPos());
-	pProjectile->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 10.f));
+	pProjectile->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 1.f));
 
 	auto pPScript = new CDiceScaleProjectile;
 	pProjectile->AddComponent(pPScript);
@@ -42,7 +42,7 @@ void CDiceScale::Attack()
 	// 필드 설정해주기
 	pPScript->SetField(m_pField);
 	pPScript->SetColor(m_vDiceColor);
-
+	pPScript->SetAttackPriority(m_AttackPriority);
 
 }
 

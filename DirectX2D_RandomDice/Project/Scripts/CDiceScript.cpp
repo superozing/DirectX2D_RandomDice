@@ -31,6 +31,14 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 
 	m_VecDiceScale.clear();
 
+	m_Dice = _Dice;
+
+	if (m_Dice == DICE::NONE)
+	{
+		m_IsGrowing = false;
+		return;
+	}
+
 	m_DiceScale = _DiceScale;
 
 	m_VecDiceScale.resize(m_DiceScale);
@@ -62,7 +70,7 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 	{
 	case 1:
 	{
-		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
+		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
 		break;
 	}
 	case 2:
@@ -123,20 +131,8 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 		break;
 	}
 
-
-
-
-
 	m_fScaleSize = 0.f;
 	m_IsGrowing = true;
-
-	m_Dice = _Dice;
-
-	if (m_Dice == DICE::NONE)
-	{
-		m_IsGrowing = false;
-		return;
-	}
 
 	m_DiceColor = CDiceScript::GetDiceColor(_Dice);
 
@@ -348,21 +344,25 @@ void CDiceScript::tick()
 	// Dice Attack
 	//============
 
+	m_AttackTimer += DT;
+
 	// 만약 공격 시간이 왔을 경우
-	if (m_AttackTimer > (1.f / m_finalAttackSpeed))
+	if (m_AttackTimer > (1.f / /*m_finalAttackSpeed*/1.f))
 	{
-		// 현재 공격 차례인 눈금에게 Attack()을 호출하기
-		m_VecDiceScale[m_CurDiceScaleIdx]->Attack();
+		if (!m_VecDiceScale.empty())
+		{
+			// 현재 공격 차례인 눈금에게 Attack()을 호출하기
+			m_VecDiceScale[m_CurDiceScaleIdx]->Attack();
 
-		// 다음 인덱스로 옮기기
-		++m_CurDiceScaleIdx;
+			// 다음 인덱스로 옮기기
+			++m_CurDiceScaleIdx;
 
-		// 모든 눈금이 공격을 했다면, 다시 첫 눈금부터 공격
-		if (m_DiceScale <= m_CurDiceScaleIdx)
-			m_CurDiceScaleIdx = 0;
-
+			// 모든 눈금이 공격을 했다면, 다시 첫 눈금부터 공격
+			if (m_DiceScale <= m_CurDiceScaleIdx)
+				m_CurDiceScaleIdx = 0;
+		}
 		// 타이머 초기화
-		m_AttackTimer -= (1.f / m_finalAttackSpeed);
+		m_AttackTimer -= (1.f / /*m_finalAttackSpeed*/1.f);
 	}
 
 

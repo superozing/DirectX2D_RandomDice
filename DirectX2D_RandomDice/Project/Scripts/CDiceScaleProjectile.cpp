@@ -30,6 +30,12 @@ void CDiceScaleProjectile::begin()
 
 	// 타겟 적
 	m_pTargetEnemy = m_pField->GetTargetEnemy(m_AttackPriority);
+
+
+	GetOwner()->AddComponent(new CMeshRender);
+	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"AlphaBlendMtrl"));
+	MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+
 	MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0
 		, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Dice\\dice_eye.png", L"texture\\Dice\\dice_eye.png"));
 
@@ -39,10 +45,21 @@ void CDiceScaleProjectile::begin()
 
 void CDiceScaleProjectile::tick()
 {
+	if (m_pTargetEnemy.pObject == nullptr)
+	{
+		m_pTargetEnemy = m_pField->GetTargetEnemy(m_AttackPriority);
+	}
+	if (m_pTargetEnemy.pObject == nullptr)
+	{
+		return;
+	}
+
 	// 해야 할 일
 	// 1) 만약 타겟 적이 죽었는가 -> 죽었다면 예외처리
 	if (m_pTargetEnemy.pObject->IsDead())
 	{
+		m_pTargetEnemy = ENEMY_PAIR();
+
 		// 나중에 애니메이션을 추가해야 한다.
 		GamePlayStatic::DestroyGameObject(GetOwner());
 	}
@@ -70,8 +87,8 @@ void CDiceScaleProjectile::tick()
 
 		vDir.Normalize();
 
-		vPos.x += vDir.x * 100 * DT;
-		vPos.y += vDir.y * 100 * DT;
+		vPos.x += vDir.x * 500 * DT;
+		vPos.y += vDir.y * 500 * DT;
 
 		Transform()->SetRelativePos(vPos);
 	}

@@ -2,6 +2,7 @@
 #include <Engine\CScript.h>
 #include <Engine\CAnimator2D.h>
 #include "CDiceAttackScript.h"
+#include "CFieldScript.h"
 
 class CDiceScaleProjectile :
     public CScript
@@ -17,7 +18,7 @@ private:
     class CFieldScript*         m_pField;
     
     ATTACK_PRIORITY             m_AttackPriority;
-    struct ENEMY_PAIR           m_pTargetEnemy;
+    ENEMY_PAIR                  m_pTargetEnemy;
     
 
 

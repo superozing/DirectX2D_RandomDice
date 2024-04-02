@@ -24,13 +24,7 @@ private:
     CDiceScript*                m_pOwnerDiceScript;
 
     // 공격 우선 순위
-    ATTACK_PRIORITY             m_AttackPriority;
-
-    // 이 눈금이 쏜 투사체 리스트. 만약 타겟 오브젝트가 바뀌었다면 날아가던 투사체를 전부 없애주어야 한다.
-    // 그래서 리스트로 모아놓기
-    //   + 리스트로 관리하기보다는, 투사체 스스로 판단하는게 가장 좋아보인다.
-    // list<CDiceScaleProjectile>  m_ProjectileList;
-    
+    ATTACK_PRIORITY             m_AttackPriority = ATTACK_PRIORITY::FRONT;
 
     // 추사위 색상(투사체 색상 위해)
     Vec3                        m_vDiceColor;
