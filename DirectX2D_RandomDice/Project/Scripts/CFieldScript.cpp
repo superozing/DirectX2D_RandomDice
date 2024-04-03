@@ -402,6 +402,8 @@ void CFieldScript::tick()
 		// 쿨타임이 돌았으면 0으로 초기화 해놓기
 		if (m_SpawnEnemyCheck[i].CoolDown < 0.f)
 			m_SpawnEnemyCheck[i].CoolDown = 0.f;
+
+		m_AttackPriority[i] = ENEMY_PAIR();
 	}
 
 	// AutoSpawnEnemy
