@@ -38,9 +38,6 @@ void CDiceScaleProjectile::begin()
 
 	MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0
 		, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Dice\\dice_eye.png", L"texture\\Dice\\dice_eye.png"));
-
-	Transform()->SetRelativePos(m_pDiceScript->Transform()->GetRelativePos());
-
 }
 
 void CDiceScaleProjectile::tick()
@@ -85,8 +82,7 @@ void CDiceScaleProjectile::tick()
 	if (vDir.Length() < 6.f)
 	{
 		// 나중에 애니메이션을 추가해야 한다.
-		// 나중에 주사위 종류에 따른 데미지를 주어야 한다.
-		m_pTargetEnemy.pEnemyScript->TakeDamage(50);
+		m_pTargetEnemy.pEnemyScript->TakeDamage(50); // 나중에 주사위 종류에 따른 데미지를 주어야 한다.
 		GamePlayStatic::DestroyGameObject(GetOwner());
 	}
 	else 
@@ -94,15 +90,14 @@ void CDiceScaleProjectile::tick()
 		// 정규화 - 방향 정보를 가지게
 		vDir.Normalize();
 
-		int m_Speed = 1500;
+		int m_Speed = 1000;
 
 		vProj += vDir * m_Speed * DT;
 		Transform()->SetRelativePos(Vec3(vProj.x, vProj.y, Transform()->GetWorldPos().z));
 	}
 
-
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 1);
-	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::VEC4_0, Vec4(m_ProjectileColor / 225.f, 0));
+	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::VEC4_0, Vec4(m_ProjectileColor, 1));
 }
 
 void CDiceScaleProjectile::StopProjectile()
