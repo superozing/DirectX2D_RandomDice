@@ -33,6 +33,9 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 
 	m_Dice = _Dice;
 
+	m_fScaleSize = 0.f;
+	m_IsGrowing = true;
+
 	if (m_Dice == DICE::NONE)
 	{
 		m_IsGrowing = false;
@@ -48,13 +51,16 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 	{
 		CGameObject* pObj = new CGameObject;
 		pObj->AddComponent(new CTransform);
-		pObj->Transform()->SetRelativeScale(Vec3(5.f, 5.f, 1.f));
+		pObj->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 1.f));
 
 		// MeshRender Set
 		pObj->AddComponent(new CMeshRender);
 		pObj->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 		pObj->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"AlphaBlendMtrl"));
-		pObj->MeshRender()->GetDynamicMaterial();
+		pObj->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 1);
+		pObj->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::VEC4_0, Vec4(m_DiceColor / 255.f, 255.f));
+		pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0
+			, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Dice\\dice_eye.png", L"texture\\Dice\\dice_eye.png"));
 
 		m_VecDiceScale[i] = new CDiceScale;
 		pObj->AddComponent(m_VecDiceScale[i]);
@@ -70,7 +76,7 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 	{
 	case 1:
 	{
-		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
+		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
 		break;
 	}
 	case 2:
@@ -131,8 +137,6 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 		break;
 	}
 
-	m_fScaleSize = 0.f;
-	m_IsGrowing = true;
 
 	m_DiceColor = CDiceScript::GetDiceColor(_Dice);
 
@@ -345,9 +349,12 @@ void CDiceScript::tick()
 	//============
 
 	m_AttackTimer += DT;
+	
+	// 나중에 반드시바꿔야 할 코드*******************
+	m_finalAttackSpeed = 30;
 
 	// 만약 공격 시간이 왔을 경우
-	if (m_AttackTimer > (1.f / /*m_finalAttackSpeed*/1.f))
+	if (m_AttackTimer > (1.f / m_finalAttackSpeed))
 	{
 		if (!m_VecDiceScale.empty())
 		{
@@ -362,7 +369,7 @@ void CDiceScript::tick()
 				m_CurDiceScaleIdx = 0;
 		}
 		// 타이머 초기화
-		m_AttackTimer -= (1.f / /*m_finalAttackSpeed*/1.f);
+		m_AttackTimer -= (1.f / m_finalAttackSpeed);
 	}
 
 
