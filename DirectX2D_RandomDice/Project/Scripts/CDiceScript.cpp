@@ -348,10 +348,11 @@ void CDiceScript::tick()
 	// Dice Attack
 	//============
 
-	m_AttackTimer += DT;
+	if (DICE::NONE != m_Dice)
+		m_AttackTimer += DT;
 	
 	// 나중에 반드시바꿔야 할 코드*******************
-	m_finalAttackSpeed = 30;
+	m_finalAttackSpeed = 2;
 
 	// 만약 공격 시간이 왔을 경우
 	if (m_AttackTimer > (1.f / m_finalAttackSpeed))

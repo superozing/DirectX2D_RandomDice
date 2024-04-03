@@ -20,7 +20,7 @@ private:
     
     ATTACK_PRIORITY             m_AttackPriority;
     ENEMY_PAIR                  m_pTargetEnemy;
-    class CDiceScript*           m_pDiceScript;
+    class CDiceScript*          m_pDiceScript;
 
 
     Vec3                        m_ProjectileColor;

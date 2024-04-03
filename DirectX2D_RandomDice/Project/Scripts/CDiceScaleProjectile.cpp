@@ -94,13 +94,15 @@ void CDiceScaleProjectile::tick()
 		// 정규화 - 방향 정보를 가지게
 		vDir.Normalize();
 
-		vProj += vDir * /*m_Speed*/1000 * DT;
+		int m_Speed = 1500;
+
+		vProj += vDir * m_Speed * DT;
 		Transform()->SetRelativePos(Vec3(vProj.x, vProj.y, Transform()->GetWorldPos().z));
 	}
 
 
 	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 1);
-	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::VEC4_0, Vec4(m_ProjectileColor / 3, 0));
+	MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::VEC4_0, Vec4(m_ProjectileColor / 225.f, 0));
 }
 
 void CDiceScaleProjectile::StopProjectile()
