@@ -42,6 +42,8 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 		return;
 	}
 
+	m_DiceColor = CDiceScript::GetDiceColor(_Dice);
+	
 	m_DiceScale = _DiceScale;
 
 	m_VecDiceScale.resize(m_DiceScale);
@@ -58,7 +60,7 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 		pObj->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
 		pObj->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"AlphaBlendMtrl"));
 		pObj->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_0, 1);
-		pObj->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::VEC4_0, Vec4(m_DiceColor / 255.f, 255.f));
+		pObj->MeshRender()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::VEC4_0, Vec4(m_DiceColor, 1.f));
 		pObj->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0
 			, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Dice\\dice_eye.png", L"texture\\Dice\\dice_eye.png"));
 
@@ -67,7 +69,8 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 		
 		m_VecDiceScale[i]->SetDiceScript(this);
 		m_VecDiceScale[i]->SetField(m_OwnerField);
-		
+		m_VecDiceScale[i]->SetDiceColor(m_DiceColor);
+
 		OBJECT->AddChild(pObj);
 	}
 
@@ -138,7 +141,6 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 	}
 
 
-	m_DiceColor = CDiceScript::GetDiceColor(_Dice);
 
 	tSpawnModule.vSpawnColor = Vec4(m_DiceColor / 255.f, 1.f);
 	tLevelUpModule.vSpawnColor = Vec4(m_DiceColor / 255.f, 1.f);

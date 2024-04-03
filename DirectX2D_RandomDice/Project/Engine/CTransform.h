@@ -26,9 +26,9 @@ public:
 
     void SetWorldMat(const Matrix _matWorld) { m_matWorld = _matWorld; }
 
-    Vec3 GetRelativePos() { return m_vRelativePos; }
-    Vec3 GetRelativeScale() { return m_vRelativeScale; }
-    Vec3 GetRelativeRotation() { return m_vRealtiveRotation; }
+    Vec3 GetRelativePos() const { return m_vRelativePos; }
+    Vec3 GetRelativeScale() const { return m_vRelativeScale; }
+    Vec3 GetRelativeRotation() const { return m_vRealtiveRotation; }
 
     Vec3 GetWorldPos() { return m_matWorld.Translation(); }
     Vec3 GetWorldScale();
