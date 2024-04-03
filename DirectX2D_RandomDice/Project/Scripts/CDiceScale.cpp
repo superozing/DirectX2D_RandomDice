@@ -34,6 +34,8 @@ void CDiceScale::Attack()
 	pProjectile->AddComponent(new CTransform);
 	
 	pProjectile->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 1.f));
+	pProjectile->Transform()->SetRelativePos(Transform()->GetWorldPos());
+	pProjectile->Transform()->finaltick();
 
 	auto pPScript = new CDiceScaleProjectile;
 	pProjectile->AddComponent(pPScript);
@@ -46,6 +48,6 @@ void CDiceScale::Attack()
 
 	pProjectile->begin();
 	GamePlayStatic::SpawnGameObject(pProjectile, 7);
-
+	
 }
 

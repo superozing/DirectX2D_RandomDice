@@ -43,6 +43,7 @@ public:
     
     void SetField(CFieldScript* _OwnerField) { m_pField = _OwnerField; }
 
+    void SetDiceColor(Vec3 _DiceColor) { m_vDiceColor = _DiceColor; }
 
 public:
     virtual void SaveToFile(FILE* _File) {}
