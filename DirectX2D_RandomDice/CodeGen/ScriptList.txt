@@ -6,7 +6,6 @@ CDiceBuffScript
 CDiceMergeScript
 CDiceScale
 CDiceScaleProjectile
-CDiceScaleScript
 CDiceScript
 CDiceUI
 CEnemyGateScript

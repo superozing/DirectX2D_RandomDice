@@ -43,9 +43,6 @@
     <ClInclude Include="CEnemyScript.h">
       <Filter>Scripts\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="CDiceScaleScript.h">
-      <Filter>Scripts\DiceAttack\DIceScale</Filter>
-    </ClInclude>
     <ClInclude Include="CExternScript.h">
       <Filter>Scripts\Extern</Filter>
     </ClInclude>
@@ -129,9 +126,6 @@
     <ClCompile Include="CEnemyScript.cpp">
       <Filter>Scripts\Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="CDiceScaleScript.cpp">
-      <Filter>Scripts\DiceAttack\DIceScale</Filter>
-    </ClCompile>
     <ClCompile Include="CExternScript.cpp">
       <Filter>Scripts\Extern</Filter>
     </ClCompile>
@@ -205,9 +199,6 @@
     </Filter>
     <Filter Include="Scripts\Enemy">
       <UniqueIdentifier>{a253f0ba-1386-423e-b475-a1a6b41f72f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scripts\DiceAttack\DIceScale">
-      <UniqueIdentifier>{3b7501c7-d0f4-4e97-aa0c-423064885c60}</UniqueIdentifier>
     </Filter>
     <Filter Include="Scripts\Enemy\Default">
       <UniqueIdentifier>{7d765733-dca9-47e5-88c8-75ec915f6e73}</UniqueIdentifier>
