@@ -52,13 +52,9 @@ private:
     int                 m_Minus = 1;
     float               m_fScale = 1;
 
-
+    bool                m_IsDeadEnemy;
 
 private:
-
-    ///////////////////////////////////////////////////////////// 자식 쪽에서 오버라이딩을 반드시 해야 해요.
-    // 사실 안쓰면 안해도 되는거 아닐까?>
-    // 맞다. 안쓰면 안해도 된다.
     virtual void SaveToFile(FILE* _File) {}
     virtual void LoadFromFile(FILE* _File) {}
 
@@ -66,7 +62,8 @@ public:
     virtual void tick() override;
     virtual void begin() override;
 
-    void PlayDeathParticle();
+    void SetDeadEnemy();
+    bool IsDeadEnemy() const { return m_IsDeadEnemy; }
 
     float GetMoveProgress() const { return m_MoveProgress; }
     ENEMY_TYPE GetEnemyType() const { return m_EnemyType; }

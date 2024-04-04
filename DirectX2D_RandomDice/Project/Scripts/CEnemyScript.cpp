@@ -44,15 +44,16 @@ void CEnemyScript::tick()
 	if (m_ParticleSystem != nullptr && m_DeathParticleTimer != -1.f)
 	{
 		if (m_DeathParticleTimer > 2.f)
+		{
 			EndDeathParticle = true;
+			GamePlayStatic::DestroyGameObject(GetOwner());
+		}
 
 		m_DeathParticleTimer += DT;
 		m_ParticleSystem->SetActivate(true);
 
 		if (m_DeathParticleTimer > 0.1f)
-		{
 			m_ParticleSystem->SetActivate(false);
-		}
 	}
 
 	OBJECT->Transform()->SetRelativeScale(Vec3(m_vScale.x, m_vScale.y * m_fScale, m_vScale.z));
@@ -105,27 +106,28 @@ void CEnemyScript::begin()
 	SetEnemyHealth(100);
 }
 
-void CEnemyScript::PlayDeathParticle()
+void CEnemyScript::SetDeadEnemy()
 {
+	m_IsDeadEnemy = true;
+
 	// m_DeathParticleTimer의 초기 값은 -1이다.
-	if (m_DeathParticleTimer == -1.f)
-	{
-		m_DeathParticleTimer = 0.f;
+	m_DeathParticleTimer = 0.f;
 
-		int AddSP = 10 * m_OwnerField->GetCurWave();
+	int AddSP = 10 * m_OwnerField->GetCurWave();
 
-		// 체력이 전부 떨어져서 죽었는가? 아니면 라인의 끝에 도달해서 죽었는가?
-		if (m_CurHealth > 0)
-			m_OwnerField->SetPlayerHP(m_OwnerField->GetPlayerHP() - 1);
+	// 체력이 전부 떨어져서 죽었는가? 아니면 라인의 끝에 도달해서 죽었는가?
+	if (m_CurHealth > 0)
+		m_OwnerField->SetPlayerHP(m_OwnerField->GetPlayerHP() - 1);
 		
-		if (m_EnemyType == ENEMY_TYPE::BIG)
-		{
-			AddSP *= 5;
-			m_OwnerField->SetPlayerHP(m_OwnerField->GetPlayerHP() - 1); // 빅 몬스터일 경우, 체력 2개 빼주기
-		}
+	if (m_EnemyType == ENEMY_TYPE::BIG)
+	{
+		AddSP *= 5;
 
-		m_OwnerField->AddCurSP(AddSP);
+		if (m_CurHealth > 0)
+			m_OwnerField->SetPlayerHP(m_OwnerField->GetPlayerHP() - 1); // 빅 몬스터일 경우, 체력 2개 빼주기
 	}
+
+	m_OwnerField->AddCurSP(AddSP);
 }
 
 void CEnemyScript::SetEnemyType(ENEMY_TYPE _Enemytype)
