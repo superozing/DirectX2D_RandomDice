@@ -42,6 +42,12 @@ CFieldScript::~CFieldScript()
 
 #define OBJECT			GetOwner()
 
+bool EnemyCompare(ENEMY_PAIR& a, ENEMY_PAIR& b)
+{
+	return a.pEnemyScript->GetMoveProgress() > b.pEnemyScript->GetMoveProgress();
+}
+
+
 void CFieldScript::begin()
 {
 	CDiceScript::InitDice();
@@ -391,23 +397,32 @@ void CFieldScript::begin()
 void CFieldScript::tick()
 {
 
-	// AccSpawnCoolDown
+	//==========================
+	// AttackPriority 배열 Clear
+	//==========================
+	for (UINT i = 0; i < (UINT)ATTACK_PRIORITY::END; ++i)
+		m_AttackPriority[i] = ENEMY_PAIR();
+
+
 	for (UINT i = 0; i < (UINT)ENEMY_TYPE::END; ++i)
 	{
+		// Enemy Auto Spawn Timer
 		m_AccSpawnCoolDown[i] -= m_EnemySpawnRate[m_CurWave] * DT;
 
-		// m_SpawnEnemyCheck의 쿨다운 감소
+		// Enemy Spawn 간격
+		//	- 적이 겹쳐 소환되는걸 방지함.
 		m_SpawnEnemyCheck[i].CoolDown -= DT;
 
-		// 쿨타임이 돌았으면 0으로 초기화 해놓기
+		//  Enemy Spawn 간격이 돌았으면 0으로 초기화 해놓기
 		if (m_SpawnEnemyCheck[i].CoolDown < 0.f)
 			m_SpawnEnemyCheck[i].CoolDown = 0.f;
-
-		m_AttackPriority[i] = ENEMY_PAIR();
 	}
 
-	// AutoSpawnEnemy
-	if (AutoSpawnEnemy)
+	//======================
+	// Enemy Auto Spawn
+	//======================
+	//	- 스폰 개수를 증가시켜서 이후에 라인에 적 오브젝트를 추가하도록 함.
+	if (AutoSpawnEnemy) // 디버그용 bool 값.
 	{
 		if (m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::DEFAULT] < 0.f)
 		{
@@ -430,21 +445,19 @@ void CFieldScript::tick()
 	//======================
 	// Update MaxEnemyHealth
 	//======================
-
 	m_EnemyHPUpdateTimer += DT;
 
 	if (m_EnemyHPUpdateTimer > 5.f)
 	{
+		// 5초마다 적의 체력을 현재 라운드에 비례해서 증가시킴.
 		m_MaxEnemyHP += m_EnemyHPArr[m_CurWave];
 		m_EnemyHPUpdateTimer = 0.f;
 	}
 
-	/////
 
-	//==================
-	// Spawn Enemy Check
-	//==================
-
+	//===============
+	// Spawn Enemy
+	//===============
 	Vec3 Line1StartPos(m_EnemyGate1->Transform()->GetWorldPos().x, m_EnemyGate1->Transform()->GetWorldPos().y, 600);
 	Vec3 Line2StartPos(m_EnemyGate1->Transform()->GetWorldPos().x, m_Line2->Transform()->GetWorldPos().y, 600);
 	Vec3 Line3StartPos(m_EnemyGate2->Transform()->GetWorldPos().x, m_Line2->Transform()->GetWorldPos().y, 600);
@@ -545,6 +558,10 @@ void CFieldScript::tick()
 
 	
 	///////////////////
+	///////////////////
+	///////////////////
+
+	sort(m_EnemyList.begin(), m_EnemyList.end(), EnemyCompare);
 
 	Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
 
@@ -564,20 +581,9 @@ void CFieldScript::tick()
 		// 위치 비율 - 31 : 38 : 31
 		float MoveProgress = pEScript->GetMoveProgress();
 
-		// ATTACK_PRIORITY Check - FRONT
-		if (m_AttackPriority[(UINT)ATTACK_PRIORITY::FRONT].pObject == nullptr 
-			|| (m_AttackPriority[(UINT)ATTACK_PRIORITY::FRONT].pEnemyScript->GetMoveProgress() < MoveProgress
-			&& MoveProgress < 100.f))
-		{
-			// 공격 우선 순위 오브젝트가 nullptr일 경우
-			// 진행도가 가장 앞서는 경우
-			m_AttackPriority[(UINT)ATTACK_PRIORITY::FRONT] = pEnemy;
-		}
-
 		Vec3 Pos(0.f, 0.f, 600.f);
 
-
-
+		// 라인에 Enemy Pos Set
 		if (MoveProgress <= 31.f) // 왼 쪽 라인에 위치
 		{
 			Pos = Line1StartPos;
@@ -611,14 +617,13 @@ void CFieldScript::tick()
 		pObject->Transform()->SetRelativePos(Pos);
 
 
-		// DamageCheck
-		if (pEScript->GetEnemyHealth() <= 0)
-			ThisEnemyIsDead = true;
-
-
 		//==================
 		// Check Enemy Dead
 		//==================
+
+		// DamageCheck
+		if (pEScript->GetEnemyHealth() <= 0)
+			ThisEnemyIsDead = true;
 
 		if (ThisEnemyIsDead)
 		{
@@ -671,6 +676,21 @@ void CFieldScript::tick()
 			CFontMgr::GetInst()->AddRenderFont(m_fInfo1);
 			++it;
 		}
+	}
+
+	//====================
+	// Attack Priority Set
+	//====================
+
+	// ATTACK_PRIORITY::FRONT
+	m_AttackPriority[(UINT)ATTACK_PRIORITY::FRONT] = m_EnemyList.back();
+
+	// ATTACK_PRIORITY::HIGH_HEALTH
+	m_AttackPriority[(UINT)ATTACK_PRIORITY::HIGH_HEALTH] = m_EnemyList.front();
+	for (auto& it : m_EnemyList)
+	{
+		if (it.pEnemyScript->GetEnemyHealth() > m_AttackPriority[(UINT)ATTACK_PRIORITY::HIGH_HEALTH].pEnemyScript->GetEnemyHealth())
+			m_AttackPriority[(UINT)ATTACK_PRIORITY::HIGH_HEALTH] = it;
 	}
 
 
