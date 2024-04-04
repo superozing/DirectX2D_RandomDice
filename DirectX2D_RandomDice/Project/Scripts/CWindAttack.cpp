@@ -6,7 +6,7 @@ CWindAttack::CWindAttack()
 {
 	SetAttackDamage(50.f);
 	SetAttackPriority(ATTACK_PRIORITY::FRONT);
-	SetAttackSpeed(0.3f);
+	SetAttackSpeed(3.f);
 }
 
 CWindAttack::CWindAttack(const CWindAttack& _Origin)

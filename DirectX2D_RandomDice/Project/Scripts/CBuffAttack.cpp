@@ -6,7 +6,7 @@ CBuffAttack::CBuffAttack()
 {
 	SetAttackDamage(10.f);
 	SetAttackPriority(ATTACK_PRIORITY::FRONT);
-	SetAttackSpeed(3.f);
+	SetAttackSpeed(0.3f);
 }
 
 CBuffAttack::CBuffAttack(const CBuffAttack& _Origin)
