@@ -62,7 +62,7 @@ void CDiceScaleProjectile::tick()
 	}
 
 	// 만약 타겟이 Dead일 경우
-	if (m_pTargetEnemy.pObject->IsDead())
+	if (m_pTargetEnemy.pObject->IsDead() || m_pTargetEnemy.pEnemyScript->IsDeadEnemy())
 	{
 		// 나중에 애니메이션을 추가해야 한다.
 		GamePlayStatic::DestroyGameObject(GetOwner());
