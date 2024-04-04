@@ -59,8 +59,12 @@ private:
     FONTINFO                m_fInfo2;
 
 
-    FONTINFO                m_fDamage;
-    float                   m_DamageFontSizeScale;
+    FONTINFO                m_fDamage1;
+    FONTINFO                m_fDamage2;
+    float                   m_DamageFontSizeScale = 1.f;
+    float                   m_SourceFontSize = 15.f;
+    float                   m_DamageFontTimer;
+    bool                    m_IsDamageFontRender = false;
 
 
 private:
@@ -84,7 +88,7 @@ public:
     int GetEnemyHealth() const { return m_CurHealth; }
     void SetEnemyHealth(int _Health) { m_CurHealth = _Health; }
     
-    void TakeDamage(int _Dmg) { m_CurHealth -= _Dmg; }
+    void TakeDamage(int _Dmg, bool _IsCriticalAttack = false);
 
 protected:
     virtual void SetEnemyType(ENEMY_TYPE _Enemytype);

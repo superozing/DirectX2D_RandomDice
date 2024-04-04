@@ -59,7 +59,7 @@ void CEnemyScript::tick()
 	OBJECT->Transform()->SetRelativeScale(Vec3(m_vScale.x, m_vScale.y * m_fSizeScale, m_vScale.z));
 
 
-	if (!m_IsDeadEnemy)
+	if (!m_IsDeadEnemy && Transform()->GetWorldPos().y != 0.f)
 	{
 		//=========
 		// HP Text
@@ -73,7 +73,7 @@ void CEnemyScript::tick()
 
 		m_fInfo1.WorldRenderOffset.y = 7;
 		m_fInfo2.WorldRenderOffset.y = 10;
-
+							
 		// 체력 폰트의 문자열 설정
 		UINT enemyHP = GetEnemyHealth();
 
@@ -99,6 +99,34 @@ void CEnemyScript::tick()
 		// 폰트 매니저 출력에 추가
 		CFontMgr::GetInst()->AddRenderFont(m_fInfo2);
 		CFontMgr::GetInst()->AddRenderFont(m_fInfo1);
+
+		if (m_IsDamageFontRender)
+		{
+			m_DamageFontTimer -= DT;
+			if (m_DamageFontTimer < 0)
+			{
+				m_DamageFontTimer = 1.f;
+				m_IsDamageFontRender = false;
+			}
+
+			m_DamageFontSizeScale -= DT * 3;
+			if (m_DamageFontSizeScale < 1.f)
+				m_DamageFontSizeScale = 1.f;
+
+			m_fDamage1.fFontSize = m_SourceFontSize * m_DamageFontSizeScale;
+			m_fDamage2.fFontSize = m_SourceFontSize * m_DamageFontSizeScale;
+
+			m_fDamage1.fPosX = Pos.x;
+			m_fDamage1.fPosY = Pos.y;
+			m_fDamage2.fPosX = Pos.x;
+			m_fDamage2.fPosY = Pos.y;
+
+			m_fDamage1.WorldRenderOffset.y = -48;
+			m_fDamage2.WorldRenderOffset.y = -45;
+
+			CFontMgr::GetInst()->AddRenderFont(m_fDamage2);
+			CFontMgr::GetInst()->AddRenderFont(m_fDamage1);
+		}
 	}
 }
 
@@ -162,6 +190,16 @@ void CEnemyScript::begin()
 	m_fInfo2.FontType = FONT_TYPE::ALBA_MATTER;
 	m_fInfo2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
 	m_fInfo2.IsWorldPosRender = true;
+
+	m_fDamage1.Color = FONT_RGBA(0, 0, 0, 255);
+	m_fDamage1.FontType = FONT_TYPE::ALBA_SUPER;
+	m_fDamage1.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_fDamage1.IsWorldPosRender = true;
+
+	m_fDamage2.Color = FONT_RGBA(255, 255, 255, 255);
+	m_fDamage2.FontType = FONT_TYPE::ALBA_MATTER;
+	m_fDamage2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_fDamage2.IsWorldPosRender = true;
 }
 
 void CEnemyScript::SetDeadEnemy()
@@ -186,6 +224,30 @@ void CEnemyScript::SetDeadEnemy()
 	}
 
 	m_OwnerField->AddCurSP(AddSP);
+}
+
+void CEnemyScript::TakeDamage(int _Dmg, bool _IsCriticalAttack)
+{
+	// 데미지 입히기
+	m_CurHealth -= _Dmg;
+
+	m_IsDamageFontRender = true;
+	m_DamageFontSizeScale = 1.3f;
+	m_DamageFontTimer = 1.f;
+
+	if (_IsCriticalAttack)
+	{
+		m_fDamage2.Color = FONT_RGBA(255, 127, 0, 255);
+		m_DamageFontSizeScale = 1.6f;
+	}
+	else
+	{
+		m_fDamage2.Color = FONT_RGBA(210, 210, 210, 255);
+		m_DamageFontSizeScale = 1.4f;
+	}
+
+	m_fDamage1.WStr = to_wstring(_Dmg);
+	m_fDamage2.WStr = to_wstring(_Dmg);
 }
 
 void CEnemyScript::SetEnemyType(ENEMY_TYPE _Enemytype)
