@@ -1,5 +1,6 @@
 CBackgroundScript
 CBigEnemyScript
+CBuffAttack
 CDefaultAttack
 CDefaultEnemyScript
 CDiceAttackScript

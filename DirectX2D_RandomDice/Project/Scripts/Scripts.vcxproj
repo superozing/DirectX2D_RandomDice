@@ -164,6 +164,7 @@ call CodeGen.exe</Command>
   <ItemGroup>
     <ClInclude Include="CBackgroundScript.h" />
     <ClInclude Include="CBigEnemyScript.h" />
+    <ClInclude Include="CBuffAttack.h" />
     <ClInclude Include="CDefaultAttack.h" />
     <ClInclude Include="CDefaultEnemyScript.h" />
     <ClInclude Include="CDiceAttackScript.h" />
@@ -194,6 +195,7 @@ call CodeGen.exe</Command>
   <ItemGroup>
     <ClCompile Include="CBackgroundScript.cpp" />
     <ClCompile Include="CBigEnemyScript.cpp" />
+    <ClCompile Include="CBuffAttack.cpp" />
     <ClCompile Include="CDefaultAttack.cpp" />
     <ClCompile Include="CDefaultEnemyScript.cpp" />
     <ClCompile Include="CDiceAttackScript.cpp" />

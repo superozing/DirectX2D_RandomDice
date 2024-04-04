@@ -3,6 +3,7 @@
 
 #include "CBackgroundScript.h"
 #include "CBigEnemyScript.h"
+#include "CBuffAttack.h"
 #include "CDefaultAttack.h"
 #include "CDefaultEnemyScript.h"
 #include "CDiceAttackScript.h"
@@ -30,6 +31,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
 	_vec.push_back(L"CBackgroundScript");
 	_vec.push_back(L"CBigEnemyScript");
+	_vec.push_back(L"CBuffAttack");
 	_vec.push_back(L"CDefaultAttack");
 	_vec.push_back(L"CDefaultEnemyScript");
 	_vec.push_back(L"CDiceAttackScript");
@@ -60,6 +62,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CBackgroundScript;
 	if (L"CBigEnemyScript" == _strScriptName)
 		return new CBigEnemyScript;
+	if (L"CBuffAttack" == _strScriptName)
+		return new CBuffAttack;
 	if (L"CDefaultAttack" == _strScriptName)
 		return new CDefaultAttack;
 	if (L"CDefaultEnemyScript" == _strScriptName)
@@ -116,6 +120,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::BIGENEMYSCRIPT:
 		return new CBigEnemyScript;
+		break;
+	case (UINT)SCRIPT_TYPE::BUFFATTACK:
+		return new CBuffAttack;
 		break;
 	case (UINT)SCRIPT_TYPE::DEFAULTATTACK:
 		return new CDefaultAttack;
@@ -197,6 +204,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::BIGENEMYSCRIPT:
 		return L"CBigEnemyScript";
+		break;
+
+	case SCRIPT_TYPE::BUFFATTACK:
+		return L"CBuffAttack";
 		break;
 
 	case SCRIPT_TYPE::DEFAULTATTACK:
