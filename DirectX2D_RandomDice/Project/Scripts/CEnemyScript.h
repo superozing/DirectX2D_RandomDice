@@ -54,6 +54,12 @@ private:
 
     bool                m_IsDeadEnemy;
 
+
+    FONTINFO                m_fInfo1;
+    FONTINFO                m_fInfo2;
+
+
+
 private:
     virtual void SaveToFile(FILE* _File) {}
     virtual void LoadFromFile(FILE* _File) {}

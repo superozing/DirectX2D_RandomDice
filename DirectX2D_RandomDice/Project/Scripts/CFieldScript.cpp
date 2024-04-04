@@ -334,20 +334,7 @@ void CFieldScript::begin()
 
 
 
-	//==================
-	// FONTINFO 세팅 
-	//==================
-	m_fInfo1.Color = FONT_RGBA(0, 0, 0, 255);
-	m_fInfo1.fFontSize = 15.f;
-	m_fInfo1.FontType = FONT_TYPE::ALBA_SUPER;
-	m_fInfo1.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
-	m_fInfo1.IsWorldPosRender = true;
 
-	m_fInfo2.Color = FONT_RGBA(255, 255, 255, 255);
-	m_fInfo2.fFontSize = 15.2f;
-	m_fInfo2.FontType = FONT_TYPE::ALBA_MATTER;
-	m_fInfo2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
-	m_fInfo2.IsWorldPosRender = true;
 
 
 	// 초기 스폰 타이밍 조절
@@ -565,7 +552,6 @@ void CFieldScript::tick()
 	///////////////////
 	///////////////////
 
-	m_EnemyList.sort(CompareEnemyPair());
 
 	Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
 
@@ -640,47 +626,11 @@ void CFieldScript::tick()
 		}
 		else
 		{
-			//=========
-			// HP Text
-			//=========
-				
-			// 체력 폰트의 위치 설정
-			m_fInfo1.fPosX = Pos.x;
-			m_fInfo1.fPosY = Pos.y;
-			m_fInfo2.fPosX = Pos.x;
-			m_fInfo2.fPosY = Pos.y;
-
-			m_fInfo1.WorldRenderOffset.y = 7;
-			m_fInfo2.WorldRenderOffset.y = 10;
-
-			// 체력 폰트의 문자열 설정
-			UINT enemyHP = pEScript->GetEnemyHealth();
-
-			// 단위 맟추기
-			if (enemyHP < 10000)
-			{
-				m_fInfo1.WStr = to_wstring(enemyHP);
-				m_fInfo2.WStr = to_wstring(enemyHP);
-			}
-			else if (enemyHP < 1000000) // enemyHP 가 10000보다 커질 경우 가독성을 위해 1000을 나누어 K로 표시
-			{
-				enemyHP /= 1000;
-				m_fInfo1.WStr = to_wstring(enemyHP) + L"K";
-				m_fInfo2.WStr = to_wstring(enemyHP) + L"K";
-			}
-			else // enemyHP 가 1000000보다 커질 경우 가독성을 위해 1000000을 나누어 M로 표시
-			{
-				enemyHP /= 1000000;
-				m_fInfo1.WStr = to_wstring(enemyHP) + L"M";
-				m_fInfo2.WStr = to_wstring(enemyHP) + L"M";
-			}
-				
-			// 폰트 매니저 출력에 추가
-			CFontMgr::GetInst()->AddRenderFont(m_fInfo2);
-			CFontMgr::GetInst()->AddRenderFont(m_fInfo1);
 			++it;
 		}
 	}
+
+	m_EnemyList.sort(CompareEnemyPair());
 
 	//====================
 	// Attack Priority Set

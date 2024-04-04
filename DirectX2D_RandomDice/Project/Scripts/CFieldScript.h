@@ -50,10 +50,6 @@ private:
     float                   m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::END];
 
 
-    FONTINFO                m_fInfo1;
-    FONTINFO                m_fInfo2;
-
-
 
     int                     m_SP;
 
