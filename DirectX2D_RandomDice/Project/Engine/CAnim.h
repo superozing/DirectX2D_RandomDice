@@ -18,7 +18,7 @@ class CAnim :
     public CEntity
 {
 private:
-    CAnimator2D* m_Animator;
+    CAnimator2D*        m_Animator;
 
     vector<tAnimFrm>    m_vecFrm;
     int                 m_CurFrmIdx;
@@ -54,7 +54,7 @@ public:
     void finaltick();
     void UpdateData();
 
-    bool IsFinish() { return m_bFinish; }
+    bool IsFinish() const { return m_bFinish; }
     void Reset()
     {
         m_bFinish = false;
@@ -68,6 +68,11 @@ public:
 
 
     void Create(CAnimator2D* _Animator, Ptr<CTexture> _Altas, const vector<tAnimFrm> _vecFrm);
+    
+    void CreateFrm(CAnimator2D* _Animator, Ptr<CTexture> _Atlas, vector<tAnimFrm> _vecAnimFrm);
+
+    bool Save(const wstring& _FilePath, const wstring& _strKey);
+    bool Load(const wstring& _FilePath);
 
     void SaveToFile(FILE* _File);
     void LoadFromFile(FILE* _File);
