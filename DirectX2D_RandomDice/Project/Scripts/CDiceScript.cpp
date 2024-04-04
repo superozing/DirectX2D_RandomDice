@@ -4,8 +4,6 @@
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
 
-#include "CDefaultAttack.h"
-#include "CBuffAttack.h"
 
 // Á¤ÀÇ
 vector<wstring> CDiceScript::DicePath;
@@ -441,6 +439,10 @@ void CDiceScript::InitDiceColor()
 	CDiceScript::DiceColor[(UINT)DICE::MIMIC] = Vec3(20, 20, 20);
 }
 
+#include "CDefaultAttack.h"
+#include "CBuffAttack.h"
+#include "CWindAttack.h"
+
 CDiceAttackScript* CDiceScript::GetDiceAttackScript(DICE _Dice)
 {
 	CDiceAttackScript* pAttack = nullptr;
@@ -456,7 +458,7 @@ CDiceAttackScript* CDiceScript::GetDiceAttackScript(DICE _Dice)
 		pAttack = new CDefaultAttack;
 		break;
 	case DICE::WIND:
-		pAttack = new CDefaultAttack;
+		pAttack = new CWindAttack;
 		break;
 	case DICE::POISON:
 		pAttack = new CDefaultAttack;

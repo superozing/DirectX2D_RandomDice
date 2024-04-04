@@ -26,6 +26,7 @@
 #include "CSpeedEnemyScript.h"
 #include "CSummonDiceBtnScript.h"
 #include "CUIScript.h"
+#include "CWindAttack.h"
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
@@ -54,6 +55,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CSpeedEnemyScript");
 	_vec.push_back(L"CSummonDiceBtnScript");
 	_vec.push_back(L"CUIScript");
+	_vec.push_back(L"CWindAttack");
 }
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
@@ -108,6 +110,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CSummonDiceBtnScript;
 	if (L"CUIScript" == _strScriptName)
 		return new CUIScript;
+	if (L"CWindAttack" == _strScriptName)
+		return new CWindAttack;
 	return nullptr;
 }
 
@@ -189,6 +193,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::UISCRIPT:
 		return new CUIScript;
+		break;
+	case (UINT)SCRIPT_TYPE::WINDATTACK:
+		return new CWindAttack;
 		break;
 	}
 	return nullptr;
@@ -296,6 +303,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::UISCRIPT:
 		return L"CUIScript";
+		break;
+
+	case SCRIPT_TYPE::WINDATTACK:
+		return L"CWindAttack";
 		break;
 
 	}

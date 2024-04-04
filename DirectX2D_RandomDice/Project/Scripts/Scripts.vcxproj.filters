@@ -88,6 +88,9 @@
     <ClInclude Include="CBuffAttack.h">
       <Filter>Scripts\DiceAttack\BuffAttack</Filter>
     </ClInclude>
+    <ClInclude Include="CWindAttack.h">
+      <Filter>Scripts\DiceAttack\WindAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -177,6 +180,9 @@
     <ClCompile Include="CBuffAttack.cpp">
       <Filter>Scripts\DiceAttack\BuffAttack</Filter>
     </ClCompile>
+    <ClCompile Include="CWindAttack.cpp">
+      <Filter>Scripts\DiceAttack\WindAttack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -259,6 +265,9 @@
     </Filter>
     <Filter Include="Scripts\DiceAttack\BuffAttack">
       <UniqueIdentifier>{f1007555-7a2b-4b2e-8cb5-2df082690933}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\DiceAttack\WindAttack">
+      <UniqueIdentifier>{de53007d-b65c-4896-b5fb-762519602d6f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
