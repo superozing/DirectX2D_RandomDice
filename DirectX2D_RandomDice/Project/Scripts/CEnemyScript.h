@@ -50,7 +50,7 @@ private:
     // 크기 조절
     Vec3                m_vScale;
     int                 m_Minus = 1;
-    float               m_fScale = 1;
+    float               m_fSizeScale = 1;
 
     bool                m_IsDeadEnemy;
 
@@ -58,6 +58,9 @@ private:
     FONTINFO                m_fInfo1;
     FONTINFO                m_fInfo2;
 
+
+    FONTINFO                m_fDamage;
+    float                   m_DamageFontSizeScale;
 
 
 private:
