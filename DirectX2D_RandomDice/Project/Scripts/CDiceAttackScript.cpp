@@ -6,8 +6,13 @@ CDiceAttackScript::CDiceAttackScript()
 {
 }
 
+CDiceAttackScript::CDiceAttackScript(UINT _ScriptType)
+	:CScript(_ScriptType)
+{
+}
+
 CDiceAttackScript::CDiceAttackScript(const CDiceAttackScript& _Origin)
-	:CScript(DICEATTACKSCRIPT)
+	:CScript(_Origin.GetScriptType())
 {
 }
 

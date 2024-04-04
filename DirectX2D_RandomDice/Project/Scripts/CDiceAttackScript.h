@@ -16,35 +16,27 @@ class CDiceAttackScript :
     public CScript
 {
 private:
-    // 자.. 어떤 정보가 필요할까요??
-
-
-    /// 공격에 필요한 정보
-    // 공격 목표
-    ATTACK_PRIORITY     m_AttackPriority; // 여기서 설정한 공격 우선 순위에 따라서, 몬스터 리스트에서 뽑아놓은 몬스터에게 Attack를 호출해주기만 하면 된다.
+    // 공격 우선 순위
+    ATTACK_PRIORITY     m_AttackPriority;
 
     // 공격력과 공격 속도
-    float               m_Damage;
+    float               m_AttackDamage;
     float               m_AttackSpeed;
 
+    // 공격 효과(CALLBACK)
+    // void(*pFunc)() m_,,,어쩌고저쩌고
 
-
-    /// 눈금
-    // 눈금 개수
-    UINT                m_DiceScale;
-
-    // 현재 공격을 실행시킬 눈금의 인덱스
-    UINT                m_CurAttackDiceScaleIdx;
-
-    // 눈금 벡터
-    // 자... 드디어 파티클을 볼 때가 왔다.
-    // 으아아아아...
-
-
-
+    // 피격 애니메이션
+    // 나중에 넣자.
 
 public:
-
+    void SetAttackPriority(ATTACK_PRIORITY _ATTACK_PRIORITY) { m_AttackPriority = _ATTACK_PRIORITY; }
+    void SetAttackDamage(float _AttackDamage) { m_AttackDamage = _AttackDamage; }
+    void SetAttackSpeed(float _AttackSpeed) { m_AttackSpeed = _AttackSpeed; }
+    
+    ATTACK_PRIORITY SetAttackPriority() const { return m_AttackPriority; }
+    float SetAttackDamage() const { return m_AttackDamage; }
+    float SetAttackSpeed() const { return m_AttackSpeed; }
 
 private:
     virtual void SaveToFile(FILE* _File) override {}
@@ -53,6 +45,7 @@ private:
 public:
     CLONE(CDiceAttackScript);
     CDiceAttackScript();
+    CDiceAttackScript(UINT _ScriptType);
     CDiceAttackScript(const CDiceAttackScript& _Origin);
     ~CDiceAttackScript();
 };
