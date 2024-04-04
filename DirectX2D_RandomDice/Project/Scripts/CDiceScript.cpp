@@ -4,6 +4,9 @@
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
 
+#include "CDefaultAttack.h"
+#include "CBuffAttack.h"
+
 // Á¤ÀÇ
 vector<wstring> CDiceScript::DicePath;
 vector<Vec3>	CDiceScript::DiceColor;
@@ -400,7 +403,7 @@ void CDiceScript::InitDicePath()
 	CDiceScript::DicePath[(UINT)DICE::WIND]		= L"texture\\Dice\\03_wind.png";
 	CDiceScript::DicePath[(UINT)DICE::POISON]	= L"texture\\Dice\\04_poison.png";
 	CDiceScript::DicePath[(UINT)DICE::ICE]		= L"texture\\Dice\\05_ice.png";
-	CDiceScript::DicePath[(UINT)DICE::IRON]			= L"texture\\Dice\\06_iron.png";
+	CDiceScript::DicePath[(UINT)DICE::IRON]		= L"texture\\Dice\\06_iron.png";
 	CDiceScript::DicePath[(UINT)DICE::BROKEN]	= L"texture\\Dice\\07_broken.png";
 	CDiceScript::DicePath[(UINT)DICE::GAMBLE]	= L"texture\\Dice\\08_gamble.png";
 	CDiceScript::DicePath[(UINT)DICE::LOCK]		= L"texture\\Dice\\09_lock.png";
@@ -436,6 +439,77 @@ void CDiceScript::InitDiceColor()
 	CDiceScript::DiceColor[(UINT)DICE::SACRIFICE] = Vec3(58, 20, 226);
 	CDiceScript::DiceColor[(UINT)DICE::ARROW] = Vec3(254, 129, 60);
 	CDiceScript::DiceColor[(UINT)DICE::MIMIC] = Vec3(20, 20, 20);
+}
+
+CDiceAttackScript* CDiceScript::GetDiceAttackScript(DICE _Dice)
+{
+	CDiceAttackScript* pAttack = nullptr;
+
+	switch (_Dice)
+	{
+	case DICE::NONE:
+		break;
+	case DICE::FIRE:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::ELECTRIC:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::WIND:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::POISON:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::ICE:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::IRON:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::BROKEN:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::GAMBLE:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::LOCK:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::MINE:
+		pAttack = new CBuffAttack;
+		break;
+	case DICE::LIGHT:
+		pAttack = new CBuffAttack;
+		break;
+	case DICE::THORN:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::CRACK:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::CRITICAL:
+		pAttack = new CBuffAttack;
+		break;
+	case DICE::ENERGY:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::SACRIFICE:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::ARROW:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::MIMIC:
+		pAttack = new CDefaultAttack;
+		break;
+	case DICE::END:
+		break;
+	default:
+		break;
+	}
+
+	return pAttack;
 }
 
 

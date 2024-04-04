@@ -44,10 +44,6 @@ enum class DICE_BUFF
 
 struct DICE_INFO
 {
-    // 아냐. 이런 식으로 하면 안된다.
-    // 너무 종류가 많아진다. 절대 이런 식으로 구현하지 않았을꺼야.
-    // 공격 스크립트, 버프 스크립트, 합쳐질 때 스크립트 이렇게 세 개를 만들자.
-    // 그리고 파생시키는 것이 좋아보인다.
     class CDiceAttackScript* pAttack;
     class CDiceBuffScript* pBuff;
     class CDiceMergeScript* pMerge;
@@ -98,8 +94,7 @@ private:
     
 
 
-public:
-    // 전역 세팅 함수
+public: // 전역
     static void InitDice();
 
     static vector<wstring> DicePath;
@@ -110,7 +105,9 @@ public:
     static void InitDiceColor();
     static Vec3 GetDiceColor(DICE _Dice) { return DiceColor[(UINT)_Dice]; }
 
+    static CDiceAttackScript* GetDiceAttackScript(DICE _Dice);
 
+public:
 	DICE GetDice() const { return m_Dice; }
 
 
