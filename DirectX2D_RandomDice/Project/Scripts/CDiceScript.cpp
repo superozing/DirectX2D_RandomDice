@@ -84,55 +84,55 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 	}
 	case 2:
 	{
-		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, 10.f, 0.f));
-		m_VecDiceScale[1]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, -10.f, 0.f));
+		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, 10.f, -10.f));
+		m_VecDiceScale[1]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, -10.f, -10.f));
 
 		break;
 	}
 	case 3:
 	{
-		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, 10.f, 0.f));
-		m_VecDiceScale[1]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
-		m_VecDiceScale[2]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, -10.f, 0.f));
+		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, 10.f, -10.f));
+		m_VecDiceScale[1]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+		m_VecDiceScale[2]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, -10.f, -10.f));
 		break;
 	}
 	case 4:
 	{
-		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, 10.f, 0.f));
-		m_VecDiceScale[1]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, 10.f, 0.f));
-		m_VecDiceScale[2]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, -10.f, 0.f));
-		m_VecDiceScale[3]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, -10.f, 0.f));
+		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, 10.f, -10.f));
+		m_VecDiceScale[1]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, 10.f, -10.f));
+		m_VecDiceScale[2]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, -10.f, -10.f));
+		m_VecDiceScale[3]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, -10.f, -10.f));
 
 		break;
 	}
 	case 5:
 	{
-		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, 10.f, 0.f));
-		m_VecDiceScale[1]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, 10.f, 0.f));
-		m_VecDiceScale[2]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
-		m_VecDiceScale[3]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, -10.f, 0.f));
-		m_VecDiceScale[4]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, -10.f, 0.f));
+		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, 10.f, -10.f));
+		m_VecDiceScale[1]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, 10.f, -10.f));
+		m_VecDiceScale[2]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+		m_VecDiceScale[3]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, -10.f, -10.f));
+		m_VecDiceScale[4]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, -10.f, -10.f));
 		break;
 	}
 	case 6:
 	{
-		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, 13.f, 0.f));
-		m_VecDiceScale[1]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, 13.f, 0.f));
-		m_VecDiceScale[2]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, 0.f, 0.f));
-		m_VecDiceScale[3]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, 0.f, 0.f));
-		m_VecDiceScale[4]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, -13.f, 0.f));
-		m_VecDiceScale[5]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, -13.f, 0.f));
+		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, 13.f, -10.f));
+		m_VecDiceScale[1]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, 13.f, -10.f));
+		m_VecDiceScale[2]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, 0.f, -10.f));
+		m_VecDiceScale[3]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, 0.f, -10.f));
+		m_VecDiceScale[4]->GetOwner()->Transform()->SetRelativePos(Vec3(-10.f, -13.f, -10.f));
+		m_VecDiceScale[5]->GetOwner()->Transform()->SetRelativePos(Vec3(10.f, -13.f, -10.f));
 		break;
 	}
 	case 7:
 	{
-		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
-		m_VecDiceScale[1]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
-		m_VecDiceScale[2]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
-		m_VecDiceScale[3]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
-		m_VecDiceScale[4]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
-		m_VecDiceScale[5]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
-		m_VecDiceScale[6]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, 0.f));
+		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+		m_VecDiceScale[1]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+		m_VecDiceScale[2]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+		m_VecDiceScale[3]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+		m_VecDiceScale[4]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+		m_VecDiceScale[5]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+		m_VecDiceScale[6]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
 
 		break;
 	}
@@ -357,7 +357,7 @@ void CDiceScript::tick()
 	m_finalAttackSpeed = 2;
 
 	// 만약 공격 시간이 왔을 경우
-	if (m_AttackTimer > (1.f / m_finalAttackSpeed))
+	if (m_AttackTimer > (1.f / m_finalAttackSpeed) / m_DiceScale)
 	{
 		if (!m_VecDiceScale.empty())
 		{
@@ -372,7 +372,7 @@ void CDiceScript::tick()
 				m_CurDiceScaleIdx = 0;
 		}
 		// 타이머 초기화
-		m_AttackTimer -= (1.f / m_finalAttackSpeed);
+		m_AttackTimer -= (1.f / m_finalAttackSpeed) / m_DiceScale;
 	}
 
 
