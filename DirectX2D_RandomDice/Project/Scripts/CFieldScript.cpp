@@ -29,11 +29,11 @@ CFieldScript::CFieldScript()
 
 	// 나중에는 여기서 초기화하면 안된다.
 
-	m_Deck[0] = DICE(15);
-	m_Deck[1] = DICE(4);
-	m_Deck[2] = DICE(5);
-	m_Deck[3] = DICE(8);
-	m_Deck[4] = DICE(12);
+	m_Deck[0] = DICE(1);
+	m_Deck[1] = DICE(2);
+	m_Deck[2] = DICE(3);
+	m_Deck[3] = DICE(4);
+	m_Deck[4] = DICE(5);
 }
 
 CFieldScript::~CFieldScript()
@@ -588,8 +588,6 @@ void CFieldScript::tick()
 			if (MoveProgress > 100.f)
 			{
 				Pos = LineEndPos;
-				Pos.z = OBJECT->Transform()->GetRelativePos().z + 100;
-				
 				ThisEnemyIsDead = true;
 			}
 			else
@@ -622,68 +620,57 @@ void CFieldScript::tick()
 		// Check Enemy Dead
 		//==================
 
-		if (!pEScript->IsEndDeathParticle())
+		if (ThisEnemyIsDead)
 		{
-			if (ThisEnemyIsDead)
-			{
-				pEScript->PlayDeathParticle();
-			}
-			else
-			{
-
-				//=========
-				// HP Text
-				//=========
-				
-				// 체력 폰트의 위치 설정
-				m_fInfo1.fPosX = Pos.x;
-				m_fInfo1.fPosY = Pos.y;
-				m_fInfo2.fPosX = Pos.x;
-				m_fInfo2.fPosY = Pos.y;
-
-				m_fInfo1.WorldRenderOffset.y = 7;
-				m_fInfo2.WorldRenderOffset.y = 10;
-
-				// 체력 폰트의 문자열 설정
-				UINT enemyHP = pEScript->GetEnemyHealth();
-
-				// 단위 맟추기
-				if (enemyHP < 10000)
-				{
-					m_fInfo1.WStr = to_wstring(enemyHP);
-					m_fInfo2.WStr = to_wstring(enemyHP);
-				}
-				else if (enemyHP < 1000000) // enemyHP 가 10000보다 커질 경우 가독성을 위해 1000을 나누어 K로 표시
-				{
-					enemyHP /= 1000;
-					m_fInfo1.WStr = to_wstring(enemyHP) + L"K";
-					m_fInfo2.WStr = to_wstring(enemyHP) + L"K";
-				}
-				else // enemyHP 가 1000000보다 커질 경우 가독성을 위해 1000000을 나누어 M로 표시
-				{
-					enemyHP /= 1000000;
-					m_fInfo1.WStr = to_wstring(enemyHP) + L"M";
-					m_fInfo2.WStr = to_wstring(enemyHP) + L"M";
-				}
-				
-				// 폰트 매니저 출력에 추가
-				CFontMgr::GetInst()->AddRenderFont(m_fInfo2);
-				CFontMgr::GetInst()->AddRenderFont(m_fInfo1);
-			}
-
-
-			++it;
-		}
-		// 만약 사망 파티클 출력이 끝났을 경우
-		else
-		{
-			// 레벨에서 제거
-			GamePlayStatic::DestroyGameObject(pObject);
+			Pos.z = Transform()->GetWorldPos().z + 100;
+			pObject->Transform()->SetRelativePos(Pos);
+			pEScript->SetDeadEnemy();
 
 			// EnemyList에서 제거
 			it = m_EnemyList.erase(it);
 		}
+		else
+		{
+			//=========
+			// HP Text
+			//=========
+				
+			// 체력 폰트의 위치 설정
+			m_fInfo1.fPosX = Pos.x;
+			m_fInfo1.fPosY = Pos.y;
+			m_fInfo2.fPosX = Pos.x;
+			m_fInfo2.fPosY = Pos.y;
 
+			m_fInfo1.WorldRenderOffset.y = 7;
+			m_fInfo2.WorldRenderOffset.y = 10;
+
+			// 체력 폰트의 문자열 설정
+			UINT enemyHP = pEScript->GetEnemyHealth();
+
+			// 단위 맟추기
+			if (enemyHP < 10000)
+			{
+				m_fInfo1.WStr = to_wstring(enemyHP);
+				m_fInfo2.WStr = to_wstring(enemyHP);
+			}
+			else if (enemyHP < 1000000) // enemyHP 가 10000보다 커질 경우 가독성을 위해 1000을 나누어 K로 표시
+			{
+				enemyHP /= 1000;
+				m_fInfo1.WStr = to_wstring(enemyHP) + L"K";
+				m_fInfo2.WStr = to_wstring(enemyHP) + L"K";
+			}
+			else // enemyHP 가 1000000보다 커질 경우 가독성을 위해 1000000을 나누어 M로 표시
+			{
+				enemyHP /= 1000000;
+				m_fInfo1.WStr = to_wstring(enemyHP) + L"M";
+				m_fInfo2.WStr = to_wstring(enemyHP) + L"M";
+			}
+				
+			// 폰트 매니저 출력에 추가
+			CFontMgr::GetInst()->AddRenderFont(m_fInfo2);
+			CFontMgr::GetInst()->AddRenderFont(m_fInfo1);
+			++it;
+		}
 	}
 
 
