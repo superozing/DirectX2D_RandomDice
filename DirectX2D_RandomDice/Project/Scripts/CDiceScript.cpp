@@ -4,52 +4,92 @@
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
 
+#include "CDefaultAttack.h"
+#include "CBuffAttack.h"
+#include "CWindAttack.h"
+
 
 // 정의
 vector<wstring> CDiceScript::DicePath;
 vector<Vec3>	CDiceScript::DiceColor;
 
 CDiceScript::CDiceScript()
-	:CScript(DICESCRIPT)
-	,m_fScaleSize(1.f)
+	: CScript(DICESCRIPT)
+	, m_fScaleSize(1.f)
+	, m_DiceScale(0)
 {
 
 }
 
 CDiceScript::~CDiceScript()
 {
-
-
+	if (m_Info.pAttack != nullptr)
+		delete m_Info.pAttack;
+	if (m_Info.pBuff != nullptr)
+		delete m_Info.pBuff;
+	if (m_Info.pMerge != nullptr)
+		delete m_Info.pMerge;
 }
 
 #define OBJECT GetOwner()
 
 void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 {
-	// 모든 눈금 오브젝트 부수기
-	for (UINT i = 0; i < m_DiceScale; ++i)
-		GamePlayStatic::DestroyGameObject(m_VecDiceScale[i]->GetOwner());
+	m_Dice = _Dice;
+	m_DiceScale = _DiceScale;
 
+	// 모든 눈금 오브젝트 제거
+	for (UINT i = 0; i < m_VecDiceScale.size(); ++i)
+	{
+		GamePlayStatic::DestroyGameObject(m_VecDiceScale[i]->GetOwner());
+	}
+
+	// 눈금 벡터 클리어
 	m_VecDiceScale.clear();
 
-	m_Dice = _Dice;
-
+	// 생성 파티클 호출 위해 크기를 0으로 세팅
 	m_fScaleSize = 0.f;
 	m_IsGrowing = true;
 
-	if (m_Dice == DICE::NONE)
+	if (m_Dice == DICE::NONE) // 세팅된 주사위가 없을 경우 return
 	{
 		m_IsGrowing = false;
 		return;
 	}
 
+	// DiceInfo Clear
+	if (m_Info.pAttack != nullptr)
+	{
+		delete m_Info.pAttack;
+		m_Info.pAttack = nullptr;
+	}
+	if (m_Info.pBuff != nullptr)
+	{
+		delete m_Info.pBuff;
+		m_Info.pBuff = nullptr;
+	}
+	if (m_Info.pMerge != nullptr)
+	{
+		delete m_Info.pMerge;
+		m_Info.pMerge = nullptr;
+	}
+
+	//================
+	// 주사위 정보 세팅
+	//================
+
+
+	// 주사위 공격
+	m_Info.pAttack = CDiceScript::GetDiceAttackScript(m_Dice);
+
+	// 주사위 색상
 	m_DiceColor = CDiceScript::GetDiceColor(_Dice);
 	
-	m_DiceScale = _DiceScale;
 
-	m_VecDiceScale.resize(m_DiceScale);
 
 	// 새로 눈금 수에 따른 눈금 할당하기
+	m_VecDiceScale.resize(m_DiceScale);
+
 	for (UINT i = 0; i < m_DiceScale; ++i)
 	{
 		CGameObject* pObj = new CGameObject;
@@ -71,6 +111,7 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 		m_VecDiceScale[i]->SetDiceScript(this);
 		m_VecDiceScale[i]->SetField(m_OwnerField);
 		m_VecDiceScale[i]->SetDiceColor(m_DiceColor);
+		m_VecDiceScale[i]->SetDiceAttackScript(m_Info.pAttack);
 
 		OBJECT->AddChild(pObj);
 	}
@@ -352,14 +393,15 @@ void CDiceScript::tick()
 	//============
 
 	if (DICE::NONE != m_Dice)
+	{
 		m_AttackTimer += DT;
-	
-	// 나중에 반드시바꿔야 할 코드*******************
-	m_finalAttackSpeed = 2;
+		m_finalAttackSpeed = m_Info.pAttack->GetAttackSpeed();
+	}
 
 	// 만약 공격 시간이 왔을 경우
 	if (m_AttackTimer > (1.f / m_finalAttackSpeed) / m_DiceScale)
 	{
+		
 		if (!m_VecDiceScale.empty())
 		{
 			// 현재 공격 차례인 눈금에게 Attack()을 호출하기
@@ -438,10 +480,6 @@ void CDiceScript::InitDiceColor()
 	CDiceScript::DiceColor[(UINT)DICE::ARROW] = Vec3(254, 129, 60);
 	CDiceScript::DiceColor[(UINT)DICE::MIMIC] = Vec3(20, 20, 20);
 }
-
-#include "CDefaultAttack.h"
-#include "CBuffAttack.h"
-#include "CWindAttack.h"
 
 CDiceAttackScript* CDiceScript::GetDiceAttackScript(DICE _Dice)
 {
