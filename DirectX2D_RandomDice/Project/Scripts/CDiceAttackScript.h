@@ -34,9 +34,9 @@ public:
     void SetAttackDamage(float _AttackDamage) { m_AttackDamage = _AttackDamage; }
     void SetAttackSpeed(float _AttackSpeed) { m_AttackSpeed = _AttackSpeed; }
     
-    ATTACK_PRIORITY SetAttackPriority() const { return m_AttackPriority; }
-    float SetAttackDamage() const { return m_AttackDamage; }
-    float SetAttackSpeed() const { return m_AttackSpeed; }
+    ATTACK_PRIORITY GetAttackPriority() const { return m_AttackPriority; }
+    float GetAttackDamage() const { return m_AttackDamage; }
+    float GetAttackSpeed() const { return m_AttackSpeed; }
 
 private:
     virtual void SaveToFile(FILE* _File) override {}

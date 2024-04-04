@@ -18,10 +18,9 @@ private:
 
     class CFieldScript*         m_pField;
     
-    ATTACK_PRIORITY             m_AttackPriority;
     ENEMY_PAIR                  m_pTargetEnemy;
     class CDiceScript*          m_pDiceScript;
-
+    CDiceAttackScript*          m_DiceAttack;
 
     Vec3                        m_ProjectileColor;
 
@@ -31,7 +30,7 @@ public:
     void StopProjectile();
     void SetField(CFieldScript* _pField) { m_pField = _pField; }
     void SetColor(Vec3 _Color) { m_ProjectileColor = _Color; }
-    void SetAttackPriority(ATTACK_PRIORITY _AttackPriority) { m_AttackPriority = _AttackPriority; }
+    void SetDiceAttackScript(CDiceAttackScript* _DiceAttack) { m_DiceAttack = _DiceAttack; }
     void SetDiceScript(CDiceScript* _Dice) { m_pDiceScript = _Dice; }
 
 

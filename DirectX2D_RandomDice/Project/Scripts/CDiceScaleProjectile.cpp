@@ -29,7 +29,7 @@ void CDiceScaleProjectile::begin()
 	
 
 	// 타겟 적
-	m_pTargetEnemy = m_pField->GetTargetEnemy(m_AttackPriority);
+	m_pTargetEnemy = m_pField->GetTargetEnemy(m_DiceAttack->GetAttackPriority());
 
 
 	GetOwner()->AddComponent(new CMeshRender);
@@ -50,7 +50,7 @@ void CDiceScaleProjectile::tick()
 	if (m_pTargetEnemy.pObject == nullptr)
 	{
 		// 필드로부터 타겟 가져오기
-		m_pTargetEnemy = m_pField->GetTargetEnemy(m_AttackPriority);
+		m_pTargetEnemy = m_pField->GetTargetEnemy(m_DiceAttack->GetAttackPriority());
 
 		// 만약 가져온 타겟 오브젝트가 nullptr -> 해당 공격 우선 순위 적을 찾지 못함.
 		if (m_pTargetEnemy.pObject == nullptr)
@@ -82,7 +82,7 @@ void CDiceScaleProjectile::tick()
 	if (vDir.Length() < 6.f)
 	{
 		// 나중에 애니메이션을 추가해야 한다.
-		m_pTargetEnemy.pEnemyScript->TakeDamage(50); // 나중에 주사위 종류에 따른 데미지를 주어야 한다.
+		m_pTargetEnemy.pEnemyScript->TakeDamage(m_DiceAttack->GetAttackDamage()); // 나중에 주사위 종류에 따른 데미지를 주어야 한다.
 		GamePlayStatic::DestroyGameObject(GetOwner());
 	}
 	else 
