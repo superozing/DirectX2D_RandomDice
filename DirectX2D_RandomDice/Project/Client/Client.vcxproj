@@ -164,6 +164,7 @@
     <ClInclude Include="ComponentUI.h" />
     <ClInclude Include="ComputeShaderUI.h" />
     <ClInclude Include="Content.h" />
+    <ClInclude Include="EditAnimator.h" />
     <ClInclude Include="MovementUI.h" />
     <ClInclude Include="ScriptUI.h" />
     <ClInclude Include="framework.h" />
@@ -212,6 +213,7 @@
     <ClCompile Include="ComponentUI.cpp" />
     <ClCompile Include="ComputeShaderUI.cpp" />
     <ClCompile Include="Content.cpp" />
+    <ClCompile Include="EditAnimator.cpp" />
     <ClCompile Include="MovementUI.cpp" />
     <ClCompile Include="ScriptUI.cpp" />
     <ClCompile Include="FSMUI.cpp" />

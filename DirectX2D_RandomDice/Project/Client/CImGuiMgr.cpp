@@ -20,6 +20,7 @@
 #include "Outliner.h"
 #include "MenuUI.h"
 #include "ListUI.h"
+#include "EditAnimator.h"
 
 #include "ParamUI.h"
 
@@ -275,6 +276,10 @@ void CImGuiMgr::create_ui()
 
     // List
     pUI = new ListUI;
+    AddUI(pUI->GetID(), pUI);
+
+    // Edit Animation
+    pUI = new EditAnimator;
     AddUI(pUI->GetID(), pUI);
 }
 

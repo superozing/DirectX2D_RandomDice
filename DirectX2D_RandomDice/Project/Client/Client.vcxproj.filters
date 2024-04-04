@@ -125,6 +125,9 @@
     <Filter Include="02. UI\3. Inspector\ComponentUI\StateMachine">
       <UniqueIdentifier>{ac503031-2202-4122-9710-6e1d7de5da60}</UniqueIdentifier>
     </Filter>
+    <Filter Include="02. UI\3. Inspector\ComponentUI\Animator2D\EditAnimator">
+      <UniqueIdentifier>{822e6239-662f-4648-b34a-e31297783229}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -267,6 +270,9 @@
     </ClInclude>
     <ClInclude Include="StateMachineUI.h">
       <Filter>02. UI\3. Inspector\ComponentUI\StateMachine</Filter>
+    </ClInclude>
+    <ClInclude Include="EditAnimator.h">
+      <Filter>02. UI\3. Inspector\ComponentUI\Animator2D\EditAnimator</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -412,6 +418,9 @@
     </ClCompile>
     <ClCompile Include="StateMachineUI.cpp">
       <Filter>02. UI\3. Inspector\ComponentUI\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="EditAnimator.cpp">
+      <Filter>02. UI\3. Inspector\ComponentUI\Animator2D\EditAnimator</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
