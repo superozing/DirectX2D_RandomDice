@@ -3,13 +3,13 @@
 
 #include "CBackgroundScript.h"
 #include "CBigEnemyScript.h"
+#include "CDefaultAttack.h"
 #include "CDefaultEnemyScript.h"
 #include "CDiceAttackScript.h"
 #include "CDiceBuffScript.h"
 #include "CDiceMergeScript.h"
 #include "CDiceScale.h"
 #include "CDiceScaleProjectile.h"
-#include "CDiceScaleScript.h"
 #include "CDiceScript.h"
 #include "CDiceUI.h"
 #include "CEnemyGateScript.h"
@@ -30,13 +30,13 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
 	_vec.push_back(L"CBackgroundScript");
 	_vec.push_back(L"CBigEnemyScript");
+	_vec.push_back(L"CDefaultAttack");
 	_vec.push_back(L"CDefaultEnemyScript");
 	_vec.push_back(L"CDiceAttackScript");
 	_vec.push_back(L"CDiceBuffScript");
 	_vec.push_back(L"CDiceMergeScript");
 	_vec.push_back(L"CDiceScale");
 	_vec.push_back(L"CDiceScaleProjectile");
-	_vec.push_back(L"CDiceScaleScript");
 	_vec.push_back(L"CDiceScript");
 	_vec.push_back(L"CDiceUI");
 	_vec.push_back(L"CEnemyGateScript");
@@ -60,6 +60,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CBackgroundScript;
 	if (L"CBigEnemyScript" == _strScriptName)
 		return new CBigEnemyScript;
+	if (L"CDefaultAttack" == _strScriptName)
+		return new CDefaultAttack;
 	if (L"CDefaultEnemyScript" == _strScriptName)
 		return new CDefaultEnemyScript;
 	if (L"CDiceAttackScript" == _strScriptName)
@@ -72,8 +74,6 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CDiceScale;
 	if (L"CDiceScaleProjectile" == _strScriptName)
 		return new CDiceScaleProjectile;
-	if (L"CDiceScaleScript" == _strScriptName)
-		return new CDiceScaleScript;
 	if (L"CDiceScript" == _strScriptName)
 		return new CDiceScript;
 	if (L"CDiceUI" == _strScriptName)
@@ -117,6 +117,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::BIGENEMYSCRIPT:
 		return new CBigEnemyScript;
 		break;
+	case (UINT)SCRIPT_TYPE::DEFAULTATTACK:
+		return new CDefaultAttack;
+		break;
 	case (UINT)SCRIPT_TYPE::DEFAULTENEMYSCRIPT:
 		return new CDefaultEnemyScript;
 		break;
@@ -134,9 +137,6 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::DICESCALEPROJECTILE:
 		return new CDiceScaleProjectile;
-		break;
-	case (UINT)SCRIPT_TYPE::DICESCALESCRIPT:
-		return new CDiceScaleScript;
 		break;
 	case (UINT)SCRIPT_TYPE::DICESCRIPT:
 		return new CDiceScript;
@@ -199,6 +199,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CBigEnemyScript";
 		break;
 
+	case SCRIPT_TYPE::DEFAULTATTACK:
+		return L"CDefaultAttack";
+		break;
+
 	case SCRIPT_TYPE::DEFAULTENEMYSCRIPT:
 		return L"CDefaultEnemyScript";
 		break;
@@ -221,10 +225,6 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::DICESCALEPROJECTILE:
 		return L"CDiceScaleProjectile";
-		break;
-
-	case SCRIPT_TYPE::DICESCALESCRIPT:
-		return L"CDiceScaleScript";
 		break;
 
 	case SCRIPT_TYPE::DICESCRIPT:

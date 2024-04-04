@@ -82,6 +82,9 @@
     <ClInclude Include="CDiceScaleProjectile.h">
       <Filter>Scripts\DiceScale\DiceScaleProjectile</Filter>
     </ClInclude>
+    <ClInclude Include="CDefaultAttack.h">
+      <Filter>Scripts\DiceAttack\DefaultAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -165,6 +168,9 @@
     <ClCompile Include="CDiceScaleProjectile.cpp">
       <Filter>Scripts\DiceScale\DiceScaleProjectile</Filter>
     </ClCompile>
+    <ClCompile Include="CDefaultAttack.cpp">
+      <Filter>Scripts\DiceAttack\DefaultAttack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -241,6 +247,9 @@
     </Filter>
     <Filter Include="Scripts\DiceScale\DiceScaleProjectile">
       <UniqueIdentifier>{3031b547-4d23-41d6-b18f-99fabb3f6bce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\DiceAttack\DefaultAttack">
+      <UniqueIdentifier>{71c2af80-4786-4ec4-9a28-996bd5f7e51b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
