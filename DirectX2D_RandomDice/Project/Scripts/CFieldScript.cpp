@@ -42,10 +42,14 @@ CFieldScript::~CFieldScript()
 
 #define OBJECT			GetOwner()
 
-bool EnemyCompare(ENEMY_PAIR& a, ENEMY_PAIR& b)
+struct CompareEnemyPair
 {
-	return a.pEnemyScript->GetMoveProgress() > b.pEnemyScript->GetMoveProgress();
-}
+	bool operator()(const ENEMY_PAIR& enemy1, const ENEMY_PAIR& enemy2) const
+	{
+		// 기준으로 삼을 멤버 변수에 접근하여 비교
+		return enemy1.pEnemyScript->GetMoveProgress() < enemy2.pEnemyScript->GetMoveProgress();
+	}
+};
 
 
 void CFieldScript::begin()
@@ -561,7 +565,7 @@ void CFieldScript::tick()
 	///////////////////
 	///////////////////
 
-	sort(m_EnemyList.begin(), m_EnemyList.end(), EnemyCompare);
+	m_EnemyList.sort(CompareEnemyPair());
 
 	Vec2 vResol = CDevice::GetInst()->GetRenderResolution();
 
@@ -682,15 +686,18 @@ void CFieldScript::tick()
 	// Attack Priority Set
 	//====================
 
-	// ATTACK_PRIORITY::FRONT
-	m_AttackPriority[(UINT)ATTACK_PRIORITY::FRONT] = m_EnemyList.back();
-
-	// ATTACK_PRIORITY::HIGH_HEALTH
-	m_AttackPriority[(UINT)ATTACK_PRIORITY::HIGH_HEALTH] = m_EnemyList.front();
-	for (auto& it : m_EnemyList)
+	if (!m_EnemyList.empty())
 	{
-		if (it.pEnemyScript->GetEnemyHealth() > m_AttackPriority[(UINT)ATTACK_PRIORITY::HIGH_HEALTH].pEnemyScript->GetEnemyHealth())
-			m_AttackPriority[(UINT)ATTACK_PRIORITY::HIGH_HEALTH] = it;
+		// ATTACK_PRIORITY::FRONT
+		m_AttackPriority[(UINT)ATTACK_PRIORITY::FRONT] = m_EnemyList.back();
+
+		// ATTACK_PRIORITY::HIGH_HEALTH
+		m_AttackPriority[(UINT)ATTACK_PRIORITY::HIGH_HEALTH] = m_EnemyList.front();
+		for (auto& it : m_EnemyList)
+		{
+			if (it.pEnemyScript->GetEnemyHealth() > m_AttackPriority[(UINT)ATTACK_PRIORITY::HIGH_HEALTH].pEnemyScript->GetEnemyHealth())
+				m_AttackPriority[(UINT)ATTACK_PRIORITY::HIGH_HEALTH] = it;
+		}
 	}
 
 
