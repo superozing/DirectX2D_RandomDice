@@ -23,6 +23,8 @@ private:
     // 소속 주사위 
     CDiceScript*                m_pOwnerDiceScript;
 
+    CDiceAttackScript*          m_pDiceAttack;
+
     // 공격 우선 순위
     ATTACK_PRIORITY             m_AttackPriority = ATTACK_PRIORITY::FRONT;
 
@@ -40,6 +42,7 @@ public:
     void Attack();
 
     void SetDiceScript(CDiceScript* _OwnerDice) { m_pOwnerDiceScript = _OwnerDice; }
+    void SetDiceAttackScript(CDiceAttackScript* _DiceAttack) { m_pDiceAttack = _DiceAttack; }
     
     void SetField(CFieldScript* _OwnerField) { m_pField = _OwnerField; }
 

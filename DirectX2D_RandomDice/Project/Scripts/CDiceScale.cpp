@@ -22,7 +22,7 @@ CDiceScale::~CDiceScale()
 
 void CDiceScale::Attack()
 {
-	if (m_pField->GetTargetEnemy(m_AttackPriority).pObject == nullptr)
+	if (m_pField->GetTargetEnemy(m_AttackPriority).pObject == nullptr || m_pDiceAttack == nullptr)
 		return;
 	// 음.. 사실 여기서 새로운 투사체를 만들어도 되는거지만
 	// 프리팹을 사용하는게 조금 더 효율적이지 않을까?
@@ -43,7 +43,7 @@ void CDiceScale::Attack()
 	// 필드 설정해주기
 	pPScript->SetField(m_pField);
 	pPScript->SetColor(m_vDiceColor);
-	pPScript->SetAttackPriority(m_AttackPriority);
+	pPScript->SetDiceAttackScript(m_pDiceAttack);
 	pPScript->SetDiceScript(m_pOwnerDiceScript);
 
 	pProjectile->begin();
