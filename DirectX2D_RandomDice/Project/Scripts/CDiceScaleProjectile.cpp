@@ -18,20 +18,14 @@ CDiceScaleProjectile::~CDiceScaleProjectile()
 
 void CDiceScaleProjectile::begin()
 {
-	// 1. 외부에서 넣어주는 것
-	// 필드
-	// 색상
 	// 피격 효과(넣어주어야 함)
+	// 사실 피격 효과는 눈금이 투사체에게 효과를 넣어주는 것이 아니라, 그냥 CDiceScale의 콜백을 호출해주어야 한다.
+	// 그러면 눈금의 포인터도 멤버로 들고 있어야겠네요.
 
-	// 2. 필요한 것
 	// 피격 애니메이터를 가진 자식 오브젝트 
 	// 피격시 효과 정보
 	
-
-	// 타겟 적
-	m_pTargetEnemy = m_pField->GetTargetEnemy(m_DiceAttack->GetAttackPriority());
-
-
+	// MeshRender Set
 	GetOwner()->AddComponent(new CMeshRender);
 	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"AlphaBlendMtrl"));
 	MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
