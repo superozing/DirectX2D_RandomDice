@@ -8,16 +8,7 @@
 class CDiceScale :
     public CScript
 {
-    // 무엇이 필요할까요?
-    // 반드시 맞는 유도탄 만들어서 공격 속도에 따라 공격하기만 하면 된다.
-    // 일단 공격은 DiceScale이 직접적으로 호출하지 않게 설계할 것
-    // Dice쪽에서 자신이 들고 있는 CDiceScale에 공격 함수를 호출하면,
-    // DiceScale이 새로운 DiceScaleProjectile을 만들어서 target Enemy 쪽에 계속해서 날아가도록 하고,
-    // DiceScale이 Target Enemy에게 다가갈 경우 -> 효과를 적용해준다.
-            // 주사위 별로 다른 동작을 하는, 갈아끼울 수 있는 효과.
-                // 1. 데미지
-                // 2. 애니메이션
-
+                // 애니메이션 필요
 private:
 
     // 소속 주사위 
@@ -37,6 +28,11 @@ private:
     // 필드
     CFieldScript*               m_pField;
 
+
+    Vec3                        m_SrcScale = Vec3(10.f, 10.f, 1.f);
+    float                       m_ScaleSize = 1.f;
+
+
 public:
     // 투사체 만들어서 타겟 오브젝트에게 공격
     void Attack();
@@ -47,6 +43,11 @@ public:
     void SetField(CFieldScript* _OwnerField) { m_pField = _OwnerField; }
 
     void SetDiceColor(Vec3 _DiceColor) { m_vDiceColor = _DiceColor; }
+    void SetSrcScale(Vec3 _SrcScale) { m_SrcScale = _SrcScale; }
+
+
+public:
+    virtual void tick() override;
 
 public:
     virtual void SaveToFile(FILE* _File) {}

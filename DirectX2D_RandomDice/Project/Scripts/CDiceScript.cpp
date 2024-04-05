@@ -94,7 +94,6 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 	{
 		CGameObject* pObj = new CGameObject;
 		pObj->AddComponent(new CTransform);
-		pObj->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 1.f));
 
 		// MeshRender Set
 		pObj->AddComponent(new CMeshRender);
@@ -111,6 +110,7 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 		m_VecDiceScale[i]->SetDiceScript(this);
 		m_VecDiceScale[i]->SetField(m_OwnerField);
 		m_VecDiceScale[i]->SetDiceColor(m_DiceColor);
+		m_VecDiceScale[i]->SetSrcScale(Vec3(10.f, 10.f, 1.f));
 		m_VecDiceScale[i]->SetDiceAttackScript(m_Info.pAttack);
 
 		OBJECT->AddChild(pObj);

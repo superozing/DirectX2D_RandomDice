@@ -49,5 +49,23 @@ void CDiceScale::Attack()
 	pProjectile->begin();
 	GamePlayStatic::SpawnGameObject(pProjectile, 7);
 	
+	// 공격 효과
+	m_ScaleSize = 1.5f;
 }
 
+
+void CDiceScale::tick()
+{
+	if (m_ScaleSize > 1.f)
+	{
+		m_ScaleSize -= DT * 3;
+
+		if (m_ScaleSize < 1.f)
+			m_ScaleSize = 1.f;
+	}
+
+	if (Transform() != nullptr)
+	{
+		Transform()->SetRelativeScale(m_SrcScale * m_ScaleSize);
+	}
+}
