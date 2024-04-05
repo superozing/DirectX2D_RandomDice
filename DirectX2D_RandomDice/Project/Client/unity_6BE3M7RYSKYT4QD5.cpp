@@ -1,5 +1,8 @@
 #include "pch.h"
 
+#include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\imgui_impl_win32.cpp"
+
+
 #include "E:\DirectX2D_RandomDice\DirectX2D_RandomDice\Project\Client\imgui_tables.cpp"
 
 
