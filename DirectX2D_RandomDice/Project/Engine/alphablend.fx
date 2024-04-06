@@ -4,6 +4,11 @@
 #include "value.fx"
 #include "func.fx"
 
+#define USE_DEFINE_COLOR g_int_0
+#define USE_MUL_COLOR g_int_1
+
+#define ConstBrightness g_float_0
+
 struct VS_IN
 {
     float4 vColor : COLOR;
@@ -64,23 +69,29 @@ float4 PS_AlphaBlend(VS_OUT _in) : SV_Target
         discard;
     }
     
+    // 샘플링 한 색상의 알파가 매우 작을 경우 discard
     if (vColor.a < 0.1f)
         discard;
     
-    // 만약 g_int_0을 사용한다면 입력받은 색상으로 처리 해주기.
-    if (g_int_0 == 1)
+    // 만약 USE_DEFINE_COLOR(g_int_0)을 사용한다면 입력받은 색상으로 치환
+    if (USE_DEFINE_COLOR == 1) 
     {
         vColor.r = g_vec4_0.r / 255.f;
         vColor.g = g_vec4_0.g / 255.f;
         vColor.b = g_vec4_0.b / 255.f;
     }
-        
+    // 만약 USE_MUL_COLOR(g_int_1)을 사용한다면 입력받은 색상을 곱
+    else if (USE_MUL_COLOR == 1)
+    {
+        vColor.rgb *= g_vec4_0.rgb / 255.f;
+    }
+    
+    //==========
     // 광원 처리
-    // 광원의 타입별 처리
-    // 광원이 여러개일 때 처리
-    //g_Light2DCount;    
+    //==========
     tLightColor LightColor = (tLightColor) 0.f;
     
+    // 모든 광원에 대한 처리
     for (int i = 0; i < g_Light2DCount; ++i)
     {
         CalLight2D(_in.vWorldPos, i, LightColor);
@@ -88,15 +99,12 @@ float4 PS_AlphaBlend(VS_OUT _in) : SV_Target
     
     vColor.rgb *= (LightColor.vColor.rgb + LightColor.vAmbient.rgb);
         
-    if (0.f == vColor.a)
-        discard;
-    
-    // 만약 float 0번을 사용한다면 음영처리 해주기.
-    if (g_float_0 != 0.f)
+    // 만약 ConstBrightness(float 0번)을 사용한다면 음영처리 해주기.
+    if (ConstBrightness != 0.f)
     {
-        vColor.r *= g_float_0;
-        vColor.g *= g_float_0;
-        vColor.b *= g_float_0;
+        vColor.r *= ConstBrightness;
+        vColor.g *= ConstBrightness;
+        vColor.b *= ConstBrightness;
     }
     
     return vColor;
