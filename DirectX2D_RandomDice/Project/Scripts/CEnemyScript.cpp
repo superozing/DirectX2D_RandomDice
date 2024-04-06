@@ -29,9 +29,100 @@ CEnemyScript::CEnemyScript(const CEnemyScript& _Origin)
 
 CEnemyScript::~CEnemyScript()
 {
+	if (m_01_fireObject != nullptr)
+		GamePlayStatic::DestroyGameObject(m_01_fireObject);
 }
 
 #define OBJECT GetOwner()
+
+
+void CEnemyScript::begin()
+{
+	assert(OBJECT);
+
+	// 만약 메쉬 렌더 컴포넌트가 없을 경우, 메쉬 렌더 컴포넌트 생성
+	if (OBJECT->GetRenderComponent() == nullptr)
+		OBJECT->AddComponent(new CMeshRender);
+
+	// 만약 메쉬 렌더 컴포넌트가 아닌 다른 렌더 컴포넌트가 들어있을 경우, assert()
+	if (OBJECT->GetRenderComponent()->GetType() != COMPONENT_TYPE::MESHRENDER)
+		assert(nullptr);
+
+	OBJECT->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	OBJECT->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"AlphaBlendMtrl"));
+
+	// 자식의 생성자로부터 받아온 적 텍스쳐 바인딩
+	OBJECT->MeshRender()->GetDynamicMaterial();
+	OBJECT->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_EnemyInfo.MonTex);
+	OBJECT->Transform()->SetRelativeScale(m_EnemyInfo.MonScale);
+
+	// vScale 세팅
+	m_vScale = m_EnemyInfo.MonScale;
+
+	// 파티클 오브젝트 생성
+	m_pParticleObject = new CGameObject;
+	m_pParticleObject->AddComponent(new CTransform);
+	m_pParticleObject->SetName(L"DeathParticleObject");
+
+	// 파티클 시스템 컴포넌트 부착
+	m_ParticleSystem = new CParticleSystem;
+	m_pParticleObject->AddComponent(m_ParticleSystem);
+
+	// 파티클 오브젝트의 파티클 시스템 세팅
+	wstring strPath = L"texture\\particle\\cloud4.png";
+	m_ParticleSystem->SetParticleModule(m_EnemyInfo.DeathParticleModule);
+	m_ParticleSystem->SetParticleTexture(CAssetMgr::GetInst()->Load<CTexture>(strPath, strPath));
+
+	// 파티클 출력 위치
+	m_pParticleObject->Transform()->SetRelativePos(Vec3(0.f, 0.f, -650.f));
+
+	// 파티클 오브젝트 추가
+	OBJECT->AddChild(m_pParticleObject);
+
+
+	SetEnemyHealth(100);
+
+	//==================
+	// FONTINFO 세팅 
+	//==================
+	m_fInfo1.Color = FONT_RGBA(0, 0, 0, 255);
+	m_fInfo1.fFontSize = 15.f;
+	m_fInfo1.FontType = FONT_TYPE::ALBA_SUPER;
+	m_fInfo1.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_fInfo1.IsWorldPosRender = true;
+
+	m_fInfo2.Color = FONT_RGBA(255, 255, 255, 255);
+	m_fInfo2.fFontSize = 15.2f;
+	m_fInfo2.FontType = FONT_TYPE::ALBA_MATTER;
+	m_fInfo2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_fInfo2.IsWorldPosRender = true;
+
+	m_fDamage1.Color = FONT_RGBA(0, 0, 0, 255);
+	m_fDamage1.FontType = FONT_TYPE::ALBA_SUPER;
+	m_fDamage1.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_fDamage1.IsWorldPosRender = true;
+
+	m_fDamage2.Color = FONT_RGBA(255, 255, 255, 255);
+	m_fDamage2.FontType = FONT_TYPE::ALBA_MATTER;
+	m_fDamage2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_fDamage2.IsWorldPosRender = true;
+
+
+
+	//=======================
+	// 애니메이션 오브젝트 세팅
+	//=======================
+	m_01_fireObject = CEnemyScript::Get01_firePrefabInstantiate();
+	m_01_fireObject->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
+	m_01_fireObject->Transform()->finaltick();
+	m_01_fireObject->begin();
+	GamePlayStatic::SpawnGameObject(m_01_fireObject, 9);
+
+	m_02_electricObject = CEnemyScript::Get02_electricPrefabInstantiate();
+	m_02_electricObject->Transform()->SetRelativeScale(Vec3(70.f, 70.f, 1.f));
+	m_02_electricObject->begin();
+	OBJECT->AddChild(m_02_electricObject);
+}
 
 void CEnemyScript::tick()
 {
@@ -133,78 +224,6 @@ void CEnemyScript::tick()
 			CFontMgr::GetInst()->AddRenderFont(m_fDamage1);
 		}
 	}
-}
-
-void CEnemyScript::begin()
-{
-	assert(OBJECT);
-
-	// 만약 메쉬 렌더 컴포넌트가 없을 경우, 메쉬 렌더 컴포넌트 생성
-	if (OBJECT->GetRenderComponent() == nullptr)
-		OBJECT->AddComponent(new CMeshRender);
-
-	// 만약 메쉬 렌더 컴포넌트가 아닌 다른 렌더 컴포넌트가 들어있을 경우, assert()
-	if (OBJECT->GetRenderComponent()->GetType() != COMPONENT_TYPE::MESHRENDER)
-		assert(nullptr);
-
-	OBJECT->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-	OBJECT->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"AlphaBlendMtrl"));
-
-	// 자식의 생성자로부터 받아온 적 텍스쳐 바인딩
-	OBJECT->MeshRender()->GetDynamicMaterial();
-	OBJECT->MeshRender()->GetMaterial()->SetTexParam(TEX_PARAM::TEX_0, m_EnemyInfo.MonTex);
-	OBJECT->Transform()->SetRelativeScale(m_EnemyInfo.MonScale);
-
-	// vScale 세팅
-	m_vScale = m_EnemyInfo.MonScale;
-
-	// 파티클 오브젝트 생성
-	m_pParticleObject = new CGameObject;
-	m_pParticleObject->AddComponent(new CTransform);
-	m_pParticleObject->SetName(L"DeathParticleObject");
-
-	// 파티클 시스템 컴포넌트 부착
-	m_ParticleSystem = new CParticleSystem;
-	m_pParticleObject->AddComponent(m_ParticleSystem);
-
-	// 파티클 오브젝트의 파티클 시스템 세팅
-	wstring strPath = L"texture\\particle\\cloud4.png";
-	m_ParticleSystem->SetParticleModule(m_EnemyInfo.DeathParticleModule);
-	m_ParticleSystem->SetParticleTexture(CAssetMgr::GetInst()->Load<CTexture>(strPath, strPath));
-
-	// 파티클 출력 위치
-	m_pParticleObject->Transform()->SetRelativePos(Vec3(0.f, 0.f, -650.f));
-
-	// 파티클 오브젝트 추가
-	OBJECT->AddChild(m_pParticleObject);
-
-
-	SetEnemyHealth(100);
-
-	//==================
-	// FONTINFO 세팅 
-	//==================
-	m_fInfo1.Color = FONT_RGBA(0, 0, 0, 255);
-	m_fInfo1.fFontSize = 15.f;
-	m_fInfo1.FontType = FONT_TYPE::ALBA_SUPER;
-	m_fInfo1.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
-	m_fInfo1.IsWorldPosRender = true;
-
-	m_fInfo2.Color = FONT_RGBA(255, 255, 255, 255);
-	m_fInfo2.fFontSize = 15.2f;
-	m_fInfo2.FontType = FONT_TYPE::ALBA_MATTER;
-	m_fInfo2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
-	m_fInfo2.IsWorldPosRender = true;
-
-	m_fDamage1.Color = FONT_RGBA(0, 0, 0, 255);
-	m_fDamage1.FontType = FONT_TYPE::ALBA_SUPER;
-	m_fDamage1.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
-	m_fDamage1.IsWorldPosRender = true;
-
-	m_fDamage2.Color = FONT_RGBA(255, 255, 255, 255);
-	m_fDamage2.FontType = FONT_TYPE::ALBA_MATTER;
-	m_fDamage2.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
-	m_fDamage2.IsWorldPosRender = true;
 }
 
 void CEnemyScript::SetDeadEnemy()

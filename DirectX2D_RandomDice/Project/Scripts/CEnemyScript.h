@@ -68,8 +68,8 @@ private:
 
     
     // 애니메이션
-    CGameObject*            m_01_fireObject;
-    CGameObject*            m_02_electricObject;
+    CGameObject*            m_01_fireObject;       // 따로 SpawnObject 
+    CGameObject*            m_02_electricObject;   // Enemy 종속
 
 public: // 전역
     static Ptr<CPrefab>            m_01_firePrefab;
@@ -104,8 +104,8 @@ public:
     virtual void LoadFromFile(FILE* _File) {}
 
 public:
-    virtual void tick() override;
     virtual void begin() override;
+    virtual void tick() override;
 
 
 public:
@@ -114,5 +114,7 @@ public:
     CEnemyScript(SCRIPT_TYPE _ScriptType);
     CEnemyScript(const CEnemyScript& _Origin);
     ~CEnemyScript();
+
+    friend class CDiceAttackScript;
 };
 
