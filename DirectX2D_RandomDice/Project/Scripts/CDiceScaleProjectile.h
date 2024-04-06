@@ -9,12 +9,7 @@ class CDiceScaleProjectile :
     public CScript
 {
 private:
-
-    // 얘는 그냥 계속 TargetEnemy 위치로 날아가기만 하면 된다.
-    // 정확히 무엇이 필요하냐면..
-    // 1. 데미지 콜백 함수가 필요하겠죠?
-    //  왜 콜백을 사용하냐면요...
-    // 음.. 얘는 조금 다른 쉐이더를 사용해야 해요.
+    // ***********************데미지 콜백 함수 동작이 필요*********************************************
 
     class CFieldScript*         m_pField;
     
@@ -24,7 +19,9 @@ private:
 
     Vec3                        m_ProjectileColor;
 
-
+    CGameObject*                m_ProjectileAnimObject;
+    bool                        m_IsDeadProjectile;
+    float                       m_ProjectileDeadTimer;
 
 public:
     void StopProjectile();
