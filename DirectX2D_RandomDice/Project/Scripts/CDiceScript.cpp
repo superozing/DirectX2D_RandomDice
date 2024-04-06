@@ -8,10 +8,16 @@
 #include "CBuffAttack.h"
 #include "CWindAttack.h"
 
+#include "CDiceBuffScript.h"
+#include "CDiceAttackScript.h"
+#include "CDiceMergeScript.h"
+
+
 
 // 정의
 vector<wstring> CDiceScript::DicePath;
 vector<Vec3>	CDiceScript::DiceColor;
+Ptr<CPrefab>	CDiceScript::m_ProjectileAnimator2DPref = nullptr;
 
 CDiceScript::CDiceScript()
 	: CScript(DICESCRIPT)
@@ -23,6 +29,7 @@ CDiceScript::CDiceScript()
 
 CDiceScript::~CDiceScript()
 {
+	// 레벨에 소속되지 않은 전역 오브젝트와 스크립트를 삭제
 	if (m_Info.pAttack != nullptr)
 		delete m_Info.pAttack;
 	if (m_Info.pBuff != nullptr)
@@ -168,13 +175,14 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 	}
 	case 7:
 	{
-		m_VecDiceScale[0]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
-		m_VecDiceScale[1]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
-		m_VecDiceScale[2]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
-		m_VecDiceScale[3]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
-		m_VecDiceScale[4]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
-		m_VecDiceScale[5]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
-		m_VecDiceScale[6]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+		for (UINT i = 0; i < m_DiceScale; ++i)
+		{
+			m_VecDiceScale[i]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+
+			// 별 모양 텍스쳐로 변경
+			m_VecDiceScale[i]->GetOwner()->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0
+				, CAssetMgr::GetInst()->Load<CTexture>(L"texture\\Dice\\dice_7.png", L"texture\\Dice\\dice_7.png"));
+		}
 
 		break;
 	}
@@ -552,5 +560,16 @@ CDiceAttackScript* CDiceScript::GetDiceAttackScript(DICE _Dice)
 	return pAttack;
 }
 
+CGameObject* CDiceScript::GetDefaultProjectileAnimObj()
+{
+	// 첫 실행 시 프리팹 로드
+	if (m_ProjectileAnimator2DPref == nullptr)
+	{
+		m_ProjectileAnimator2DPref = CAssetMgr::GetInst()->Load<CPrefab>(
+			L"prefab\\ProjectileAnimator2DPrefab.pref", L"prefab\\ProjectileAnimator2DPrefab.pref");
+	}
+
+	return m_ProjectileAnimator2DPref->Instantiate();
+}
 
 #undef OBJECT

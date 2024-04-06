@@ -1,5 +1,7 @@
 #pragma once
 #include <Engine/CScript.h>
+#include <Engine/CPrefab.h>
+
 #include "CFieldScript.h"
 #include "CDiceScale.h"
 
@@ -106,6 +108,9 @@ public: // Àü¿ª
     static Vec3 GetDiceColor(DICE _Dice) { return DiceColor[(UINT)_Dice]; }
 
     static CDiceAttackScript* GetDiceAttackScript(DICE _Dice);
+
+    static Ptr<CPrefab> m_ProjectileAnimator2DPref;
+    static CGameObject* GetDefaultProjectileAnimObj();
 
 public:
 	DICE GetDice() const { return m_Dice; }
