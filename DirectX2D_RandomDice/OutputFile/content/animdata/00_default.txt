@@ -19,7 +19,7 @@ texture\Atlas\00_default_atlas.png
 [BACKGROUND]
 0.195312 1.562500
 [DURATION]
-0.030000
+0.040000
 
 [FRAME_NUM]
 1
@@ -32,7 +32,7 @@ texture\Atlas\00_default_atlas.png
 [BACKGROUND]
 0.195312 1.562500
 [DURATION]
-0.030000
+0.040000
 
 [FRAME_NUM]
 2
@@ -45,7 +45,7 @@ texture\Atlas\00_default_atlas.png
 [BACKGROUND]
 0.195312 1.562500
 [DURATION]
-0.030000
+0.040000
 
 [FRAME_NUM]
 3
@@ -58,7 +58,7 @@ texture\Atlas\00_default_atlas.png
 [BACKGROUND]
 0.195312 1.562500
 [DURATION]
-0.030000
+0.040000
 
 [FRAME_NUM]
 4
@@ -71,7 +71,7 @@ texture\Atlas\00_default_atlas.png
 [BACKGROUND]
 0.195312 1.562500
 [DURATION]
-0.030000
+0.040000
 
 [FRAME_NUM]
 5
@@ -84,7 +84,7 @@ texture\Atlas\00_default_atlas.png
 [BACKGROUND]
 0.195312 1.562500
 [DURATION]
-0.030000
+0.040000
 
 [FRAME_NUM]
 6
@@ -97,7 +97,7 @@ texture\Atlas\00_default_atlas.png
 [BACKGROUND]
 0.195312 1.562500
 [DURATION]
-0.030000
+0.040000
 
 [FRAME_NUM]
 7
@@ -110,5 +110,5 @@ texture\Atlas\00_default_atlas.png
 [BACKGROUND]
 0.195312 1.562500
 [DURATION]
-0.030000
+0.040000
 
