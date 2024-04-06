@@ -1,5 +1,5 @@
 [ANIM_NAME]
-02_electric1
+02_electric
 
 [ATLAS_TEXTURE]
 02_electric1_atlas.png
