@@ -54,7 +54,7 @@ private:
 
     bool                m_IsDeadEnemy;
 
-
+    // 폰트
     FONTINFO                m_fInfo1;
     FONTINFO                m_fInfo2;
 
@@ -66,15 +66,18 @@ private:
     float                   m_DamageFontTimer;
     bool                    m_IsDamageFontRender = false;
 
+    
+    // 애니메이션
+    CGameObject*            m_01_fireObject;
+    CGameObject*            m_02_electricObject;
 
-private:
-    virtual void SaveToFile(FILE* _File) {}
-    virtual void LoadFromFile(FILE* _File) {}
+public: // 전역
+    static Ptr<CPrefab>            m_01_firePrefab;
+    static CGameObject* Get01_fireObject();
+    static Ptr<CPrefab>            m_02_electricPrefab;
+    static CGameObject* Get02_electricObject();
 
 public:
-    virtual void tick() override;
-    virtual void begin() override;
-
     void SetDeadEnemy();
     bool IsDeadEnemy() const { return m_IsDeadEnemy; }
 
@@ -93,6 +96,15 @@ public:
 protected:
     virtual void SetEnemyType(ENEMY_TYPE _Enemytype);
     virtual void SetEnemyInfo(ENEMY_INFO _EnemyInfo);
+
+
+public:
+    virtual void SaveToFile(FILE* _File) {}
+    virtual void LoadFromFile(FILE* _File) {}
+
+public:
+    virtual void tick() override;
+    virtual void begin() override;
 
 
 public:

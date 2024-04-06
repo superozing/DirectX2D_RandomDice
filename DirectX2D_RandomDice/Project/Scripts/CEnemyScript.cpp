@@ -4,6 +4,11 @@
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
 
+// 정의
+Ptr<CPrefab> CEnemyScript::m_01_firePrefab;
+Ptr<CPrefab> CEnemyScript::m_02_electricPrefab;
+
+
 CEnemyScript::CEnemyScript()
 	: CScript(ENEMYSCRIPT)
 	, m_DeathParticleTimer(-1.f)
@@ -258,4 +263,57 @@ void CEnemyScript::SetEnemyType(ENEMY_TYPE _Enemytype)
 void CEnemyScript::SetEnemyInfo(ENEMY_INFO _EnemyInfo)
 {
 	m_EnemyInfo = _EnemyInfo;
+}
+
+
+// 프리팹 억지로 생성하는 코드
+//CGameObject* CEnemyScript::Get01_fireObject()
+//{
+//	if (m_01_firePrefab == nullptr)
+//	{
+//		auto pObj = new CGameObject;
+//		pObj->SetName(L"01_fireObject");
+//		
+//		// Transform
+//		pObj->AddComponent(new CTransform);
+//
+//		// MeshRender
+//		pObj->AddComponent(new CMeshRender);
+//		pObj->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+//		pObj->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"AlphaBlendMtrl"));
+//		
+//		// Animator2D
+//		pObj->AddComponent(new CAnimator2D);
+//		pObj->Animator2D()->LoadAnimation(L"animdata\\01_fire.txt");
+//
+//		Ptr<CPrefab> pMissilePrefab = new CPrefab(pObj, true);
+//		CAssetMgr::GetInst()->AddAsset<CPrefab>(L"01_firePrefab", pMissilePrefab.Get());
+//
+//		pMissilePrefab->Save(L"prefab\\01_fire.pref");
+//	}
+//	return nullptr;
+//}
+
+CGameObject* CEnemyScript::Get01_fireObject()
+{
+	// 첫 실행 시 프리팹 로드
+	if (m_01_firePrefab == nullptr)
+	{
+		m_01_firePrefab = CAssetMgr::GetInst()->Load<CPrefab>(
+			L"prefab\\01_fire.pref", L"prefab\\01_fire.pref");
+	}
+
+	return m_01_firePrefab->Instantiate();
+}
+
+CGameObject* CEnemyScript::Get02_electricObject()
+{
+	// 첫 실행 시 프리팹 로드
+	if (m_02_electricPrefab == nullptr)
+	{
+		m_02_electricPrefab = CAssetMgr::GetInst()->Load<CPrefab>(
+			L"prefab\\02_electric.pref", L"prefab\\02_electric.pref");
+	}
+
+	return m_02_electricPrefab->Instantiate();
 }
