@@ -1,6 +1,8 @@
 #pragma once
 #include <Engine/CScript.h>
 
+typedef  void(CEntity::* EnemyAttackDelegate)(ENEMY_PAIR);
+
 enum class ATTACK_PRIORITY // 주사위의 공격 우선 순위
 {
     BUFF,		 // 버프 주사위 - 공격을 하지 않음
@@ -24,7 +26,8 @@ private:
     float               m_AttackSpeed;
 
     // 공격 효과(CALLBACK)
-    // void(*pFunc)() m_,,,어쩌고저쩌고
+    EnemyAttackDelegate m_AttackDelegate;
+
 
     // 피격 애니메이션
     // 나중에 넣자.
