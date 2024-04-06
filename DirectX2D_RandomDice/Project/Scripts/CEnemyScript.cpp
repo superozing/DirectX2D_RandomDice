@@ -267,7 +267,7 @@ void CEnemyScript::SetEnemyInfo(ENEMY_INFO _EnemyInfo)
 
 
 // 프리팹 억지로 생성하는 코드
-//CGameObject* CEnemyScript::Get01_fireObject()
+//CGameObject* CEnemyScript::Get01_firePrefabInstantiate()
 //{
 //	if (m_01_firePrefab == nullptr)
 //	{
@@ -294,7 +294,7 @@ void CEnemyScript::SetEnemyInfo(ENEMY_INFO _EnemyInfo)
 //	return nullptr;
 //}
 
-CGameObject* CEnemyScript::Get01_fireObject()
+CGameObject* CEnemyScript::Get01_firePrefabInstantiate()
 {
 	// 첫 실행 시 프리팹 로드
 	if (m_01_firePrefab == nullptr)
@@ -306,7 +306,7 @@ CGameObject* CEnemyScript::Get01_fireObject()
 	return m_01_firePrefab->Instantiate();
 }
 
-CGameObject* CEnemyScript::Get02_electricObject()
+CGameObject* CEnemyScript::Get02_electricPrefabInstantiate()
 {
 	// 첫 실행 시 프리팹 로드
 	if (m_02_electricPrefab == nullptr)

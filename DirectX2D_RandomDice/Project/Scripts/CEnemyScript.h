@@ -73,9 +73,10 @@ private:
 
 public: // Àü¿ª
     static Ptr<CPrefab>            m_01_firePrefab;
-    static CGameObject* Get01_fireObject();
+    static CGameObject* Get01_firePrefabInstantiate();
+
     static Ptr<CPrefab>            m_02_electricPrefab;
-    static CGameObject* Get02_electricObject();
+    static CGameObject* Get02_electricPrefabInstantiate();
 
 public:
     void SetDeadEnemy();
