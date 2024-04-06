@@ -6,6 +6,8 @@
 
 #include "CDiceScaleProjectile.h"
 
+Ptr<CPrefab> CDiceScale::m_DiceScaleProjectilePrefab = nullptr;
+
 CDiceScale::CDiceScale()
 	: CScript(SCRIPT_TYPE::DICESCALE)
 {
@@ -24,30 +26,27 @@ void CDiceScale::Attack()
 {
 	if (m_pField->GetTargetEnemy(m_AttackPriority).pObject == nullptr || m_pDiceAttack == nullptr)
 		return;
-	// 음.. 사실 여기서 새로운 투사체를 만들어도 되는거지만
-	// 프리팹을 사용하는게 조금 더 효율적이지 않을까?
-	// 일단은 프리팹을 사용하지 말자.
 	
-	CGameObject* pProjectile = new CGameObject;
-	pProjectile->SetName(L"Projectile");
+	CGameObject* pObj = CDiceScale::GetDiceScaleProjectile();
 
-	pProjectile->AddComponent(new CTransform);
-	
-	pProjectile->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 1.f));
-	pProjectile->Transform()->SetRelativePos(Transform()->GetWorldPos());
-	pProjectile->Transform()->finaltick();
+	// 프리팹 객체로부터 투사체 스크립트 가져오기
+	CDiceScaleProjectile* pProjectile = pObj->GetScript<CDiceScaleProjectile>();
 
-	auto pPScript = new CDiceScaleProjectile;
-	pProjectile->AddComponent(pPScript);
+	// Transform set
+	pObj->Transform()->SetRelativeScale(Vec3(10.f, 10.f, 1.f));
+	pObj->Transform()->SetRelativePos(Transform()->GetWorldPos());
+	pObj->Transform()->finaltick();
 
-	// 필드 설정해주기
-	pPScript->SetField(m_pField);
-	pPScript->SetColor(m_vDiceColor);
-	pPScript->SetDiceAttackScript(m_pDiceAttack);
-	pPScript->SetDiceScript(m_pOwnerDiceScript);
+	// 투사체 정보 세팅
+	pProjectile->SetField(m_pField);
+	pProjectile->SetColor(m_vDiceColor);
+	pProjectile->SetDiceAttackScript(m_pDiceAttack);
 
-	pProjectile->begin();
-	GamePlayStatic::SpawnGameObject(pProjectile, 7);
+	// 객체에게 begin() 호출
+	pObj->begin();
+
+	// 레벨에 스폰
+	GamePlayStatic::SpawnGameObject(pObj, 9);
 	
 	// 공격 효과
 	m_ScaleSize = 1.5f;
@@ -68,4 +67,17 @@ void CDiceScale::tick()
 	{
 		Transform()->SetRelativeScale(m_SrcScale * m_ScaleSize);
 	}
+}
+
+
+CGameObject* CDiceScale::GetDiceScaleProjectile()
+{
+	// 첫 실행 시 프리팹 로드
+	if (m_DiceScaleProjectilePrefab == nullptr)
+	{
+		m_DiceScaleProjectilePrefab = CAssetMgr::GetInst()->Load<CPrefab>(
+			L"prefab\\DiceScaleProjectile.pref", L"prefab\\DiceScaleProjectile.pref");
+	}
+
+	return m_DiceScaleProjectilePrefab->Instantiate();
 }

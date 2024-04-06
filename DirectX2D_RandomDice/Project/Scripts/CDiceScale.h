@@ -1,5 +1,6 @@
 #pragma once
 #include <Engine\CScript.h>
+#include <Engine\CPrefab.h>
 #include "CDiceScaleProjectile.h"
 #include "CEnemyScript.h"
 #include "CDiceScript.h"
@@ -44,6 +45,11 @@ public:
 
     void SetDiceColor(Vec3 _DiceColor) { m_vDiceColor = _DiceColor; }
     void SetSrcScale(Vec3 _SrcScale) { m_SrcScale = _SrcScale; }
+
+
+public: // Àü¿ª
+    static Ptr<CPrefab> m_DiceScaleProjectilePrefab;
+    static CGameObject* GetDiceScaleProjectile();
 
 
 public:
