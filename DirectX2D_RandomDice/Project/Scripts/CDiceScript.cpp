@@ -178,6 +178,7 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 		for (UINT i = 0; i < m_DiceScale; ++i)
 		{
 			m_VecDiceScale[i]->GetOwner()->Transform()->SetRelativePos(Vec3(0.f, 0.f, -10.f));
+			m_VecDiceScale[i]->SetSrcScale(Vec3(18.f, 18.f, 1.f));
 
 			// 별 모양 텍스쳐로 변경
 			m_VecDiceScale[i]->GetOwner()->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0
@@ -197,7 +198,7 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 
 	m_SpawnParticle->SetParticleModule(tSpawnModule);
 	m_LevelUpParticle->SetParticleModule(tLevelUpModule);
-
+	
 	m_SpawnParticle->SetActivate(true);
 
 	m_IsGrowing = true;
