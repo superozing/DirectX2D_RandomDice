@@ -1,19 +1,8 @@
 #pragma once
 #include <Engine/CScript.h>
+#include "ScriptDefine.h"
 
-typedef  void(CEntity::* EnemyAttackDelegate)(ENEMY_PAIR);
 
-enum class ATTACK_PRIORITY // 주사위의 공격 우선 순위
-{
-    BUFF,		 // 버프 주사위 - 공격을 하지 않음
-    FRONT,		 // 앞 쪽 적 우선 공격
-    HIGH_HEALTH, // 높은 체력의 적 우선 공격
-    RANDOM,      // 무작위 적 공격
-    RANGE_ATTACK,// 무작위 범위 공격
-    END,
-};
-
-// 주사위 공격 정보 스크립트
 class CDiceAttackScript :
     public CScript
 {
@@ -25,12 +14,26 @@ private:
     float               m_AttackDamage;
     float               m_AttackSpeed;
 
+public:
     // 공격 효과(CALLBACK)
-    EnemyAttackDelegate m_AttackDelegate;
 
+    // 1. 직접 AttackDelegate를 통해서 DelegateFunc 호출
+    //      => (diceAttackScript객체포인터->*AttackDelegate)(ENEMY_PAIR 객체);
+    // 2. CallAttackDelegateFunc()를 사용해 호출
+    EnemyAttackDelegate AttackDelegate;
 
-    // 피격 애니메이션
-    // 나중에 넣자.
+    // 공격 델리게이트 함수 호출
+    void CallAttackDelegateFunc(ENEMY_PAIR _EnemyPair)
+    {
+        if (AttackDelegate != nullptr)
+        {
+            (this->*AttackDelegate)(_EnemyPair);
+        }
+    }
+
+    // 	CDiceAttackScript::SetAttackDelegate((EnemyAttackDelegate)&CDefaultAttack::DefaultAttackDelegateFunc);
+    // 위와 같이 사용하여 파생 클래스에서 세팅
+    void SetAttackDelegate(EnemyAttackDelegate _DelegateFunc) { AttackDelegate = _DelegateFunc; }
 
 public:
     void SetAttackPriority(ATTACK_PRIORITY _ATTACK_PRIORITY) { m_AttackPriority = _ATTACK_PRIORITY; }
