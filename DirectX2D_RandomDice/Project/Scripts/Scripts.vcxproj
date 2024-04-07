@@ -190,6 +190,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CSummonDiceBtnScript.h" />
     <ClInclude Include="CUIScript.h" />
     <ClInclude Include="CWindAttack.h" />
+    <ClInclude Include="ScriptDefine.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>

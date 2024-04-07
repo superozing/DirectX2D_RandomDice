@@ -91,6 +91,9 @@
     <ClInclude Include="CWindAttack.h">
       <Filter>Scripts\DiceAttack\WindAttack</Filter>
     </ClInclude>
+    <ClInclude Include="ScriptDefine.h">
+      <Filter>Default</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">

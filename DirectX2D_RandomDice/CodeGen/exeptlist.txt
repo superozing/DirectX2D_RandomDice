@@ -1,2 +1,3 @@
 CScriptMgr.h
 CGameMemoryPool.h
+ScriptDefine.h
