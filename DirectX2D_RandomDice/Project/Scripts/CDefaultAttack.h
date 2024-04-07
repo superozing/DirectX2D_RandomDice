@@ -3,8 +3,8 @@
 class CDefaultAttack :
     public CDiceAttackScript
 {
-private:
-
+public:
+    void DefaultAttackDelegateFunc(ENEMY_PAIR _EnemyPair);
 
 public:
     CLONE(CDefaultAttack);
