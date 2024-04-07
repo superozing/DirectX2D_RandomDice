@@ -30,11 +30,11 @@ CFieldScript::CFieldScript()
 
 	// 나중에는 여기서 초기화하면 안된다.
 
-	m_Deck[0] = DICE(1);
+	m_Deck[0] = DICE(2);
 	m_Deck[1] = DICE(2);
-	m_Deck[2] = DICE(3);
-	m_Deck[3] = DICE(4);
-	m_Deck[4] = DICE(5);
+	m_Deck[2] = DICE(2);
+	m_Deck[3] = DICE(2);
+	m_Deck[4] = DICE(2);
 }
 
 CFieldScript::~CFieldScript()

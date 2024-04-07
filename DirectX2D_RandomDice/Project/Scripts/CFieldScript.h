@@ -86,6 +86,8 @@ public:
 
     ENEMY_PAIR GetTargetEnemy(ATTACK_PRIORITY attack_priority) const { return m_AttackPriority[(UINT)attack_priority]; }
 
+    list<ENEMY_PAIR>& GetEnemyList() { return m_EnemyList; }
+
     UINT GetSummonSP() const { return m_SummonSP; }
 
     UINT GetCurWave() const { return m_CurWave; }
