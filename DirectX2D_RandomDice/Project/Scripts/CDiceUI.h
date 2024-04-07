@@ -1,7 +1,7 @@
 #pragma once
 #include <Engine\CScript.h>
 #include <Engine\CFontMgr.h>
-#include "CDiceScript.h"
+#include "ScriptDefine.h"
 
 class CDiceUI :
     public CScript

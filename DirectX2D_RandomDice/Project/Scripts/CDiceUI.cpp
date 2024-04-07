@@ -5,6 +5,8 @@
 #include <Engine\CDevice.h>
 
 #include "CUIScript.h"
+#include "CFieldScript.h"
+#include "CDiceScript.h"
 
 
 
