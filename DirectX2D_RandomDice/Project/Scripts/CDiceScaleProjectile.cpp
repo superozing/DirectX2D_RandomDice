@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "CDiceScaleProjectile.h"
+#include "CDiceAttackScript.h"
 #include "CFieldScript.h"
+#include "CDiceScript.h"
+#include "CEnemyScript.h"
+
 
 CDiceScaleProjectile::CDiceScaleProjectile()
 	: CScript(DICESCALEPROJECTILE)
@@ -99,7 +103,9 @@ void CDiceScaleProjectile::tick()
 	// 적에게 닿았을 경우.
 	if (vDir.Length() < 6.f)
 	{
-		m_pTargetEnemy.pEnemyScript->TakeDamage(m_DiceAttack->GetAttackDamage()); // 나중에 주사위 종류에 따른 데미지를 주어야 한다.
+		assert(m_DiceAttack);
+
+		m_DiceAttack->CallAttackDelegateFunc(m_pTargetEnemy);
 
 		// 파괴 애니메이션 재생
 		StopProjectile();
