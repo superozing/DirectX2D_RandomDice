@@ -1,55 +1,7 @@
 #pragma once
 #include <Engine/CScript.h>
-#include <Engine/CPrefab.h>
+#include "ScriptDefine.h"
 
-#include "CFieldScript.h"
-#include "CDiceScale.h"
-
-enum class DICE
-{
-    NONE,
-
-    FIRE,
-    ELECTRIC,
-    WIND,
-    POISON,
-    ICE,
-
-    IRON,
-    BROKEN,
-    GAMBLE,
-    LOCK,
-    MINE,
-
-    LIGHT,
-    THORN,
-    CRACK,
-    CRITICAL,
-    ENERGY,
-
-    SACRIFICE,
-    ARROW,
-    MIMIC,
-
-    END,
-};
-
-
-
-enum class DICE_BUFF
-{
-    NONE,
-    CRITICAL,
-    ATTACK_SPEED,
-};
-
-
-struct DICE_INFO
-{
-    class CDiceAttackScript* pAttack;
-    class CDiceBuffScript* pBuff;
-    class CDiceMergeScript* pMerge;
-};
 
 // 필드 위에 존재할 주사위 게임 오브젝트에 부착될 스크립트.
 class CDiceScript
@@ -57,7 +9,7 @@ class CDiceScript
 {
 private:
     // 필드
-	CFieldScript*               m_OwnerField;
+	class CFieldScript*         m_OwnerField;
 
     // 주사위 정보
 	DICE		                m_Dice;			// 주사위 종류

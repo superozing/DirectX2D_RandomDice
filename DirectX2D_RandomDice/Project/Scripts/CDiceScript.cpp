@@ -12,6 +12,8 @@
 #include "CDiceAttackScript.h"
 #include "CDiceMergeScript.h"
 
+#include "CDiceScale.h"
+#include "CFieldScript.h"
 
 
 // Á¤ÀÇ
