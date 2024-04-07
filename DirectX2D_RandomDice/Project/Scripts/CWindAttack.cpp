@@ -1,6 +1,13 @@
 #include "pch.h"
 #include "CWindAttack.h"
 
+#include "CEnemyScript.h"
+
+void CWindAttack::WindAttackDelegateFunc(ENEMY_PAIR _EnemyPair)
+{
+	_EnemyPair.pEnemyScript->TakeDamage(GetAttackDamage());
+}
+
 CWindAttack::CWindAttack()
 	: CDiceAttackScript(WINDATTACK)
 {
@@ -14,7 +21,7 @@ CWindAttack::CWindAttack(const CWindAttack& _Origin)
 {
 	SetAttackDamage(50.f);
 	SetAttackPriority(ATTACK_PRIORITY::FRONT);
-	SetAttackSpeed(0.3f);
+	SetAttackSpeed(3.f);
 }
 
 CWindAttack::~CWindAttack()

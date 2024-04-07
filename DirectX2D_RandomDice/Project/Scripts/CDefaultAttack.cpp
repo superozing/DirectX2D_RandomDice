@@ -2,11 +2,6 @@
 #include "CDefaultAttack.h"
 #include "CEnemyScript.h"
 
-void CDefaultAttack::DefaultAttackDelegateFunc(ENEMY_PAIR _EnemyPair)
-{
-	_EnemyPair.pEnemyScript->TakeDamage(70.f);
-}
-
 CDefaultAttack::CDefaultAttack()
 	: CDiceAttackScript(DEFAULTATTACK)
 {
@@ -27,4 +22,9 @@ CDefaultAttack::CDefaultAttack(const CDefaultAttack& _Origin)
 
 CDefaultAttack::~CDefaultAttack()
 {
+}
+
+void CDefaultAttack::DefaultAttackDelegateFunc(ENEMY_PAIR _EnemyPair)
+{
+	_EnemyPair.pEnemyScript->TakeDamage(GetAttackDamage());
 }

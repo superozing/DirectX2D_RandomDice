@@ -15,8 +15,6 @@ private:
     float               m_AttackSpeed;
 
 public:
-    // 공격 효과(CALLBACK)
-
     // 1. 직접 AttackDelegate를 통해서 DelegateFunc 호출
     //      => (diceAttackScript객체포인터->*AttackDelegate)(ENEMY_PAIR 객체);
     // 2. CallAttackDelegateFunc()를 사용해 호출

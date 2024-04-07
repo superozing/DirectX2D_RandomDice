@@ -5,6 +5,8 @@ class CWindAttack :
 {
 private:
 
+public:
+    void WindAttackDelegateFunc(ENEMY_PAIR _EnemyPair);
 
 public:
     CLONE(CWindAttack);
