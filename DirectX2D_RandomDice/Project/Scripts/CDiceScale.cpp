@@ -5,6 +5,8 @@
 #include <Engine\CLevel.h>
 
 #include "CDiceScaleProjectile.h"
+#include "CDiceAttackScript.h"
+#include "CFieldScript.h"
 
 Ptr<CPrefab> CDiceScale::m_DiceScaleProjectilePrefab = nullptr;
 

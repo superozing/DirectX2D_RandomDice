@@ -1,9 +1,6 @@
 #pragma once
 #include <Engine\CScript.h>
-#include <Engine\CPrefab.h>
-#include "CDiceScaleProjectile.h"
-#include "CEnemyScript.h"
-#include "CDiceScript.h"
+#include "ScriptDefine.h"
 
 // 주사위 눈금 스크립트
 class CDiceScale :
@@ -13,9 +10,9 @@ class CDiceScale :
 private:
 
     // 소속 주사위 
-    CDiceScript*                m_pOwnerDiceScript;
+    class CDiceScript*                m_pOwnerDiceScript;
 
-    CDiceAttackScript*          m_pDiceAttack;
+    class CDiceAttackScript*          m_pDiceAttack;
 
     // 공격 우선 순위
     ATTACK_PRIORITY             m_AttackPriority = ATTACK_PRIORITY::FRONT;
@@ -24,10 +21,10 @@ private:
     Vec3                        m_vDiceColor;
 
     // 타겟 enemy
-    CEnemyScript*               m_pTargetEnemy;
+    class CEnemyScript*               m_pTargetEnemy;
 
     // 필드
-    CFieldScript*               m_pField;
+    class CFieldScript*               m_pField;
 
 
     Vec3                        m_SrcScale = Vec3(10.f, 10.f, 1.f);
