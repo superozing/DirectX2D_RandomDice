@@ -78,8 +78,11 @@ public:
     ENEMY_TYPE GetEnemyType() const { return m_EnemyType; }
     bool IsEndDeathParticle() const { return EndDeathParticle; }
 
+    void Play02_electricAnimation();
+    CGameObject* Get02_electricObject() { return m_02_electricObject; }
 
     void SetField(CFieldScript* _Field) { m_OwnerField = _Field; }
+    CFieldScript* GetField() { return m_OwnerField; }
 
     int GetEnemyHealth() const { return m_CurHealth; }
     void SetEnemyHealth(int _Health) { m_CurHealth = _Health; }

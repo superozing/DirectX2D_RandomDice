@@ -29,8 +29,7 @@ CEnemyScript::CEnemyScript(const CEnemyScript& _Origin)
 
 CEnemyScript::~CEnemyScript()
 {
-	if (m_01_fireObject != nullptr)
-		GamePlayStatic::DestroyGameObject(m_01_fireObject);
+
 }
 
 #define OBJECT GetOwner()
@@ -112,14 +111,15 @@ void CEnemyScript::begin()
 	//=======================
 	// 애니메이션 오브젝트 세팅
 	//=======================
-	m_01_fireObject = CEnemyScript::Get01_firePrefabInstantiate();
-	m_01_fireObject->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
-	m_01_fireObject->Transform()->finaltick();
-	m_01_fireObject->begin();
-	GamePlayStatic::SpawnGameObject(m_01_fireObject, 9);
+	//m_01_fireObject = CEnemyScript::Get01_firePrefabInstantiate();
+	//m_01_fireObject->Transform()->SetRelativeScale(Vec3(100.f, 100.f, 1.f));
+	//m_01_fireObject->Transform()->finaltick();
+	//m_01_fireObject->begin();
+	//GamePlayStatic::SpawnGameObject(m_01_fireObject, 9);
 
 	m_02_electricObject = CEnemyScript::Get02_electricPrefabInstantiate();
 	m_02_electricObject->Transform()->SetRelativeScale(Vec3(70.f, 70.f, 1.f));
+	m_02_electricObject->Transform()->SetRelativePos(Vec3(0.f, 0.f, -1.f));
 	m_02_electricObject->begin();
 	OBJECT->AddChild(m_02_electricObject);
 }
@@ -248,6 +248,12 @@ void CEnemyScript::SetDeadEnemy()
 	}
 
 	m_OwnerField->AddCurSP(AddSP);
+}
+
+void CEnemyScript::Play02_electricAnimation()
+{
+	m_02_electricObject->Animator2D()->Stop();
+	m_02_electricObject->Animator2D()->Play(L"02_electric", false);
 }
 
 void CEnemyScript::TakeDamage(int _Dmg, bool _IsCriticalAttack)
