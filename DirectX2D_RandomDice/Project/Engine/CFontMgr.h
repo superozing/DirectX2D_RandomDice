@@ -7,7 +7,7 @@
 #ifdef _DEBUG
 #pragma comment(lib, "FontEngine/FW1FontWrapper_debug")
 #else
-#pragma comment(lib, "FontEngine/FW1FontWrapper"))
+#pragma comment(lib, "FontEngine/FW1FontWrapper")
 #endif
 
 
