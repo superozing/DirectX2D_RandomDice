@@ -142,6 +142,8 @@ void CAnimator2D::Play(const wstring& _strAnimName, bool _bRepeat)
 
 void CAnimator2D::Stop()
 {
+	if (m_CurAnim == nullptr)
+		return;
 	m_CurAnim->Reset();
 	m_CurAnim = nullptr;
 }
