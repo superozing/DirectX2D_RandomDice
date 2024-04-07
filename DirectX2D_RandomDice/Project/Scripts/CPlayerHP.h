@@ -1,8 +1,5 @@
 #pragma once
 #include <Engine\CScript.h>
-#include <Engine\CAssetMgr.h>
-#include <Engine\CTexture.h>
-
 
 class CPlayerHP :
     public CScript
