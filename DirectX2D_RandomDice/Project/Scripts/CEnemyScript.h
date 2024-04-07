@@ -1,15 +1,7 @@
 #pragma once
 #include <Engine\CScript.h>
 #include <Engine\CFontMgr.h>
-
-enum class ENEMY_TYPE
-{
-    DEFAULT,
-    SPEED,
-    BIG,
-    BOSS,
-    END
-};
+#include "ScriptDefine.h"
 
 struct ENEMY_INFO
 {

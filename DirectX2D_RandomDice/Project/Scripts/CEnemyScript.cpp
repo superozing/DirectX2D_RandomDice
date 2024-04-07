@@ -255,6 +255,9 @@ void CEnemyScript::TakeDamage(int _Dmg, bool _IsCriticalAttack)
 	// 데미지 입히기
 	m_CurHealth -= _Dmg;
 
+
+	// 데미지 폰트 렌더 적용
+
 	m_IsDamageFontRender = true;
 	m_DamageFontSizeScale = 1.3f;
 	m_DamageFontTimer = 1.f;
