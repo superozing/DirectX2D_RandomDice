@@ -10,6 +10,7 @@ CDiceScale
 CDiceScaleProjectile
 CDiceScript
 CDiceUI
+CElectricAttack
 CEnemyGateScript
 CEnemyScript
 CExternScript

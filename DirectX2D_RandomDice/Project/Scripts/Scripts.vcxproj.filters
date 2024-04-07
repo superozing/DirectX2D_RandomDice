@@ -94,6 +94,9 @@
     <ClInclude Include="ScriptDefine.h">
       <Filter>Default</Filter>
     </ClInclude>
+    <ClInclude Include="CElectricAttack.h">
+      <Filter>Scripts\DiceAttack\ElectricAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -186,6 +189,9 @@
     <ClCompile Include="CWindAttack.cpp">
       <Filter>Scripts\DiceAttack\WindAttack</Filter>
     </ClCompile>
+    <ClCompile Include="CElectricAttack.cpp">
+      <Filter>Scripts\DiceAttack\ElectricAttack</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -271,6 +277,9 @@
     </Filter>
     <Filter Include="Scripts\DiceAttack\WindAttack">
       <UniqueIdentifier>{de53007d-b65c-4896-b5fb-762519602d6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\DiceAttack\ElectricAttack">
+      <UniqueIdentifier>{8e54bee1-d353-4dc4-b511-7cda299b1072}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
