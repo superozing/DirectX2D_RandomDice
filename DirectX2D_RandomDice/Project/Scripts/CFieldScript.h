@@ -1,16 +1,7 @@
 #pragma once
 #include <Engine\CScript.h>
-#include "CDiceAttackScript.h"
-#include "CEnemyScript.h"
+#include "ScriptDefine.h"
 #include <random>
-
-// EnemyScript를 조금 더 빠르게 참조하기 위해서 구조체 사용
-struct ENEMY_PAIR
-{
-    CGameObject*            pObject;
-    class CEnemyScript*     pEnemyScript;
-};
-
 
 struct SPAWN_ENEMY_COOLDOWN
 {
