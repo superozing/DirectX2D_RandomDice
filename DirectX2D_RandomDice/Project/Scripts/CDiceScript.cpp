@@ -7,6 +7,7 @@
 #include "CDefaultAttack.h"
 #include "CBuffAttack.h"
 #include "CWindAttack.h"
+#include "CElectricAttack.h"
 
 #include "CDiceBuffScript.h"
 #include "CDiceAttackScript.h"
@@ -504,7 +505,7 @@ CDiceAttackScript* CDiceScript::GetDiceAttackScript(DICE _Dice)
 		pAttack = new CDefaultAttack;
 		break;
 	case DICE::ELECTRIC:
-		pAttack = new CDefaultAttack;
+		pAttack = new CElectricAttack;
 		break;
 	case DICE::WIND:
 		pAttack = new CWindAttack;
