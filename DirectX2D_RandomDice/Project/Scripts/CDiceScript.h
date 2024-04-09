@@ -86,6 +86,9 @@ public:
 private:
 	void SetDiceScale();
 
+    // Delegate Function
+    void DiceClickedDelegateFunc();
+
 public:
 	virtual void begin() override;
 	virtual void tick() override;

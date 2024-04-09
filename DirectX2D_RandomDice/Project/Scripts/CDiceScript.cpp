@@ -43,6 +43,75 @@ CDiceScript::~CDiceScript()
 
 #define OBJECT GetOwner()
 
+void CDiceScript::tick()
+{
+	//==============
+	// Set Transform
+	//==============
+
+	if (m_LevelUpParticleTimer > 0.f)
+	{
+		m_LevelUpParticleTimer -= DT;
+		if (m_LevelUpParticleTimer <= 0.f)
+		{
+			m_LevelUpParticleTimer = 0.f;
+			m_LevelUpParticle->SetActivate(false);
+		}
+	}
+
+	if (m_IsGrowing)
+	{
+		m_fScaleSize += 5.f * DT;
+		if (m_fScaleSize > 0.5f)
+			m_SpawnParticle->SetActivate(false);
+
+		if (m_fScaleSize > 1.f)
+		{
+			m_fScaleSize = 1.f;
+			m_IsGrowing = false;
+		}
+	}
+
+	OBJECT->Transform()->SetRelativeScale(m_vSrcScale * m_fScaleSize);
+
+	OBJECT->GetRenderComponent()->GetDynamicMaterial()
+		->SetScalarParam(SCALAR_PARAM::FLOAT_0, m_fScaleSize);
+
+
+
+	//============
+	// Dice Attack
+	//============
+
+	if (DICE::NONE != m_Dice)
+	{
+		m_AttackTimer += DT;
+		m_finalAttackSpeed = m_Info.pAttack->GetAttackSpeed();
+	}
+
+	// 만약 공격 시간이 왔을 경우
+	if (m_AttackTimer > (1.f / m_finalAttackSpeed) / m_DiceScale)
+	{
+		
+		if (!m_VecDiceScale.empty())
+		{
+			// 현재 공격 차례인 눈금에게 Attack()을 호출하기
+			m_VecDiceScale[m_CurDiceScaleIdx]->Attack();
+
+			// 다음 인덱스로 옮기기
+			++m_CurDiceScaleIdx;
+
+			// 모든 눈금이 공격을 했다면, 다시 첫 눈금부터 공격
+			if (m_DiceScale <= m_CurDiceScaleIdx)
+				m_CurDiceScaleIdx = 0;
+		}
+		// 타이머 초기화
+		m_AttackTimer -= (1.f / m_finalAttackSpeed) / m_DiceScale;
+	}
+
+}
+
+
 void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 {
 	m_Dice = _Dice;
@@ -93,7 +162,7 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 
 	// 주사위 색상
 	m_DiceColor = CDiceScript::GetDiceColor(_Dice);
-	
+
 	// 주사위 눈금 생성
 	SetDiceScale();
 
@@ -102,7 +171,7 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 
 	m_SpawnParticle->SetParticleModule(tSpawnModule);
 	m_LevelUpParticle->SetParticleModule(tLevelUpModule);
-	
+
 	m_SpawnParticle->SetActivate(true);
 
 	m_IsGrowing = true;
@@ -213,12 +282,42 @@ void CDiceScript::SetDiceScale()
 	}
 }
 
+void CDiceScript::DiceClickedDelegateFunc()
+{
+	// 필드에게서 현재 포커싱 된 주사위가 있는지 가져온다.
+	CDiceScript* pFocusDice = m_OwnerField->GetFocusDice();
+
+	// 포커싱 된 주사위가 없을 경우
+	if (pFocusDice == nullptr)
+	{
+		m_OwnerField->SetFocusDice(this); // 자신을 포커싱 주사위로 세팅
+		return;
+	}
+
+	// 포커싱 된 주사위가 자기 자신일 경우 (자신을 한 번 더 눌렀을 경우)
+	if (pFocusDice == this)
+	{
+		m_OwnerField->SetFocusDice(nullptr); // 포커싱을 해제
+		return;
+	}
+
+	// 포커싱 된 주사위가 다른 주사위일 경우 합쳐질 수 있는지 판단 (나중에 판단하는 함수를 추가해야 한다.)
+	if (pFocusDice->GetDice() == GetDice() && pFocusDice->GetDiceScale() == GetDiceScale())// 합쳐질 수 있는 경우
+	{
+		// 포커싱 주사위 제거
+		pFocusDice->SetDiceType(DICE::NONE);
+		
+		// 현재 주사위의 눈금 증가
+		SetDiceType(m_OwnerField->GetRandomDeckDiceType(), GetDiceScale() + 1);
+	}
+	
+	m_OwnerField->SetFocusDice(nullptr); // 포커싱을 해제
+
+}
+
 void CDiceScript::PlayLevelUp()
 {
-	// 해야 할 일.
-	// 1. LevelUp 텍스트 이미지 띄우도록 만들기
-	// 2. 파티클 "위로" 방출
-
+	// LevelUp 텍스트 이미지 띄우도록 해주어야 하는데.
 	m_LevelUpParticle->SetActivate(true);
 	m_LevelUpParticleTimer = 0.15f;
 
@@ -226,73 +325,6 @@ void CDiceScript::PlayLevelUp()
 	m_IsGrowing = true;
 }
 
-void CDiceScript::tick()
-{
-	//==============
-	// Set Transform
-	//==============
-
-	if (m_LevelUpParticleTimer > 0.f)
-	{
-		m_LevelUpParticleTimer -= DT;
-		if (m_LevelUpParticleTimer <= 0.f)
-		{
-			m_LevelUpParticleTimer = 0.f;
-			m_LevelUpParticle->SetActivate(false);
-		}
-	}
-
-	if (m_IsGrowing)
-	{
-		m_fScaleSize += 5.f * DT;
-		if (m_fScaleSize > 0.5f)
-			m_SpawnParticle->SetActivate(false);
-
-		if (m_fScaleSize > 1.f)
-		{
-			m_fScaleSize = 1.f;
-			m_IsGrowing = false;
-		}
-	}
-
-	OBJECT->Transform()->SetRelativeScale(m_vSrcScale * m_fScaleSize);
-
-	OBJECT->GetRenderComponent()->GetDynamicMaterial()
-		->SetScalarParam(SCALAR_PARAM::FLOAT_0, m_fScaleSize);
-
-
-
-	//============
-	// Dice Attack
-	//============
-
-	if (DICE::NONE != m_Dice)
-	{
-		m_AttackTimer += DT;
-		m_finalAttackSpeed = m_Info.pAttack->GetAttackSpeed();
-	}
-
-	// 만약 공격 시간이 왔을 경우
-	if (m_AttackTimer > (1.f / m_finalAttackSpeed) / m_DiceScale)
-	{
-		
-		if (!m_VecDiceScale.empty())
-		{
-			// 현재 공격 차례인 눈금에게 Attack()을 호출하기
-			m_VecDiceScale[m_CurDiceScaleIdx]->Attack();
-
-			// 다음 인덱스로 옮기기
-			++m_CurDiceScaleIdx;
-
-			// 모든 눈금이 공격을 했다면, 다시 첫 눈금부터 공격
-			if (m_DiceScale <= m_CurDiceScaleIdx)
-				m_CurDiceScaleIdx = 0;
-		}
-		// 타이머 초기화
-		m_AttackTimer -= (1.f / m_finalAttackSpeed) / m_DiceScale;
-	}
-
-}
 
 //=============
 // Static Func
