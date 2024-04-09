@@ -2,6 +2,15 @@
 
 
 #define TEX_LOAD(wstrPath) CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath)
+
+enum class DICE_MERGE_STATE
+{
+    NOT_SET,
+    ABLE,
+    UNABLE,
+};
+
+
 enum class ENEMY_TYPE
 {
     DEFAULT,
