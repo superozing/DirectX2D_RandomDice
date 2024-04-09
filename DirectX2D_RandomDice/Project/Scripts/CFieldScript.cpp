@@ -13,7 +13,15 @@
 #include "CEnemyGateScript.h"
 
 
-
+// Functor
+struct CompareEnemyPair
+{
+	bool operator()(const ENEMY_PAIR& enemy1, const ENEMY_PAIR& enemy2) const
+	{
+		// 기준으로 삼을 멤버 변수에 접근하여 비교
+		return enemy1.pEnemyScript->GetMoveProgress() < enemy2.pEnemyScript->GetMoveProgress();
+	}
+};
 
 CFieldScript::CFieldScript()
 	:CScript(FIELDSCRIPT)
@@ -375,7 +383,7 @@ void CFieldScript::SummonDice()
 	// 랜덤한 빈 필드 공간 찾기
 	while (true)
 	{
-		pDice = GetRandomDice();
+		pDice = GetRandomFieldDice();
 		if (pDice != nullptr && pDice->GetDice() == DICE::NONE)
 			break;
 	}

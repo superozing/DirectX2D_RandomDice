@@ -27,6 +27,9 @@ private:
 
     class CDiceScript*      m_DiceField[5][3]; // CDiceScript를 가진 CGameObject의 2차원 배열
 
+    // 현재 포커싱
+    CDiceScript*            m_FocusDice;
+
     UINT                    m_CurDiceCount;
 
     list<ENEMY_PAIR>        m_EnemyList;
@@ -73,7 +76,7 @@ private: // EnemyPos 계산 용도의 GameObject*
     CGameObject* m_Line2;
     CGameObject* m_EnemyGate2;
 
-    class CDiceScript* GetRandomDice() 
+    class CDiceScript* GetRandomFieldDice() 
     {
         // 0 ~ 4, 0 ~ 2
         return m_DiceField[m_XDis(m_gen)][m_YDis(m_gen)];
@@ -94,6 +97,10 @@ public:
 
     UINT GetDiceCount() const { return m_CurDiceCount; }
 
+    DICE GetRandomDeckDiceType()
+    {
+        return m_Deck[m_XDis(m_gen)];
+    }
 
     void AddCurSP(int _addSP) { m_SP += _addSP; }
     int  GetCurSP() const { return m_SP; }
@@ -110,6 +117,16 @@ public:
         if (m_PlayerHP < 0)
             m_PlayerHP = 0;
     }
+
+    void SetFocusDice(CDiceScript* _Dice)
+    {
+        m_FocusDice = _Dice;
+    }
+    CDiceScript* GetFocusDice()
+    {
+        return m_FocusDice;
+    }
+
 
 public:
 

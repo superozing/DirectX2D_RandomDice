@@ -195,6 +195,9 @@
     <ClCompile Include="CDiceScript_init.cpp">
       <Filter>Scripts\Dice</Filter>
     </ClCompile>
+    <ClCompile Include="CFieldScript_init.cpp">
+      <Filter>Scripts\Field</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">

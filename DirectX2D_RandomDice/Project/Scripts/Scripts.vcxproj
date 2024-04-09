@@ -214,6 +214,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CEnemyScript.cpp" />
     <ClCompile Include="CExternScript.cpp" />
     <ClCompile Include="CFieldScript.cpp" />
+    <ClCompile Include="CFieldScript_init.cpp" />
     <ClCompile Include="CGameMemoryPool.cpp" />
     <ClCompile Include="CMissileScript.cpp" />
     <ClCompile Include="CMonsterScript.cpp" />
