@@ -17,6 +17,16 @@ struct ENEMY_PAIR
     class CEnemyScript* pEnemyScript;
 };
 
+// Functor
+struct CompareEnemyPair
+{
+    bool operator()(const ENEMY_PAIR& enemy1, const ENEMY_PAIR& enemy2) const
+    {
+        // 기준으로 삼을 멤버 변수에 접근하여 비교
+        return enemy1.pEnemyScript->GetMoveProgress() < enemy2.pEnemyScript->GetMoveProgress();
+    }
+};
+
 enum class ATTACK_PRIORITY // 주사위의 공격 우선 순위
 {
     BUFF,		 // 버프 주사위 - 공격을 하지 않음

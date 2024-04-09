@@ -192,6 +192,9 @@
     <ClCompile Include="CElectricAttack.cpp">
       <Filter>Scripts\DiceAttack\ElectricAttack</Filter>
     </ClCompile>
+    <ClCompile Include="CDiceScript_init.cpp">
+      <Filter>Scripts\Dice</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">

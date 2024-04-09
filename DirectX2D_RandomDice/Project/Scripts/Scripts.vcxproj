@@ -207,6 +207,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CDiceScale.cpp" />
     <ClCompile Include="CDiceScaleProjectile.cpp" />
     <ClCompile Include="CDiceScript.cpp" />
+    <ClCompile Include="CDiceScript_init.cpp" />
     <ClCompile Include="CDiceUI.cpp" />
     <ClCompile Include="CElectricAttack.cpp" />
     <ClCompile Include="CEnemyGateScript.cpp" />
