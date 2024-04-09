@@ -9,6 +9,8 @@
 #include "CWindAttack.h"
 #include "CElectricAttack.h"
 
+#include "CDefaultMerge.h"
+
 #include "CDiceBuffScript.h"
 #include "CDiceAttackScript.h"
 #include "CDiceMergeScript.h"
@@ -127,6 +129,9 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 	// 주사위 공격 스크립트 부착
 	m_Info.pAttack = CDiceScript::GetDiceAttackScript(m_Dice);
 
+	// 주사위 병합 스크립트 부착
+	m_Info.pMerge = CDiceScript::GetDiceMergeScript(m_Dice, this);
+
 	// 주사위 색상
 	m_DiceColor = CDiceScript::GetDiceColor(_Dice);
 
@@ -161,20 +166,15 @@ void CDiceScript::ClearDice()
 
 	// DiceInfo Clear
 	if (m_Info.pAttack != nullptr)
-	{
 		delete m_Info.pAttack;
-		m_Info.pAttack = nullptr;
-	}
+
 	if (m_Info.pBuff != nullptr)
-	{
 		delete m_Info.pBuff;
-		m_Info.pBuff = nullptr;
-	}
+
 	if (m_Info.pMerge != nullptr)
-	{
 		delete m_Info.pMerge;
-		m_Info.pMerge = nullptr;
-	}
+
+	m_Info = DICE_INFO();
 
 	m_fScaleSize = 0.f;
 	m_IsGrowing = false;
@@ -302,16 +302,13 @@ void CDiceScript::DiceClickedDelegateFunc()
 		return;
 	}
 
-	// 포커싱 된 주사위가 다른 주사위일 경우 합쳐질 수 있는지 판단 (나중에 판단하는 함수를 추가해야 한다.)
-	if (pFocusDice->GetDice() == GetDice() && pFocusDice->GetDiceScale() == GetDiceScale())// 합쳐질 수 있는 경우
-	{
-		// 포커싱 주사위 제거
-		pFocusDice->SetDiceType(DICE::NONE);
-		
-		// 현재 주사위의 눈금 증가
-		SetDiceType(m_OwnerField->GetRandomDeckDiceType(), GetDiceScale() + 1);
-	}
-	
+	// m_Info에서 주사위 병합 스크립트 가져오기 
+	CDiceMergeScript* pMerge = m_Info.pMerge;
+
+	// 만약 합칠 수 있을 경우 -> MergeDice 호출
+	if (pMerge->IsMergeAble(pFocusDice))
+		pMerge->MergeDice(pFocusDice);
+
 	m_OwnerField->SetFocusDice(nullptr); // 포커싱을 해제
 
 }
@@ -400,6 +397,80 @@ CDiceAttackScript* CDiceScript::GetDiceAttackScript(DICE _Dice)
 	}
 
 	return pAttack;
+}
+
+CDiceMergeScript* CDiceScript::GetDiceMergeScript(DICE _Dice, CDiceScript* _Inst)
+{
+	CDiceMergeScript* pMerge = nullptr;
+
+	switch (_Dice)
+	{
+	case DICE::NONE:
+		break;
+	case DICE::FIRE:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::ELECTRIC:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::WIND:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::POISON:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::ICE:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::IRON:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::BROKEN:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::GAMBLE:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::LOCK:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::MINE:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::LIGHT:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::THORN:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::CRACK:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::CRITICAL:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::ENERGY:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::SACRIFICE:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::ARROW:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::MIMIC:
+		pMerge = new CDefaultMerge;
+		break;
+	case DICE::END:
+		break;
+	default:
+		break;
+	}
+
+	// 소유주를 인자로 받아온 객체로 설정
+	pMerge->SetOwnerDice(_Inst);
+
+	return pMerge;
 }
 
 CGameObject* CDiceScript::GetDefaultProjectileAnimObj()

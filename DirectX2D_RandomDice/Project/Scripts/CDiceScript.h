@@ -60,6 +60,7 @@ public: // 전역
     static Vec3 GetDiceColor(DICE _Dice) { return DiceColor[(UINT)_Dice]; }
 
     static CDiceAttackScript* GetDiceAttackScript(DICE _Dice);
+    static CDiceMergeScript* GetDiceMergeScript(DICE _Dice, CDiceScript* _inst);
 
     static Ptr<CPrefab> m_ProjectileAnimator2DPref;
     static CGameObject* GetDefaultProjectileAnimObj();
@@ -67,7 +68,6 @@ public: // 전역
 public:
 	DICE GetDice() const { return m_Dice; }
 	UINT GetDiceScale() const { return m_DiceScale; }
-
 
     float GetFinalDamage() const { return m_finalDamage; }
     float GetFinalAttackSpeed() const { return m_finalAttackSpeed; }
@@ -78,6 +78,7 @@ public:
 	void InitDiceRowCol(UINT _DiceRow, UINT _DiceCol);
 
 	void SetField(CFieldScript* _field) { m_OwnerField = _field; }
+    CFieldScript* GetField() { return m_OwnerField; }
 
 
     void PlayLevelUp();
