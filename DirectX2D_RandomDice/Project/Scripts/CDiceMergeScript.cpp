@@ -6,6 +6,11 @@ CDiceMergeScript::CDiceMergeScript()
 {
 }
 
+CDiceMergeScript::CDiceMergeScript(UINT _ScriptType)
+	:CScript(_ScriptType)
+{
+}
+
 CDiceMergeScript::CDiceMergeScript(const CDiceMergeScript& _Origin)
 	:CScript(DICEMERGESCRIPT)
 {
