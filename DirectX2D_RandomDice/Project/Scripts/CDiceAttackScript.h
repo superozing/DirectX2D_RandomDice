@@ -23,7 +23,7 @@ public:
     // 공격 델리게이트 함수 호출
     void CallAttackDelegateFunc(ENEMY_PAIR _EnemyPair)
     {
-        if (AttackDelegate != nullptr)
+        if (GetOwner() && AttackDelegate) // 둘 다 nullptr이 아닐 경우
         {
             (this->*AttackDelegate)(_EnemyPair);
         }
