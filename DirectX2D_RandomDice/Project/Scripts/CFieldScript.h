@@ -118,10 +118,8 @@ public:
             m_PlayerHP = 0;
     }
 
-    void SetFocusDice(CDiceScript* _Dice)
-    {
-        m_FocusDice = _Dice;
-    }
+    void SetFocusDice(CDiceScript* _Dice);
+
     CDiceScript* GetFocusDice()
     {
         return m_FocusDice;

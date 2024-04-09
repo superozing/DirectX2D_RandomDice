@@ -351,6 +351,11 @@ UINT CFieldScript::DiceLevelUp(DICE _dice, UINT _idx)
 	return m_LevelUpSP[++m_DiceLevel[_idx] - 1];
 }
 
+void CFieldScript::SetFocusDice(CDiceScript* _Dice)
+{
+	m_FocusDice = _Dice;
+}
+
 UINT CFieldScript::GetCurDiceLevel(DICE _dice) const
 {
 	int i = 0;
