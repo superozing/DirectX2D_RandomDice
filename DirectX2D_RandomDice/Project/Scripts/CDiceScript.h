@@ -90,6 +90,8 @@ public:
         m_IsGrowing = true;
     }
 
+    bool IsMergeAbleDice();
+
 
 private:
     void ClearDice();

@@ -26,7 +26,7 @@ public:
 
     bool IsMergeAble(CDiceScript* _FocusDice)
     {
-        if (GetOwnerDice() && MergeAbleDelegateFunc)
+        if (GetOwnerDice() && MergeAbleDelegateFunc && _FocusDice)
             return (this->*MergeAbleDelegateFunc)(_FocusDice);
 
         return false;

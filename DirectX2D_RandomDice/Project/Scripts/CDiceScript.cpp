@@ -306,7 +306,7 @@ void CDiceScript::DiceClickedDelegateFunc()
 	CDiceMergeScript* pMerge = m_Info.pMerge;
 
 	// 만약 합칠 수 있을 경우 -> MergeDice 호출
-	if (pMerge->IsMergeAble(pFocusDice))
+	if (IsMergeAbleDice())
 		pMerge->MergeDice(pFocusDice);
 
 	m_OwnerField->SetFocusDice(nullptr); // 포커싱을 해제
@@ -321,6 +321,15 @@ void CDiceScript::PlayLevelUp()
 
 	m_fScaleSize = 0.f;
 	m_IsGrowing = true;
+}
+
+
+bool CDiceScript::IsMergeAbleDice()
+{
+	if (m_Info.pMerge)
+		return m_Info.pMerge->IsMergeAble(m_OwnerField->GetFocusDice());
+	else
+		return false;
 }
 
 
