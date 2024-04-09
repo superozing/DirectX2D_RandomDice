@@ -66,6 +66,7 @@ public: // Àü¿ª
 
 public:
 	DICE GetDice() const { return m_Dice; }
+	UINT GetDiceScale() const { return m_DiceScale; }
 
 
     float GetFinalDamage() const { return m_finalDamage; }

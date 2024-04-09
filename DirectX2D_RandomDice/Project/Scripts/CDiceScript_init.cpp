@@ -147,11 +147,10 @@ void CDiceScript::begin()
 
 
 	// UI Script ºÎÂø
+	m_UI = new CUIScript;
 
-
-
-
-
+	OBJECT->AddComponent(m_UI);
+	m_UI->SetDeletage((CEntity*)this, (DelegateFunc)&CDiceScript::DiceClickedDelegateFunc);
 }
 
 void CDiceScript::InitDicePath()
