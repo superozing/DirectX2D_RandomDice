@@ -48,6 +48,9 @@ private:
     
     class CUIScript*            m_UI;
 
+    DICE_MERGE_STATE            m_MergeState;
+    Vec4                        m_MergeStateColor = Vec4(200.f, 200.f, 200.f, 0.f);
+
 public: // Àü¿ª
     static void InitDice();
 
@@ -91,6 +94,9 @@ public:
     }
 
     bool IsMergeAbleDice();
+
+    DICE_MERGE_STATE GetMergeState() const { return m_MergeState; }
+    void SetMergeState(DICE_MERGE_STATE _state) { m_MergeState = _state; }
 
 
 private:

@@ -79,7 +79,19 @@ void CDiceScript::tick()
 	OBJECT->GetRenderComponent()->GetDynamicMaterial()
 		->SetScalarParam(SCALAR_PARAM::FLOAT_0, m_fScaleSize);
 
+	//=================
+	// Dice Merge State
+	//=================
 
+	if (m_MergeState == DICE_MERGE_STATE::UNABLE)
+	{
+		OBJECT->GetRenderComponent()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_1, 1);
+		OBJECT->GetRenderComponent()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::VEC4_0, m_MergeStateColor);
+	}
+	else
+	{
+		OBJECT->GetRenderComponent()->GetDynamicMaterial()->SetScalarParam(SCALAR_PARAM::INT_1, 0);
+	}
 
 	//============
 	// Dice Attack
