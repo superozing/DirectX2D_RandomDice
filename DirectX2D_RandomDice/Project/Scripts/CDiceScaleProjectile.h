@@ -24,7 +24,11 @@ public:
 
     void SetField(CFieldScript* _pField) { m_pField = _pField; }
     void SetColor(Vec3 _Color) { m_ProjectileColor = _Color; }
-    void SetDiceAttackScript(CDiceAttackScript* _DiceAttack) { m_DiceAttack = _DiceAttack; }
+    void SetDiceAttackScript(CDiceAttackScript* _DiceAttack) 
+    {
+        m_DiceAttack = _DiceAttack; 
+        GetOwner()->AddComponent((CComponent*)m_DiceAttack);
+    }
 
 public:
 
