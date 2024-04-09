@@ -82,9 +82,18 @@ public:
 
     void PlayLevelUp();
 
+    void PlaySpawnEffect() 
+    {
+        m_fScaleSize = 0.f;
+        m_SpawnParticle->SetActivate(true);
+        m_IsGrowing = true;
+    }
+
 
 private:
+    void ClearDice();
 	void SetDiceScale();
+
 
     // Delegate Function
     void DiceClickedDelegateFunc();

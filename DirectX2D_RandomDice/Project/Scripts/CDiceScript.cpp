@@ -117,6 +117,38 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 	m_Dice = _Dice;
 	m_DiceScale = _DiceScale;
 
+	// 주사위 정보 클리어 (눈금, 주사위 능력 스크립트, 크기 배율, 파티클 등)
+	ClearDice();
+
+	// 세팅된 주사위가 없을 경우 return
+	if (m_Dice == DICE::NONE) 
+		return;
+
+	// 주사위 공격 스크립트 부착
+	m_Info.pAttack = CDiceScript::GetDiceAttackScript(m_Dice);
+
+	// 주사위 색상
+	m_DiceColor = CDiceScript::GetDiceColor(_Dice);
+
+	// 주사위 눈금 생성
+	SetDiceScale();
+
+	// 파티클 색상 설정
+	tSpawnModule.vSpawnColor = Vec4(m_DiceColor / 255.f, 1.f);
+	tLevelUpModule.vSpawnColor = Vec4(m_DiceColor / 255.f, 1.f);
+
+	m_SpawnParticle->SetParticleModule(tSpawnModule);
+	m_LevelUpParticle->SetParticleModule(tLevelUpModule);
+
+	// 생성 파티클, Scale 증가 효과
+	PlaySpawnEffect();
+
+	// 텍스쳐 바인딩
+	OBJECT->GetRenderComponent()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, TEX_LOAD(CDiceScript::GetDicePath(m_Dice)));
+}
+
+void CDiceScript::ClearDice()
+{
 	// 모든 눈금 오브젝트 제거
 	for (UINT i = 0; i < m_VecDiceScale.size(); ++i)
 	{
@@ -125,16 +157,6 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 
 	// 눈금 벡터 클리어
 	m_VecDiceScale.clear();
-
-	// 생성 파티클 호출 위해 크기를 0으로 세팅
-	m_fScaleSize = 0.f;
-	m_IsGrowing = true;
-
-	if (m_Dice == DICE::NONE) // 세팅된 주사위가 없을 경우 return
-	{
-		m_IsGrowing = false;
-		return;
-	}
 
 	// DiceInfo Clear
 	if (m_Info.pAttack != nullptr)
@@ -153,33 +175,8 @@ void CDiceScript::SetDiceType(DICE _Dice, UINT _DiceScale)
 		m_Info.pMerge = nullptr;
 	}
 
-	//================
-	// 주사위 정보 세팅
-	//================
-
-	// 주사위 공격 스크립트 부착
-	m_Info.pAttack = CDiceScript::GetDiceAttackScript(m_Dice);
-
-	// 주사위 색상
-	m_DiceColor = CDiceScript::GetDiceColor(_Dice);
-
-	// 주사위 눈금 생성
-	SetDiceScale();
-
-	tSpawnModule.vSpawnColor = Vec4(m_DiceColor / 255.f, 1.f);
-	tLevelUpModule.vSpawnColor = Vec4(m_DiceColor / 255.f, 1.f);
-
-	m_SpawnParticle->SetParticleModule(tSpawnModule);
-	m_LevelUpParticle->SetParticleModule(tLevelUpModule);
-
-	m_SpawnParticle->SetActivate(true);
-
-	m_IsGrowing = true;
-
-	wstring wstrPath = CDiceScript::GetDicePath(m_Dice);
-
-	OBJECT->GetRenderComponent()->GetDynamicMaterial()
-		->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
+	m_fScaleSize = 0.f;
+	m_IsGrowing = false;
 }
 
 void CDiceScript::SetDiceScale()
