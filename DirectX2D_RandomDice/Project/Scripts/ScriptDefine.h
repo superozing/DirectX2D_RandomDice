@@ -29,8 +29,11 @@ enum class ATTACK_PRIORITY // 주사위의 공격 우선 순위
     END,
 };
 class CDiceAttackScript;
+class CDiceMergeScript;
 
 typedef  void(CDiceAttackScript::* EnemyAttackDelegate)(struct ENEMY_PAIR);
+typedef  void(CDiceMergeScript::* DiceMergeDelegate)(class CDiceScript*);
+typedef  bool(CDiceMergeScript::* IsMergeAbleDelegate)(class CDiceScript*);
 
 
 enum class DICE
