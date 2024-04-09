@@ -157,6 +157,7 @@ void CDiceScript::ClearDice()
 
 	// 눈금 벡터 클리어
 	m_VecDiceScale.clear();
+	m_CurDiceScaleIdx = 0;
 
 	// DiceInfo Clear
 	if (m_Info.pAttack != nullptr)
@@ -281,6 +282,9 @@ void CDiceScript::SetDiceScale()
 
 void CDiceScript::DiceClickedDelegateFunc()
 {
+	if (GetDice() == DICE::NONE)
+		return;
+
 	// 필드에게서 현재 포커싱 된 주사위가 있는지 가져온다.
 	CDiceScript* pFocusDice = m_OwnerField->GetFocusDice();
 
