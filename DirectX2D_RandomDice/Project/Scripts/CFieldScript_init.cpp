@@ -11,6 +11,7 @@
 #include "CDiceUI.h"
 #include "CEnemyScript.h"
 #include "CEnemyGateScript.h"
+#include "CRotateScript.h"
 
 
 #define OBJECT			GetOwner()
@@ -277,6 +278,25 @@ void CFieldScript::begin()
 	OBJECT->AddChild(pObj);
 
 #pragma endregion
+
+	//==================
+	// FocusMarker
+	//==================
+
+	m_FocusMarker = pAlphaPref->Instantiate();
+	m_FocusMarker->Transform()->SetRelativePos(Vec3(0, 0, 10));
+	m_FocusMarker->Transform()->SetRelativeScale(Vec3(90, 90, 1));
+	m_FocusMarker->Transform()->SetAbsolute(true);
+
+	auto rot = new CRotateScript;
+	m_FocusMarker->AddComponent(rot);
+	rot->SetRotateValue(Vec3(0.f, 0.f, XM_PI));
+	
+	m_FocusMarker->SetName(L"FocusMarker");
+	wstrPath = L"texture\\Battle\\focus_dice.png";
+	m_FocusMarker->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, TEX_LOAD(wstrPath));
+
+	OBJECT->AddChild(m_FocusMarker);
 
 
 	//==================

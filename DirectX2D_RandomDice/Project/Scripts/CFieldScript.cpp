@@ -351,9 +351,48 @@ UINT CFieldScript::DiceLevelUp(DICE _dice, UINT _idx)
 	return m_LevelUpSP[++m_DiceLevel[_idx] - 1];
 }
 
+void CFieldScript::SetDiceMergeState()
+{
+	// 병합 가능 상태 설정
+	for (UINT i = 0; i < 5; ++i)
+	{
+		for (UINT j = 0; j < 3; ++j)
+		{
+			if (m_DiceField[i][j]->IsMergeAbleDice())
+			{
+				m_DiceField[i][j]->SetMergeState(DICE_MERGE_STATE::ABLE);
+			}
+			else
+			{
+				m_DiceField[i][j]->SetMergeState(DICE_MERGE_STATE::UNABLE);
+			}
+		}
+	}
+}
+
 void CFieldScript::SetFocusDice(CDiceScript* _Dice)
 {
 	m_FocusDice = _Dice;
+
+	if (m_FocusDice)
+	{
+		SetDiceMergeState();
+		auto pos = m_FocusDice->Transform()->GetRelativePos();
+		m_FocusMarker->Transform()->SetRelativePos(Vec3(pos.x, pos.y, pos.z - 10));
+	}
+	else // nullptr이 세팅될 경우
+	{
+		m_FocusMarker->Transform()->SetRelativePos(Vec3(0, 0, 10));
+
+		// 병합 상태 해제
+		for (UINT i = 0; i < 5; ++i)
+		{
+			for (UINT j = 0; j < 3; ++j)
+			{
+				m_DiceField[i][j]->SetMergeState(DICE_MERGE_STATE::NOT_SET);
+			}
+		}
+	}
 }
 
 UINT CFieldScript::GetCurDiceLevel(DICE _dice) const

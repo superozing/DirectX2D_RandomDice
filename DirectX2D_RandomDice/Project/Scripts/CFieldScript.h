@@ -29,6 +29,7 @@ private:
 
     // ÇöÀç Æ÷Ä¿½Ì
     CDiceScript*            m_FocusDice;
+    CGameObject*            m_FocusMarker;
 
     UINT                    m_CurDiceCount;
 
@@ -63,7 +64,7 @@ private:
 
     // Debug
     bool                    AutoSpawnEnemy;
-    int                    IsInvincible;
+    int                     IsInvincible;
 
     // random
     std::random_device      m_rd;
@@ -119,6 +120,8 @@ public:
     }
 
     void SetFocusDice(CDiceScript* _Dice);
+
+    void SetDiceMergeState();
 
     CDiceScript* GetFocusDice()
     {
