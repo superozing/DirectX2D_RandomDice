@@ -1,6 +1,7 @@
 #pragma once
 
 
+#define TEX_LOAD(wstrPath) CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath)
 enum class ENEMY_TYPE
 {
     DEFAULT,
