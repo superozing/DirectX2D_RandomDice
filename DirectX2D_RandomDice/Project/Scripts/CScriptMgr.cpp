@@ -6,6 +6,7 @@
 #include "CBuffAttack.h"
 #include "CDefaultAttack.h"
 #include "CDefaultEnemyScript.h"
+#include "CDefaultMerge.h"
 #include "CDiceAttackScript.h"
 #include "CDiceBuffScript.h"
 #include "CDiceMergeScript.h"
@@ -36,6 +37,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CBuffAttack");
 	_vec.push_back(L"CDefaultAttack");
 	_vec.push_back(L"CDefaultEnemyScript");
+	_vec.push_back(L"CDefaultMerge");
 	_vec.push_back(L"CDiceAttackScript");
 	_vec.push_back(L"CDiceBuffScript");
 	_vec.push_back(L"CDiceMergeScript");
@@ -72,6 +74,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CDefaultAttack;
 	if (L"CDefaultEnemyScript" == _strScriptName)
 		return new CDefaultEnemyScript;
+	if (L"CDefaultMerge" == _strScriptName)
+		return new CDefaultMerge;
 	if (L"CDiceAttackScript" == _strScriptName)
 		return new CDiceAttackScript;
 	if (L"CDiceBuffScript" == _strScriptName)
@@ -137,6 +141,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::DEFAULTENEMYSCRIPT:
 		return new CDefaultEnemyScript;
+		break;
+	case (UINT)SCRIPT_TYPE::DEFAULTMERGE:
+		return new CDefaultMerge;
 		break;
 	case (UINT)SCRIPT_TYPE::DICEATTACKSCRIPT:
 		return new CDiceAttackScript;
@@ -230,6 +237,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::DEFAULTENEMYSCRIPT:
 		return L"CDefaultEnemyScript";
+		break;
+
+	case SCRIPT_TYPE::DEFAULTMERGE:
+		return L"CDefaultMerge";
 		break;
 
 	case SCRIPT_TYPE::DICEATTACKSCRIPT:

@@ -97,6 +97,9 @@
     <ClInclude Include="CElectricAttack.h">
       <Filter>Scripts\DiceAttack\ElectricAttack</Filter>
     </ClInclude>
+    <ClInclude Include="CDefaultMerge.h">
+      <Filter>Scripts\DiceMerge\DefaultMerge</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -198,6 +201,9 @@
     <ClCompile Include="CFieldScript_init.cpp">
       <Filter>Scripts\Field</Filter>
     </ClCompile>
+    <ClCompile Include="CDefaultMerge.cpp">
+      <Filter>Scripts\DiceMerge\DefaultMerge</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">
@@ -286,6 +292,9 @@
     </Filter>
     <Filter Include="Scripts\DiceAttack\ElectricAttack">
       <UniqueIdentifier>{8e54bee1-d353-4dc4-b511-7cda299b1072}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scripts\DiceMerge\DefaultMerge">
+      <UniqueIdentifier>{60e85197-0a92-4619-ab39-6f8c25323413}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

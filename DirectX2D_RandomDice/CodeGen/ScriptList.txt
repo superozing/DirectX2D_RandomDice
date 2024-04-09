@@ -3,6 +3,7 @@ CBigEnemyScript
 CBuffAttack
 CDefaultAttack
 CDefaultEnemyScript
+CDefaultMerge
 CDiceAttackScript
 CDiceBuffScript
 CDiceMergeScript

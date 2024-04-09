@@ -167,6 +167,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CBuffAttack.h" />
     <ClInclude Include="CDefaultAttack.h" />
     <ClInclude Include="CDefaultEnemyScript.h" />
+    <ClInclude Include="CDefaultMerge.h" />
     <ClInclude Include="CDiceAttackScript.h" />
     <ClInclude Include="CDiceBuffScript.h" />
     <ClInclude Include="CDiceMergeScript.h" />
@@ -201,6 +202,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CBuffAttack.cpp" />
     <ClCompile Include="CDefaultAttack.cpp" />
     <ClCompile Include="CDefaultEnemyScript.cpp" />
+    <ClCompile Include="CDefaultMerge.cpp" />
     <ClCompile Include="CDiceAttackScript.cpp" />
     <ClCompile Include="CDiceBuffScript.cpp" />
     <ClCompile Include="CDiceMergeScript.cpp" />
