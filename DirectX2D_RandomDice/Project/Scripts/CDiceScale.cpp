@@ -22,6 +22,7 @@ CDiceScale::CDiceScale(const CDiceScale& _Origin)
 
 CDiceScale::~CDiceScale()
 {
+	//m_pDiceAttack->SetAttackDelegate(nullptr);
 }
 
 void CDiceScale::Attack()
@@ -42,13 +43,16 @@ void CDiceScale::Attack()
 	// 투사체 정보 세팅
 	pProjectile->SetField(m_pField);
 	pProjectile->SetColor(m_vDiceColor);
-	pProjectile->SetDiceAttackScript(m_pDiceAttack);
 
 	// 객체에게 begin() 호출
 	pObj->begin();
 
 	// 레벨에 스폰
 	GamePlayStatic::SpawnGameObject(pObj, 9);
+
+
+	pProjectile->SetDiceAttackScript(m_pDiceAttack->Clone());
+
 	
 	// 공격 효과
 	m_ScaleSize = 1.5f;
