@@ -36,17 +36,11 @@ CFieldScript::CFieldScript()
 	, IsInvincible(false)
 {
 
-	// 나중에는 여기서 초기화하면 안된다.
-
-	m_Deck[0] = DICE(1);
-	m_Deck[1] = DICE(2);
-	m_Deck[2] = DICE(3);
-	m_Deck[3] = DICE(4);
-	m_Deck[4] = DICE(5);
 }
 
 CFieldScript::~CFieldScript()
 {
+	SaveDeckInfoFromFile();
 }
 
 #define OBJECT			GetOwner()
@@ -368,6 +362,88 @@ void CFieldScript::SetDiceMergeState()
 			}
 		}
 	}
+}
+
+
+void CFieldScript::LoadDeckInfoFromFile()
+{
+	wstring Path = CPathMgr::GetContentPath();
+
+	Path += L"userdata\\player_deck.txt";
+
+	FILE* pFile = nullptr;
+	_wfopen_s(&pFile, Path.c_str(), L"r");
+
+	if (nullptr == pFile)
+	{
+		MessageBox(nullptr, L"파일 오류", L"Deck Info Load 실패", MB_OK);
+		return;
+	}
+
+
+	while (true)
+	{
+		wchar_t szRead[256] = {};
+		if (EOF == fwscanf_s(pFile, L"%s", szRead, 256))
+			break;
+
+		if (!wcscmp(szRead, L"[DICE_1]"))
+		{
+			fwscanf_s(pFile, L"%s", szRead, 256);
+			m_Deck[0] = (DICE)stoi(szRead);
+		}
+		else if (!wcscmp(szRead, L"[DICE_2]"))
+		{
+			fwscanf_s(pFile, L"%s", szRead, 256);
+			m_Deck[1] = (DICE)stoi(szRead);
+		}
+		else if (!wcscmp(szRead, L"[DICE_3]"))
+		{
+			fwscanf_s(pFile, L"%s", szRead, 256);
+			m_Deck[2] = (DICE)stoi(szRead);
+		}
+		else if (!wcscmp(szRead, L"[DICE_4]"))
+		{
+			fwscanf_s(pFile, L"%s", szRead, 256);
+			m_Deck[3] = (DICE)stoi(szRead);
+		}
+		else if (!wcscmp(szRead, L"[DICE_5]"))
+		{
+			fwscanf_s(pFile, L"%s", szRead, 256);
+			m_Deck[4] = (DICE)stoi(szRead);
+		}
+	}
+	fclose(pFile);
+}
+
+void CFieldScript::SaveDeckInfoFromFile()
+{
+	wstring Path = CPathMgr::GetContentPath();
+
+	Path += L"userdata\\player_deck.txt";
+	
+	FILE* pFile = nullptr;
+
+	_wfopen_s(&pFile, Path.c_str(), L"w");
+
+	if (nullptr == pFile)
+	{
+		MessageBox(nullptr, L"파일 오류", L"Deck Info Save 실패", MB_OK);
+		return;
+	}
+
+	for (UINT i = 0; i < 5; ++i)
+	{
+		wstring strDice = L"[DICE_";
+		strDice += to_wstring(i + 1) + L"]";
+
+		fwprintf_s(pFile, strDice.c_str());
+		fwprintf_s(pFile, L"\n");
+		fwprintf_s(pFile, to_wstring((UINT)m_Deck[i]).c_str());
+		fwprintf_s(pFile, L"\n\n");
+
+	}
+	fclose(pFile);
 }
 
 void CFieldScript::SetFocusDice(CDiceScript* _Dice)

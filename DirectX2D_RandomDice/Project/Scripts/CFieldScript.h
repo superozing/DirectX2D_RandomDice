@@ -141,6 +141,10 @@ public:
     // 현재 주사위의 레벨을 반환해줌. 만약 해당 주사위가 레벨에 없을 경우 0을 반환해요.
     UINT GetCurDiceLevel(DICE _dice) const;
 
+private:
+    void LoadDeckInfoFromFile();
+    void SaveDeckInfoFromFile();
+
 
 
 public:

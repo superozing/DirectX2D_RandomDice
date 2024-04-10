@@ -19,11 +19,12 @@
 
 void CFieldScript::begin()
 {
+	// 파일에서 덱 정보 가져오기
+	LoadDeckInfoFromFile();
+
 	CDiceScript::InitDice();
 
-
 	// 예외 처리
-
 	assert(OBJECT);
 
 	if (OBJECT->GetRenderComponent() == nullptr)
