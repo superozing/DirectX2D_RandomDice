@@ -185,6 +185,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CMonsterScript.h" />
     <ClInclude Include="CPlayerHP.h" />
     <ClInclude Include="CPlayerScript.h" />
+    <ClInclude Include="CPracticeModeMgr.h" />
     <ClInclude Include="CRotateScript.h" />
     <ClInclude Include="CScriptMgr.h" />
     <ClInclude Include="CSPBarScript.h" />
@@ -222,6 +223,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CMonsterScript.cpp" />
     <ClCompile Include="CPlayerHP.cpp" />
     <ClCompile Include="CPlayerScript.cpp" />
+    <ClCompile Include="CPracticeModeMgr.cpp" />
     <ClCompile Include="CRotateScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
     <ClCompile Include="CSPBarScript.cpp" />

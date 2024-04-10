@@ -23,6 +23,7 @@
 #include "CMonsterScript.h"
 #include "CPlayerHP.h"
 #include "CPlayerScript.h"
+#include "CPracticeModeMgr.h"
 #include "CRotateScript.h"
 #include "CSPBarScript.h"
 #include "CSpeedEnemyScript.h"
@@ -54,6 +55,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CMonsterScript");
 	_vec.push_back(L"CPlayerHP");
 	_vec.push_back(L"CPlayerScript");
+	_vec.push_back(L"CPracticeModeMgr");
 	_vec.push_back(L"CRotateScript");
 	_vec.push_back(L"CSPBarScript");
 	_vec.push_back(L"CSpeedEnemyScript");
@@ -108,6 +110,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CPlayerHP;
 	if (L"CPlayerScript" == _strScriptName)
 		return new CPlayerScript;
+	if (L"CPracticeModeMgr" == _strScriptName)
+		return new CPracticeModeMgr;
 	if (L"CRotateScript" == _strScriptName)
 		return new CRotateScript;
 	if (L"CSPBarScript" == _strScriptName)
@@ -192,6 +196,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::PLAYERSCRIPT:
 		return new CPlayerScript;
+		break;
+	case (UINT)SCRIPT_TYPE::PRACTICEMODEMGR:
+		return new CPracticeModeMgr;
 		break;
 	case (UINT)SCRIPT_TYPE::ROTATESCRIPT:
 		return new CRotateScript;
@@ -305,6 +312,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::PLAYERSCRIPT:
 		return L"CPlayerScript";
+		break;
+
+	case SCRIPT_TYPE::PRACTICEMODEMGR:
+		return L"CPracticeModeMgr";
 		break;
 
 	case SCRIPT_TYPE::ROTATESCRIPT:
