@@ -83,7 +83,7 @@
       <Filter>01. Dice\DiceAbility\DiceMerge\DefaultMerge</Filter>
     </ClInclude>
     <ClInclude Include="CPracticeModeMgr.h">
-      <Filter>01. ModeMgr\PracticeModeMgr</Filter>
+      <Filter>00. ModeMgr\PracticeModeMgr</Filter>
     </ClInclude>
     <ClInclude Include="CDiceScript.h">
       <Filter>01. Dice</Filter>
@@ -175,7 +175,7 @@
       <Filter>01. Dice\DiceAbility\DiceMerge\DefaultMerge</Filter>
     </ClCompile>
     <ClCompile Include="CPracticeModeMgr.cpp">
-      <Filter>01. ModeMgr\PracticeModeMgr</Filter>
+      <Filter>00. ModeMgr\PracticeModeMgr</Filter>
     </ClCompile>
     <ClCompile Include="CDiceScript.cpp">
       <Filter>01. Dice</Filter>
@@ -196,12 +196,6 @@
     </Filter>
     <Filter Include="98. Memory Pool">
       <UniqueIdentifier>{9704712e-15b5-46bc-a464-0bcc8b7c19d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. ModeMgr">
-      <UniqueIdentifier>{567a473b-05c6-41c4-a762-88ad48feb371}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01. ModeMgr\PracticeModeMgr">
-      <UniqueIdentifier>{bf236ebd-a5c5-49c7-a44d-fd8ea7fd9a38}</UniqueIdentifier>
     </Filter>
     <Filter Include="99. Scripts">
       <UniqueIdentifier>{af5c3808-4d30-476b-b2ab-d844558017d2}</UniqueIdentifier>
@@ -283,6 +277,12 @@
     </Filter>
     <Filter Include="04. UI\SPBar">
       <UniqueIdentifier>{4d8e83dd-4f05-42a4-acd2-a418dcfe0996}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. ModeMgr">
+      <UniqueIdentifier>{567a473b-05c6-41c4-a762-88ad48feb371}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00. ModeMgr\PracticeModeMgr">
+      <UniqueIdentifier>{bf236ebd-a5c5-49c7-a44d-fd8ea7fd9a38}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

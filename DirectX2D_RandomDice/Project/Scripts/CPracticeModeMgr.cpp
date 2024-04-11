@@ -22,6 +22,35 @@ CPracticeModeMgr::~CPracticeModeMgr()
 
 #define OBJ GetOwner()
 
+void CPracticeModeMgr::BossAppears()
+{
+	// 보스 등장
+	m_IsBossAppears = true;
+	
+	// 웨이브를 0으로 맟추어서 몬스터가 소환되지 않도록 해주기
+	m_Field->SetCurWave(0);
+
+	m_TempBossTimer = 5.f;
+
+	m_CurWaveTime = 0.f;
+	m_Field->ClearEnemyList();
+}
+
+void CPracticeModeMgr::WaveEnd()
+{
+	// 다음 웨이브 세팅
+	++m_CurWave;
+	m_Field->SetCurWave(m_CurWave);
+	m_CurWaveTime = m_MaxWaveTime;
+
+	// Wave font set
+	m_WaveFontInfo.WStr = wstring(L"WAVE ") + to_wstring(m_CurWave);
+
+	m_IsBossAppears = false;
+	m_TempBossTimer = 0.f;
+
+}
+
 void CPracticeModeMgr::begin()
 {
 	OBJ->SetName(L"PracticeModeMgr");
@@ -92,10 +121,41 @@ void CPracticeModeMgr::begin()
 	m_HP->SetModeMgr(this);
 	m_HP->SetPlayerHPPos(Vec3(-125.f, -365.f, 900.f));
 
+
+	//==================
+	// FONTINFO 세팅 
+	//==================
+	m_WaveFontInfo.Color = FONT_RGBA(255, 255, 255, 255);
+	m_WaveFontInfo.fFontSize = 20.f;
+	m_WaveFontInfo.FontType = FONT_TYPE::MAPLE;
+	m_WaveFontInfo.TextFlag = FW1_TEXT_FLAG::FW1_CENTER;
+	m_WaveFontInfo.IsWorldPosRender = true;
+	m_WaveFontInfo.fPosX = -220;
+	m_WaveFontInfo.fPosY = 90;
+	m_WaveFontInfo.WStr = wstring(L"WAVE 1");
+
+	// 기본 정보 세팅
+	m_MaxWaveTime = 10.f;
+	m_CurWave = 1;
+	m_CurWaveTime = m_MaxWaveTime;
+
+	m_Field->SetCurWave(m_CurWave);
 }
 
 void CPracticeModeMgr::tick()
 {
+	CFontMgr::GetInst()->AddRenderFont(m_WaveFontInfo);
+
+	if (m_IsBossAppears == false)
+		m_CurWaveTime -= DT;
+	else
+		m_TempBossTimer -= DT;
+
+	if (m_CurWaveTime < 0.f)
+		BossAppears();
+	if (m_TempBossTimer < 0.f)
+		WaveEnd();
+
 }
 
 #undef OBJ

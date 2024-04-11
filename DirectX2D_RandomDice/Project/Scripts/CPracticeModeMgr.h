@@ -1,6 +1,7 @@
 #pragma once
 #include <Engine/CScript.h>
 #include "ScriptDefine.h"
+#include <Engine/CFontMgr.h>
 
 // 연습 모드 매니저
 // 결과적으로 연습 모드는, 빈 오브젝트에 연습 모드 관리자 스크립트를 부착하고 시작할 경우
@@ -9,24 +10,34 @@ class CPracticeModeMgr :
     public CScript
 {
 private:
-    /// 기존 필드 종속 오브젝트
-    // 1. 필드
+    /// 필드
     class CFieldScript*         m_Field;
-
-    // 2. 주사위 소환 버튼
     class CSummonDiceBtnScript* m_SummonBtn;
-
-    // 3. SP 바
     class CSPBarScript*         m_SPBar;
-
-    // 4. 플레이어 HP
     class CPlayerHP*            m_HP;
+
+    // 라운드
+    UINT                        m_CurWave = 1;
+    float                       m_MaxWaveTime = 45.f;
+    float                       m_CurWaveTime;
+
+    bool                        m_IsBossAppears;
+
+    float                       m_TempBossTimer; // 나중에 바꿔주어야 한다...!
+
+    FONTINFO                    m_WaveFontInfo;
+
 
 public:
     CFieldScript* GetField()
     {
         return m_Field;
     }
+
+
+private:
+    void BossAppears();
+    void WaveEnd();
 
 public:
     virtual void begin() override;
