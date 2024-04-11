@@ -44,7 +44,7 @@ void CDiceUI::begin()
 	OBJECT->Transform()->SetRelativeScale(Vec3(118.f, 118.f, 1.f));
 	m_vScale = Vec3(118.f, 118.f, 1.f);
 	// 생성된 트랜스폼에 위치 값 세팅
-	OBJECT->Transform()->SetRelativePos(Vec3(-180.f + (90.f * m_DeckIdx), -210.f, -100.f));
+	OBJECT->Transform()->SetRelativePos(Vec3(-180.f + (90.f * m_DeckIdx), -190.f, -100.f));
 
 	// 매쉬렌더 세팅
 	if (OBJECT->MeshRender() == nullptr)
@@ -167,7 +167,7 @@ void CDiceUI::begin()
 	OBJECT->AddChild(pObj);
 
 	pObj->AddComponent(new CTransform);
-	pObj->Transform()->SetRelativePos(Vec3(-18.f, -19.f, -10.f));
+	pObj->Transform()->SetRelativePos(Vec3(-18.f, -49.f, -10.f));
 	pObj->Transform()->SetRelativeScale(Vec3(20.f, 20.f, 1.f));
 	
 	pObj->AddComponent(new CMeshRender);
@@ -265,9 +265,9 @@ void CDiceUI::tick()
 	m_FSP2.fPosY = vPos.y;
 
 	m_FSP1.WorldRenderOffset.x = 12;
-	m_FSP1.WorldRenderOffset.y = 4;
+	m_FSP1.WorldRenderOffset.y = 37;
 	m_FSP2.WorldRenderOffset.x = 12;
-	m_FSP2.WorldRenderOffset.y = 7;
+	m_FSP2.WorldRenderOffset.y = 40;
 
 	///
 
@@ -286,13 +286,13 @@ void CDiceUI::tick()
 	m_FDiceLevel1.fPosX = vPos.x;
 	m_FDiceLevel1.fPosY = vPos.y;
 
-	m_FDiceLevel1.WorldRenderOffset.y = -25;
+	m_FDiceLevel1.WorldRenderOffset.y = -15; -25;
 
 	m_FDiceLevel2.fPosX = vPos.x;
 	m_FDiceLevel2.fPosY = vPos.y;
 
 	m_FDiceLevel2.WorldRenderOffset.x = 1;
-	m_FDiceLevel2.WorldRenderOffset.y = -24;
+	m_FDiceLevel2.WorldRenderOffset.y = -14; -24;
 
 	// 스케일 적용
 	OBJECT->Transform()->SetRelativeScale(m_vScale * m_fScaleSize);
