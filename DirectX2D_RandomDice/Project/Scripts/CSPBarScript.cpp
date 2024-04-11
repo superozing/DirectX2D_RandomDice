@@ -39,12 +39,8 @@ void CSPBarScript::begin()
 
 	assert(OBJECT->Transform());
 
-	Vec3 vFieldWorldPos = m_pFieldScript->Transform()->GetRelativePos();
-
-	// -165, -305
-	Transform()->SetRelativePos(Vec3(vFieldWorldPos.x - 135, vFieldWorldPos.y - 110, vFieldWorldPos.z - 100));
+	Transform()->SetRelativePos(m_SPBarPos);
 	Transform()->SetRelativeScale(Vec3(116.f, 36.f, 1.f));
-
 
 	//=====================
 	// 매쉬렌더 컴포넌트 설정
