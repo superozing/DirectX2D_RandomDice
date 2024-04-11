@@ -243,7 +243,7 @@ void CCreateTempLevel::CreateTempLevel()
 	//CCollisionMgr::GetInst()->LayerCheck(3, 4);
 	//CCollisionMgr::GetInst()->LayerCheck(4, 4);
 
-	CLevel* pTempLevel = CLevelSaveLoad::LoadLevel(L"level\\debug3.lv");
+	CLevel* pTempLevel = CLevelSaveLoad::LoadLevel(L"level\\PracticeMode.lv");
 
 	CLevelMgr::GetInst()->ChangeLevel(pTempLevel, LEVEL_STATE::STOP);
 
