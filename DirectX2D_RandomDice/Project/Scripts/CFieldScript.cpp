@@ -364,6 +364,23 @@ void CFieldScript::SetDiceMergeState()
 }
 
 
+void CFieldScript::ClearEnemyList()
+{
+	auto it = m_EnemyList.begin();
+	float FieldZPos = Transform()->GetRelativePos().z;
+
+	for (;it != m_EnemyList.end();)
+	{
+		Vec3 pos = it->pObject->Transform()->GetRelativePos();
+		pos.z = FieldZPos + 100;
+		it->pObject->Transform()->SetRelativePos(pos);
+		it->pEnemyScript->SetEnemyHealth(0);
+		it->pEnemyScript->SetDeadEnemy();
+		it = m_EnemyList.erase(it);
+	}
+}
+
+
 void CFieldScript::LoadDeckInfoFromFile()
 {
 	wstring Path = CPathMgr::GetContentPath();

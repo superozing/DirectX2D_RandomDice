@@ -98,6 +98,7 @@ public:
     UINT GetSummonSP() const { return m_SummonSP; }
 
     UINT GetCurWave() const { return m_CurWave; }
+    void SetCurWave(UINT _Wave) { m_CurWave = _Wave; }
 
     UINT GetDiceCount() const { return m_CurDiceCount; }
 
@@ -140,6 +141,8 @@ public:
         return m_FocusDice;
     }
 
+
+    void ClearEnemyList();
 
 public:
 
