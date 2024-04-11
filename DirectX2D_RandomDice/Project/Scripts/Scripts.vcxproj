@@ -162,7 +162,6 @@ call CodeGen.exe</Command>
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="CBackgroundScript.h" />
     <ClInclude Include="CBigEnemyScript.h" />
     <ClInclude Include="CBuffAttack.h" />
     <ClInclude Include="CDefaultAttack.h" />
@@ -181,10 +180,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CExternScript.h" />
     <ClInclude Include="CFieldScript.h" />
     <ClInclude Include="CGameMemoryPool.h" />
-    <ClInclude Include="CMissileScript.h" />
-    <ClInclude Include="CMonsterScript.h" />
     <ClInclude Include="CPlayerHP.h" />
-    <ClInclude Include="CPlayerScript.h" />
     <ClInclude Include="CPracticeModeMgr.h" />
     <ClInclude Include="CRotateScript.h" />
     <ClInclude Include="CScriptMgr.h" />
@@ -198,7 +194,6 @@ call CodeGen.exe</Command>
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CBackgroundScript.cpp" />
     <ClCompile Include="CBigEnemyScript.cpp" />
     <ClCompile Include="CBuffAttack.cpp" />
     <ClCompile Include="CDefaultAttack.cpp" />
@@ -219,10 +214,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CFieldScript.cpp" />
     <ClCompile Include="CFieldScript_init.cpp" />
     <ClCompile Include="CGameMemoryPool.cpp" />
-    <ClCompile Include="CMissileScript.cpp" />
-    <ClCompile Include="CMonsterScript.cpp" />
     <ClCompile Include="CPlayerHP.cpp" />
-    <ClCompile Include="CPlayerScript.cpp" />
     <ClCompile Include="CPracticeModeMgr.cpp" />
     <ClCompile Include="CRotateScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
