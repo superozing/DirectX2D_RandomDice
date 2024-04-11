@@ -19,6 +19,9 @@ class CFieldScript :
 {
 private:
 
+    Vec3                    m_FieldPos;
+    class CPracticeModeMgr*       m_ModeMgr;
+
     enum class DICE         m_Deck[5]; // 배열인데 왜 모르냐->Dice를 몰라서.
     UINT                    m_DiceLevel[5] = { 1, 1, 1, 1, 1 }; // 현재 덱에 있는 주사위들의 레벨
     UINT                    m_LevelUpSP[5] = { 100, 200, 400, 700, 0 }; // 레벨업에 드는 SP 비용
@@ -120,8 +123,17 @@ public:
     }
 
     void SetFocusDice(CDiceScript* _Dice);
+    void SetFieldPos(Vec3 _FieldPos)
+    {
+        m_FieldPos = _FieldPos;
+    }
 
     void SetDiceMergeState();
+
+    void SetModeMgr(CPracticeModeMgr* _SetModeMgr)
+    {
+        m_ModeMgr = _SetModeMgr;
+    }
 
     CDiceScript* GetFocusDice()
     {
@@ -140,9 +152,9 @@ public:
 
     // 현재 주사위의 레벨을 반환해줌. 만약 해당 주사위가 레벨에 없을 경우 0을 반환해요.
     UINT GetCurDiceLevel(DICE _dice) const;
+    void LoadDeckInfoFromFile();
 
 private:
-    void LoadDeckInfoFromFile();
     void SaveDeckInfoFromFile();
 
 

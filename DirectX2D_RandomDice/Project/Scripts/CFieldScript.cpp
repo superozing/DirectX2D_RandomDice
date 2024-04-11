@@ -40,7 +40,6 @@ CFieldScript::CFieldScript()
 
 CFieldScript::~CFieldScript()
 {
-	SaveDeckInfoFromFile();
 }
 
 #define OBJECT			GetOwner()

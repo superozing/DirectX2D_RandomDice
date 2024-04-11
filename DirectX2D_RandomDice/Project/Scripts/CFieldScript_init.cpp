@@ -27,27 +27,29 @@ void CFieldScript::begin()
 	// 예외 처리
 	assert(OBJECT);
 
-	if (OBJECT->GetRenderComponent() == nullptr)
-	{
+	if (GetRenderComponent() == nullptr)
 		OBJECT->AddComponent(new CMeshRender);
-		OBJECT->MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
-		OBJECT->MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"AlphaBlendMtrl"));
-	}
 
 	assert(OBJECT->MeshRender());
-	OBJECT->MeshRender()->GetDynamicMaterial();
+
+	MeshRender()->SetMesh(CAssetMgr::GetInst()->FindAsset<CMesh>(L"RectMesh"));
+	MeshRender()->SetMaterial(CAssetMgr::GetInst()->FindAsset<CMaterial>(L"AlphaBlendMtrl"));
 
 	CGameObject* pObj = nullptr;
 	wstring wstrPath;
 
 	wstrPath = L"texture\\BattleField\\battlefield_normal_bg_top.png";
-	OBJECT->MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
+	MeshRender()->GetDynamicMaterial()->SetTexParam(TEX_PARAM::TEX_0, CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath));
 
 
 	// 플레이어 자신일 경우 -> Vec3(0, -210, 1000)
 	// 적 플레이어일 경우 -> Vec3(0, 340, 1000)
-	//OBJECT->Transform()->SetRelativePos(Vec3(0, -210, 1000));
-	OBJECT->Transform()->SetRelativeScale(Vec3(540, 540, 1));
+
+	if (Transform() == nullptr)
+		OBJECT->AddComponent(new CTransform);
+
+	Transform()->SetRelativePos(m_FieldPos);
+	Transform()->SetRelativeScale(Vec3(540, 540, 1));
 
 	Vec3 FieldPos = OBJECT->Transform()->GetRelativePos();
 
