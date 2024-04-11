@@ -4,6 +4,7 @@
 #include "CFieldScript.h"
 #include "CSummonDiceBtnScript.h"
 #include "CSPBarScript.h"
+#include "CPlayerHP.h"
 
 CPracticeModeMgr::CPracticeModeMgr()
 	: CScript(PRACTICEMODEMGR)
@@ -78,6 +79,18 @@ void CPracticeModeMgr::begin()
 	pObj->AddComponent(m_SPBar);
 	OBJ->AddChild(pObj);
 	m_SPBar->SetModeMgr(this);
+	m_SPBar->SetSPBarPos(Vec3(-135.f, -400.f, 900.f));
+
+	//===========
+	// Player HP
+	//===========
+	pObj = new CGameObject;
+	pObj->SetName(L"Player_HP");
+	m_HP = new CPlayerHP;
+	pObj->AddComponent(m_HP);
+	OBJ->AddChild(pObj);
+	m_HP->SetModeMgr(this);
+	m_HP->SetPlayerHPPos(Vec3(-125.f, -365.f, 900.f));
 
 }
 

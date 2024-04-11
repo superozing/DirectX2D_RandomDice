@@ -1,4 +1,3 @@
-CBackgroundScript
 CBigEnemyScript
 CBuffAttack
 CDefaultAttack
@@ -16,10 +15,7 @@ CEnemyGateScript
 CEnemyScript
 CExternScript
 CFieldScript
-CMissileScript
-CMonsterScript
 CPlayerHP
-CPlayerScript
 CPracticeModeMgr
 CRotateScript
 CSPBarScript
