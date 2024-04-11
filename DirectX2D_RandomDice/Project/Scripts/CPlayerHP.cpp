@@ -6,6 +6,7 @@
 #include <Engine/CLevel.h>
 
 #include "CFieldScript.h"
+#include "CPracticeModeMgr.h"
 
 CPlayerHP::CPlayerHP()
 	: CScript(PLAYERHP)
@@ -25,18 +26,16 @@ CPlayerHP::~CPlayerHP()
 
 void CPlayerHP::begin()
 {
-	// 레벨로부터 필드 스크립트 가져오기
-	m_pField = CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"FieldObject")->GetScript<CFieldScript>();
-
 	assert(OBJECT);
+
+	// 모드 매니저로부터 필드 스크립트 가져오기
+	m_pField = m_ModeMgr->GetField();
 
 	// Transform Set
 	if (OBJECT->Transform() == nullptr)
 		OBJECT->AddComponent(new CTransform);
 
-	Vec3 vPos = m_pField->OBJECT->Transform()->GetRelativePos();
-
-	OBJECT->Transform()->SetRelativePos(Vec3(vPos.x - 125.f, vPos.y - 75.f, vPos.z - 100.f));
+	OBJECT->Transform()->SetRelativePos(m_PlayerHPPos);
 	OBJECT->Transform()->SetRelativeScale(Vec3(81.f, 27.f, 1.f));
 
 	// MeshRender Set
