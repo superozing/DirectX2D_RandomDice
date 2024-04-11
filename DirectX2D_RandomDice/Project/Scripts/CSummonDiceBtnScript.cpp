@@ -3,10 +3,11 @@
 
 #include <Engine\CLevelMgr.h>
 #include <Engine\CLevel.h>
+#include <Engine/CDevice.h>
 
 #include "CFieldScript.h"
 #include "CUIScript.h"
-#include <Engine/CDevice.h>
+#include "CPracticeModeMgr.h"
 
 CSummonDiceBtnScript::CSummonDiceBtnScript()
 	: CScript(SUMMONDICEBTNSCRIPT)
@@ -29,13 +30,8 @@ void CSummonDiceBtnScript::begin()
 {
 	assert(OBJECT);
 
-	// 필드 오브젝트 레벨로부터 가져오기 - 확실하지는 않지만 레이어가 31번이니까 호출이 제일 늦지 않을까요?
-	CGameObject* pField = CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"FieldObject");
-
-	assert(pField);
-
 	// 필드오브젝트에게 스크립트 받아오기
-	m_pFieldScript = pField->GetScript<CFieldScript>();
+	m_pFieldScript = m_ModeMgr->GetField();
 
 	//=====================
 	// 트랜스폼 컴포넌트 설정
@@ -43,11 +39,9 @@ void CSummonDiceBtnScript::begin()
 	if (OBJECT->Transform() == nullptr)
 		OBJECT->AddComponent(new CTransform);
 
-	assert(OBJECT->Transform());
+	Vec3 vFieldWorldPos = m_pFieldScript->Transform()->GetWorldPos();
 
-	Vec3 vFieldWorldPos = pField->Transform()->GetWorldPos();
-
-	OBJECT->Transform()->SetRelativePos(Vec3(vFieldWorldPos.x, vFieldWorldPos.y - 100, vFieldWorldPos.z - 100));
+	OBJECT->Transform()->SetRelativePos(m_SummonDiceBtnPos);
 	m_vScale = Vec3(92.f, 80.f, 1.f);
 	OBJECT->Transform()->SetRelativeScale(m_vScale);
 
