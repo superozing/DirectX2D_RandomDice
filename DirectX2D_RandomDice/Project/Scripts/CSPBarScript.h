@@ -7,11 +7,24 @@ class CSPBarScript :
 	public CScript
 {
 private:
-
+	Vec3				m_SPBarPos;
+	class CPracticeModeMgr* m_ModeMgr;
 	class CFieldScript* m_pFieldScript;
 
 	// 현재 보유한 SP 출력
 	FONTINFO                m_fInfo;
+
+public:
+	void SetSPBarPos(Vec3 _SPPos)
+	{
+		m_SPBarPos = _SPPos;
+	}
+
+
+	void SetModeMgr(CPracticeModeMgr* _SetModeMgr)
+	{
+		m_ModeMgr = _SetModeMgr;
+	}
 
 public:
 	virtual void begin() override;

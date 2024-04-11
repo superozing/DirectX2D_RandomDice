@@ -6,6 +6,7 @@
 
 #include "CSPBarScript.h"
 #include "CFieldScript.h"
+#include "CPracticeModeMgr.h"
 
 CSPBarScript::CSPBarScript()
 	:CScript(SPBARSCRIPT)
@@ -27,13 +28,8 @@ void CSPBarScript::begin()
 {
 	assert(OBJECT);
 
-	// 레벨로부터 필드 오브젝트 가져오기
-	CGameObject* pField = CLevelMgr::GetInst()->GetCurrentLevel()->FindObjectByName(L"FieldObject");
-
-	assert(pField);
-
 	// 필드 오브젝트에게 스크립트 받아오기
-	m_pFieldScript = pField->GetScript<CFieldScript>();
+	m_pFieldScript = m_ModeMgr->GetField();
 
 	//=====================
 	// 트랜스폼 컴포넌트 설정
@@ -43,11 +39,11 @@ void CSPBarScript::begin()
 
 	assert(OBJECT->Transform());
 
-	Vec3 vFieldWorldPos = pField->Transform()->GetWorldPos();
+	Vec3 vFieldWorldPos = m_pFieldScript->Transform()->GetRelativePos();
 
 	// -165, -305
-	OBJECT->Transform()->SetRelativePos(Vec3(vFieldWorldPos.x - 135, vFieldWorldPos.y - 110, vFieldWorldPos.z - 100));
-	OBJECT->Transform()->SetRelativeScale(Vec3(116.f, 36.f, 1.f));
+	Transform()->SetRelativePos(Vec3(vFieldWorldPos.x - 135, vFieldWorldPos.y - 110, vFieldWorldPos.z - 100));
+	Transform()->SetRelativeScale(Vec3(116.f, 36.f, 1.f));
 
 
 	//=====================
