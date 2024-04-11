@@ -100,7 +100,9 @@
     <ClInclude Include="CDefaultMerge.h">
       <Filter>Scripts\DiceMerge\DefaultMerge</Filter>
     </ClInclude>
-    <ClInclude Include="CPracticeModeMgr.h" />
+    <ClInclude Include="CPracticeModeMgr.h">
+      <Filter>Scripts\PvPMgr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -205,7 +207,9 @@
     <ClCompile Include="CDefaultMerge.cpp">
       <Filter>Scripts\DiceMerge\DefaultMerge</Filter>
     </ClCompile>
-    <ClCompile Include="CPracticeModeMgr.cpp" />
+    <ClCompile Include="CPracticeModeMgr.cpp">
+      <Filter>Scripts\PvPMgr</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Default">

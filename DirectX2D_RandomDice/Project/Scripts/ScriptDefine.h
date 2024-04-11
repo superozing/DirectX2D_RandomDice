@@ -2,6 +2,7 @@
 
 
 #define TEX_LOAD(wstrPath) CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath)
+#define ASSET_MGR CAssetMgr::GetInst()
 
 enum class DICE_MERGE_STATE
 {

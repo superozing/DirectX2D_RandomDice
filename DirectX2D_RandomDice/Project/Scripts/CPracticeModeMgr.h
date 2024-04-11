@@ -1,5 +1,6 @@
 #pragma once
 #include <Engine/CScript.h>
+#include "ScriptDefine.h"
 
 // 연습 모드 매니저
 // 결과적으로 연습 모드는, 빈 오브젝트에 연습 모드 관리자 스크립트를 부착하고 시작할 경우
@@ -21,7 +22,11 @@ private:
     // 4. 플레이어 HP
     class CPlayerHP*            m_HP;
 
-
+public:
+    CFieldScript* GetField()
+    {
+        return m_Field;
+    }
 
 public:
     virtual void begin() override;
