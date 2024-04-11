@@ -10,17 +10,12 @@
 #include <Engine/CGameObject.h>
 #include <Engine/components.h>
 
-#include <Scripts/CPlayerScript.h>
-#include <Scripts/CBackgroundScript.h>
-
 #include <Engine/CMesh.h>
 #include <Engine/CGraphicsShader.h>
 #include <Engine/CTexture.h>
 #include <Engine/CSetColorShader.h>
 
 #include "CLevelSaveLoad.h"
-#include <Scripts/CMissileScript.h>
-#include <Scripts/CMonsterScript.h>
 
 #include <Engine/CAssetMgr.h>
 #include <Engine/CPrefab.h>

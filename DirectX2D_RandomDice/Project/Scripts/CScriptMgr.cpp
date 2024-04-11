@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "CScriptMgr.h"
 
-#include "CBackgroundScript.h"
 #include "CBigEnemyScript.h"
 #include "CBuffAttack.h"
 #include "CDefaultAttack.h"
@@ -19,10 +18,7 @@
 #include "CEnemyScript.h"
 #include "CExternScript.h"
 #include "CFieldScript.h"
-#include "CMissileScript.h"
-#include "CMonsterScript.h"
 #include "CPlayerHP.h"
-#include "CPlayerScript.h"
 #include "CPracticeModeMgr.h"
 #include "CRotateScript.h"
 #include "CSPBarScript.h"
@@ -33,7 +29,6 @@
 
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
-	_vec.push_back(L"CBackgroundScript");
 	_vec.push_back(L"CBigEnemyScript");
 	_vec.push_back(L"CBuffAttack");
 	_vec.push_back(L"CDefaultAttack");
@@ -51,10 +46,7 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CEnemyScript");
 	_vec.push_back(L"CExternScript");
 	_vec.push_back(L"CFieldScript");
-	_vec.push_back(L"CMissileScript");
-	_vec.push_back(L"CMonsterScript");
 	_vec.push_back(L"CPlayerHP");
-	_vec.push_back(L"CPlayerScript");
 	_vec.push_back(L"CPracticeModeMgr");
 	_vec.push_back(L"CRotateScript");
 	_vec.push_back(L"CSPBarScript");
@@ -66,8 +58,6 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 
 CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 {
-	if (L"CBackgroundScript" == _strScriptName)
-		return new CBackgroundScript;
 	if (L"CBigEnemyScript" == _strScriptName)
 		return new CBigEnemyScript;
 	if (L"CBuffAttack" == _strScriptName)
@@ -102,14 +92,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CExternScript;
 	if (L"CFieldScript" == _strScriptName)
 		return new CFieldScript;
-	if (L"CMissileScript" == _strScriptName)
-		return new CMissileScript;
-	if (L"CMonsterScript" == _strScriptName)
-		return new CMonsterScript;
 	if (L"CPlayerHP" == _strScriptName)
 		return new CPlayerHP;
-	if (L"CPlayerScript" == _strScriptName)
-		return new CPlayerScript;
 	if (L"CPracticeModeMgr" == _strScriptName)
 		return new CPracticeModeMgr;
 	if (L"CRotateScript" == _strScriptName)
@@ -131,9 +115,6 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 {
 	switch (_iScriptType)
 	{
-	case (UINT)SCRIPT_TYPE::BACKGROUNDSCRIPT:
-		return new CBackgroundScript;
-		break;
 	case (UINT)SCRIPT_TYPE::BIGENEMYSCRIPT:
 		return new CBigEnemyScript;
 		break;
@@ -185,17 +166,8 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::FIELDSCRIPT:
 		return new CFieldScript;
 		break;
-	case (UINT)SCRIPT_TYPE::MISSILESCRIPT:
-		return new CMissileScript;
-		break;
-	case (UINT)SCRIPT_TYPE::MONSTERSCRIPT:
-		return new CMonsterScript;
-		break;
 	case (UINT)SCRIPT_TYPE::PLAYERHP:
 		return new CPlayerHP;
-		break;
-	case (UINT)SCRIPT_TYPE::PLAYERSCRIPT:
-		return new CPlayerScript;
 		break;
 	case (UINT)SCRIPT_TYPE::PRACTICEMODEMGR:
 		return new CPracticeModeMgr;
@@ -226,10 +198,6 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 {
 	switch ((SCRIPT_TYPE)_pScript->GetScriptType())
 	{
-	case SCRIPT_TYPE::BACKGROUNDSCRIPT:
-		return L"CBackgroundScript";
-		break;
-
 	case SCRIPT_TYPE::BIGENEMYSCRIPT:
 		return L"CBigEnemyScript";
 		break;
@@ -298,20 +266,8 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CFieldScript";
 		break;
 
-	case SCRIPT_TYPE::MISSILESCRIPT:
-		return L"CMissileScript";
-		break;
-
-	case SCRIPT_TYPE::MONSTERSCRIPT:
-		return L"CMonsterScript";
-		break;
-
 	case SCRIPT_TYPE::PLAYERHP:
 		return L"CPlayerHP";
-		break;
-
-	case SCRIPT_TYPE::PLAYERSCRIPT:
-		return L"CPlayerScript";
 		break;
 
 	case SCRIPT_TYPE::PRACTICEMODEMGR:
