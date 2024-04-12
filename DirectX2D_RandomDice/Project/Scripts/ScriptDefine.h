@@ -4,6 +4,15 @@
 #define TEX_LOAD(wstrPath) CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath)
 #define ASSET_MGR CAssetMgr::GetInst()
 
+enum class BOSS_TYPE
+{
+    SNAKE,
+    SILENCE,
+    RANDOM_KNIGHT,
+    END
+};
+
+
 enum class DICE_MERGE_STATE
 {
     NOT_SET,
