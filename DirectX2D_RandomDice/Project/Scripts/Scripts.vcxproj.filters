@@ -91,6 +91,9 @@
     <ClInclude Include="CUIScript.h">
       <Filter>04. UI</Filter>
     </ClInclude>
+    <ClInclude Include="CWaveTimer.h">
+      <Filter>04. UI\WaveTimer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -185,6 +188,9 @@
     </ClCompile>
     <ClCompile Include="CUIScript.cpp">
       <Filter>04. UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CWaveTimer.cpp">
+      <Filter>04. UI\WaveTimer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -283,6 +289,9 @@
     </Filter>
     <Filter Include="00. ModeMgr\PracticeModeMgr">
       <UniqueIdentifier>{bf236ebd-a5c5-49c7-a44d-fd8ea7fd9a38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\WaveTimer">
+      <UniqueIdentifier>{48b7f0eb-079a-4ea9-814a-e46b2874b28d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

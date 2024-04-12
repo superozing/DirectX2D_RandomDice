@@ -22,4 +22,5 @@ CSPBarScript
 CSpeedEnemyScript
 CSummonDiceBtnScript
 CUIScript
+CWaveTimer
 CWindAttack

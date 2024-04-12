@@ -188,6 +188,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CSpeedEnemyScript.h" />
     <ClInclude Include="CSummonDiceBtnScript.h" />
     <ClInclude Include="CUIScript.h" />
+    <ClInclude Include="CWaveTimer.h" />
     <ClInclude Include="CWindAttack.h" />
     <ClInclude Include="ScriptDefine.h" />
     <ClInclude Include="framework.h" />
@@ -222,6 +223,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CSpeedEnemyScript.cpp" />
     <ClCompile Include="CSummonDiceBtnScript.cpp" />
     <ClCompile Include="CUIScript.cpp" />
+    <ClCompile Include="CWaveTimer.cpp" />
     <ClCompile Include="CWindAttack.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
