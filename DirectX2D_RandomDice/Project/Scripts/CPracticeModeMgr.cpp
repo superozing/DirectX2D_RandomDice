@@ -5,6 +5,7 @@
 #include "CSummonDiceBtnScript.h"
 #include "CSPBarScript.h"
 #include "CPlayerHP.h"
+#include "CWaveTimer.h"
 
 CPracticeModeMgr::CPracticeModeMgr()
 	: CScript(PRACTICEMODEMGR)
@@ -49,6 +50,21 @@ void CPracticeModeMgr::WaveEnd()
 	m_IsBossAppears = false;
 	m_TempBossTimer = 0.f;
 
+	switch (m_CurBoss)
+	{
+	case BOSS_TYPE::SNAKE :
+		m_CurBoss = BOSS_TYPE::SILENCE;
+		break;
+	case BOSS_TYPE::SILENCE :
+		m_CurBoss = BOSS_TYPE::RANDOM_KNIGHT;
+		break;
+	case BOSS_TYPE::RANDOM_KNIGHT :
+		m_CurBoss = BOSS_TYPE::SNAKE;
+		break;
+	}
+
+	m_WaveTimer->SetBoss(m_CurBoss);
+
 }
 
 void CPracticeModeMgr::begin()
@@ -59,7 +75,7 @@ void CPracticeModeMgr::begin()
 	if (Transform() == nullptr)
 		OBJ->AddComponent(new CTransform);
 
-	Transform()->SetRelativePos(Vec3(0.f, 80.f, 0.f));
+	Transform()->SetRelativePos(Vec3(0.f, 80.f, 100.f));
 	Transform()->SetRelativeScale(Vec3(540.f, 40.f, 1.f));
 
 
@@ -121,6 +137,15 @@ void CPracticeModeMgr::begin()
 	m_HP->SetModeMgr(this);
 	m_HP->SetPlayerHPPos(Vec3(-125.f, -365.f, 900.f));
 
+	//===========
+	// Wave Timer
+	//===========
+	pObj = new CGameObject;
+	pObj->SetName(L"Wave_Timer");
+	m_WaveTimer = new CWaveTimer;
+	m_WaveTimer->SetModeMgr(this);
+	pObj->AddComponent(m_WaveTimer);
+	OBJ->AddChild(pObj);
 
 	//==================
 	// FONTINFO 세팅 
@@ -135,7 +160,6 @@ void CPracticeModeMgr::begin()
 	m_WaveFontInfo.WStr = wstring(L"WAVE 1");
 
 	// 기본 정보 세팅
-	m_MaxWaveTime = 10.f;
 	m_CurWave = 1;
 	m_CurWaveTime = m_MaxWaveTime;
 

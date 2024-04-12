@@ -16,16 +16,22 @@ private:
     class CSPBarScript*         m_SPBar;
     class CPlayerHP*            m_HP;
 
-    // 라운드
+    // 웨이브
     UINT                        m_CurWave = 1;
     float                       m_MaxWaveTime = 45.f;
     float                       m_CurWaveTime;
 
+    FONTINFO                    m_WaveFontInfo;
+
+    // 보스
     bool                        m_IsBossAppears;
+    
+    BOSS_TYPE                   m_CurBoss;
 
     float                       m_TempBossTimer; // 나중에 바꿔주어야 한다...!
 
-    FONTINFO                    m_WaveFontInfo;
+    // 라운드
+    class CWaveTimer*           m_WaveTimer;
 
 
 public:
@@ -34,6 +40,8 @@ public:
         return m_Field;
     }
 
+    bool IsBossAppears() const { return m_IsBossAppears; }
+    float GetCurWaveTime() const { return m_CurWaveTime; }
 
 private:
     void BossAppears();
