@@ -11,6 +11,7 @@
 #include "CDiceUI.h"
 #include "CEnemyScript.h"
 #include "CEnemyGateScript.h"
+#include "CSnakeBoss.h"
 
 
 // Functor
@@ -207,6 +208,34 @@ void CFieldScript::tick()
 		--m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnemySpawnCount;
 	}
 
+	///// BOSS
+	if (m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount > 0
+		&& m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnableSpawn())
+	{
+		// 1. 프리팹 객체화
+		SpawnEnemy.pObject = m_EnemyPrefab[(UINT)ENEMY_TYPE::BOSS]->Instantiate();
+		SpawnEnemy.pObject->SetName(L"BossEnemy");
+
+		SpawnEnemy.pEnemyScript = SpawnEnemy.pObject->GetScript<CSnakeBoss>();
+
+		// 시작 게이트 Pos
+		SpawnEnemy.pObject->begin();
+		SpawnEnemy.pObject->Transform()->SetRelativePos(Vec3(Line1StartPos.x, Line1StartPos.y, 599.f));
+
+		// 체력 설정
+		SpawnEnemy.pEnemyScript->SetEnemyHealth(10000);
+		SpawnEnemy.pEnemyScript->SetField(this);
+
+		// 2. EnemyList에 삽입
+		m_EnemyList.push_back(SpawnEnemy);
+
+		// 3. SpawnObject로 게임에 생성
+		GamePlayStatic::SpawnGameObject(SpawnEnemy.pObject, 7);
+
+
+		m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].CoolDown = 0.5f;
+		--m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount;
+	}
 	
 	///////////////////
 	///////////////////
@@ -363,6 +392,12 @@ void CFieldScript::SetDiceMergeState()
 	}
 }
 
+
+void CFieldScript::SpawnBoss(BOSS_TYPE _BossType)
+{
+	m_IsBossAlive = true;
+	m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount = (UINT)_BossType;
+}
 
 void CFieldScript::ClearEnemyList()
 {

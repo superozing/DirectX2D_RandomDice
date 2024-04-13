@@ -65,6 +65,12 @@ private:
     // 플레이어 HP
     int                     m_PlayerHP = 3;
 
+
+    // 보스가 살아있나요? 의 bool 값.
+    // 보스가 죽을 경우, bool 값을 false로 전환하면
+    // ModeMgr에서 이 값을 읽어서 라운드를 전환할 수 있도록 해준다.
+    bool                    m_IsBossAlive = false;
+
     // Debug
     bool                    AutoSpawnEnemy;
     int                     IsInvincible;
@@ -141,8 +147,13 @@ public:
         return m_FocusDice;
     }
 
+    void SpawnBoss(BOSS_TYPE _BossType);
+
 
     void ClearEnemyList();
+
+    bool IsBossAlive() const { return m_IsBossAlive; }
+    void SetBossAlive(bool _IsBossAlive) { m_IsBossAlive = _IsBossAlive; }
 
 public:
 
