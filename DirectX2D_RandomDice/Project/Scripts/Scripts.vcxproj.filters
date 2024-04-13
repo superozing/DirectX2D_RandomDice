@@ -94,6 +94,15 @@
     <ClInclude Include="CWaveTimer.h">
       <Filter>04. UI\WaveTimer</Filter>
     </ClInclude>
+    <ClInclude Include="CExitBtnUI.h">
+      <Filter>04. UI\ExitBtn</Filter>
+    </ClInclude>
+    <ClInclude Include="CBossScript.h">
+      <Filter>02. Enemy\Boss</Filter>
+    </ClInclude>
+    <ClInclude Include="CSnakeBoss.h">
+      <Filter>02. Enemy\Boss\Snake</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -191,6 +200,15 @@
     </ClCompile>
     <ClCompile Include="CWaveTimer.cpp">
       <Filter>04. UI\WaveTimer</Filter>
+    </ClCompile>
+    <ClCompile Include="CExitBtnUI.cpp">
+      <Filter>04. UI\ExitBtn</Filter>
+    </ClCompile>
+    <ClCompile Include="CBossScript.cpp">
+      <Filter>02. Enemy\Boss</Filter>
+    </ClCompile>
+    <ClCompile Include="CSnakeBoss.cpp">
+      <Filter>02. Enemy\Boss\Snake</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -292,6 +310,12 @@
     </Filter>
     <Filter Include="04. UI\WaveTimer">
       <UniqueIdentifier>{48b7f0eb-079a-4ea9-814a-e46b2874b28d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04. UI\ExitBtn">
+      <UniqueIdentifier>{52fdc059-d493-494c-a31b-262adc1dc6bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Enemy\Boss\Snake">
+      <UniqueIdentifier>{08879cde-b58b-44f3-ae17-6fd3f5265b6f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

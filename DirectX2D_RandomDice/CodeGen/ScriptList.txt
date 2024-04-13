@@ -1,4 +1,5 @@
 CBigEnemyScript
+CBossScript
 CBuffAttack
 CDefaultAttack
 CDefaultEnemyScript
@@ -13,11 +14,13 @@ CDiceUI
 CElectricAttack
 CEnemyGateScript
 CEnemyScript
+CExitBtnUI
 CExternScript
 CFieldScript
 CPlayerHP
 CPracticeModeMgr
 CRotateScript
+CSnakeBoss
 CSPBarScript
 CSpeedEnemyScript
 CSummonDiceBtnScript

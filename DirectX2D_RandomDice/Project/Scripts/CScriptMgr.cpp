@@ -2,6 +2,7 @@
 #include "CScriptMgr.h"
 
 #include "CBigEnemyScript.h"
+#include "CBossScript.h"
 #include "CBuffAttack.h"
 #include "CDefaultAttack.h"
 #include "CDefaultEnemyScript.h"
@@ -16,11 +17,13 @@
 #include "CElectricAttack.h"
 #include "CEnemyGateScript.h"
 #include "CEnemyScript.h"
+#include "CExitBtnUI.h"
 #include "CExternScript.h"
 #include "CFieldScript.h"
 #include "CPlayerHP.h"
 #include "CPracticeModeMgr.h"
 #include "CRotateScript.h"
+#include "CSnakeBoss.h"
 #include "CSPBarScript.h"
 #include "CSpeedEnemyScript.h"
 #include "CSummonDiceBtnScript.h"
@@ -31,6 +34,7 @@
 void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 {
 	_vec.push_back(L"CBigEnemyScript");
+	_vec.push_back(L"CBossScript");
 	_vec.push_back(L"CBuffAttack");
 	_vec.push_back(L"CDefaultAttack");
 	_vec.push_back(L"CDefaultEnemyScript");
@@ -45,11 +49,13 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CElectricAttack");
 	_vec.push_back(L"CEnemyGateScript");
 	_vec.push_back(L"CEnemyScript");
+	_vec.push_back(L"CExitBtnUI");
 	_vec.push_back(L"CExternScript");
 	_vec.push_back(L"CFieldScript");
 	_vec.push_back(L"CPlayerHP");
 	_vec.push_back(L"CPracticeModeMgr");
 	_vec.push_back(L"CRotateScript");
+	_vec.push_back(L"CSnakeBoss");
 	_vec.push_back(L"CSPBarScript");
 	_vec.push_back(L"CSpeedEnemyScript");
 	_vec.push_back(L"CSummonDiceBtnScript");
@@ -62,6 +68,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 {
 	if (L"CBigEnemyScript" == _strScriptName)
 		return new CBigEnemyScript;
+	if (L"CBossScript" == _strScriptName)
+		return new CBossScript;
 	if (L"CBuffAttack" == _strScriptName)
 		return new CBuffAttack;
 	if (L"CDefaultAttack" == _strScriptName)
@@ -90,6 +98,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CEnemyGateScript;
 	if (L"CEnemyScript" == _strScriptName)
 		return new CEnemyScript;
+	if (L"CExitBtnUI" == _strScriptName)
+		return new CExitBtnUI;
 	if (L"CExternScript" == _strScriptName)
 		return new CExternScript;
 	if (L"CFieldScript" == _strScriptName)
@@ -100,6 +110,8 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CPracticeModeMgr;
 	if (L"CRotateScript" == _strScriptName)
 		return new CRotateScript;
+	if (L"CSnakeBoss" == _strScriptName)
+		return new CSnakeBoss;
 	if (L"CSPBarScript" == _strScriptName)
 		return new CSPBarScript;
 	if (L"CSpeedEnemyScript" == _strScriptName)
@@ -121,6 +133,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	{
 	case (UINT)SCRIPT_TYPE::BIGENEMYSCRIPT:
 		return new CBigEnemyScript;
+		break;
+	case (UINT)SCRIPT_TYPE::BOSSSCRIPT:
+		return new CBossScript;
 		break;
 	case (UINT)SCRIPT_TYPE::BUFFATTACK:
 		return new CBuffAttack;
@@ -164,6 +179,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::ENEMYSCRIPT:
 		return new CEnemyScript;
 		break;
+	case (UINT)SCRIPT_TYPE::EXITBTNUI:
+		return new CExitBtnUI;
+		break;
 	case (UINT)SCRIPT_TYPE::EXTERNSCRIPT:
 		return new CExternScript;
 		break;
@@ -178,6 +196,9 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 		break;
 	case (UINT)SCRIPT_TYPE::ROTATESCRIPT:
 		return new CRotateScript;
+		break;
+	case (UINT)SCRIPT_TYPE::SNAKEBOSS:
+		return new CSnakeBoss;
 		break;
 	case (UINT)SCRIPT_TYPE::SPBARSCRIPT:
 		return new CSPBarScript;
@@ -207,6 +228,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 	{
 	case SCRIPT_TYPE::BIGENEMYSCRIPT:
 		return L"CBigEnemyScript";
+		break;
+
+	case SCRIPT_TYPE::BOSSSCRIPT:
+		return L"CBossScript";
 		break;
 
 	case SCRIPT_TYPE::BUFFATTACK:
@@ -265,6 +290,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CEnemyScript";
 		break;
 
+	case SCRIPT_TYPE::EXITBTNUI:
+		return L"CExitBtnUI";
+		break;
+
 	case SCRIPT_TYPE::EXTERNSCRIPT:
 		return L"CExternScript";
 		break;
@@ -283,6 +312,10 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 
 	case SCRIPT_TYPE::ROTATESCRIPT:
 		return L"CRotateScript";
+		break;
+
+	case SCRIPT_TYPE::SNAKEBOSS:
+		return L"CSnakeBoss";
 		break;
 
 	case SCRIPT_TYPE::SPBARSCRIPT:

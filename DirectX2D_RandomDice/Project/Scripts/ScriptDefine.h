@@ -4,8 +4,13 @@
 #define TEX_LOAD(wstrPath) CAssetMgr::GetInst()->Load<CTexture>(wstrPath, wstrPath)
 #define ASSET_MGR CAssetMgr::GetInst()
 
+#define FSAVELOAD_DISABLE public:\
+                            virtual void SaveToFile(FILE* _File) {}\
+                            virtual void LoadFromFile(FILE* _File) {}
+
 enum class BOSS_TYPE
 {
+    NONE,
     SNAKE,
     SILENCE,
     RANDOM_KNIGHT,

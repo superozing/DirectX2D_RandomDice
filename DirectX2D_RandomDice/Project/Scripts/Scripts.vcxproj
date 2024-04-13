@@ -163,6 +163,7 @@ call CodeGen.exe</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CBigEnemyScript.h" />
+    <ClInclude Include="CBossScript.h" />
     <ClInclude Include="CBuffAttack.h" />
     <ClInclude Include="CDefaultAttack.h" />
     <ClInclude Include="CDefaultEnemyScript.h" />
@@ -177,6 +178,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CElectricAttack.h" />
     <ClInclude Include="CEnemyGateScript.h" />
     <ClInclude Include="CEnemyScript.h" />
+    <ClInclude Include="CExitBtnUI.h" />
     <ClInclude Include="CExternScript.h" />
     <ClInclude Include="CFieldScript.h" />
     <ClInclude Include="CGameMemoryPool.h" />
@@ -184,6 +186,7 @@ call CodeGen.exe</Command>
     <ClInclude Include="CPracticeModeMgr.h" />
     <ClInclude Include="CRotateScript.h" />
     <ClInclude Include="CScriptMgr.h" />
+    <ClInclude Include="CSnakeBoss.h" />
     <ClInclude Include="CSPBarScript.h" />
     <ClInclude Include="CSpeedEnemyScript.h" />
     <ClInclude Include="CSummonDiceBtnScript.h" />
@@ -196,6 +199,7 @@ call CodeGen.exe</Command>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CBigEnemyScript.cpp" />
+    <ClCompile Include="CBossScript.cpp" />
     <ClCompile Include="CBuffAttack.cpp" />
     <ClCompile Include="CDefaultAttack.cpp" />
     <ClCompile Include="CDefaultEnemyScript.cpp" />
@@ -211,6 +215,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CElectricAttack.cpp" />
     <ClCompile Include="CEnemyGateScript.cpp" />
     <ClCompile Include="CEnemyScript.cpp" />
+    <ClCompile Include="CExitBtnUI.cpp" />
     <ClCompile Include="CExternScript.cpp" />
     <ClCompile Include="CFieldScript.cpp" />
     <ClCompile Include="CFieldScript_init.cpp" />
@@ -219,6 +224,7 @@ call CodeGen.exe</Command>
     <ClCompile Include="CPracticeModeMgr.cpp" />
     <ClCompile Include="CRotateScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
+    <ClCompile Include="CSnakeBoss.cpp" />
     <ClCompile Include="CSPBarScript.cpp" />
     <ClCompile Include="CSpeedEnemyScript.cpp" />
     <ClCompile Include="CSummonDiceBtnScript.cpp" />
