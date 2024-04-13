@@ -315,9 +315,13 @@ void CFieldScript::begin()
 	wstrPath = L"prefab\\BigEnemy.pref";
 	m_EnemyPrefab[(UINT)ENEMY_TYPE::BIG] = CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath);
 
+	wstrPath = L"prefab\\SnakeBoss.pref";
+	m_EnemyPrefab[(UINT)ENEMY_TYPE::BOSS] = CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath);
+
 	assert(m_EnemyPrefab[(UINT)ENEMY_TYPE::DEFAULT].Get());
 	assert(m_EnemyPrefab[(UINT)ENEMY_TYPE::SPEED].Get());
 	assert(m_EnemyPrefab[(UINT)ENEMY_TYPE::BIG].Get());
+	assert(m_EnemyPrefab[(UINT)ENEMY_TYPE::BOSS].Get());
 
 
 
