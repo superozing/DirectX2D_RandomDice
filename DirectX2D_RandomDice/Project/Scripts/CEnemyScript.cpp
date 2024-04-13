@@ -239,7 +239,7 @@ void CEnemyScript::SetDeadEnemy()
 	if (m_CurHealth > 0)
 		m_OwnerField->SetPlayerHP(m_OwnerField->GetPlayerHP() - 1);
 		
-	if (m_EnemyType == ENEMY_TYPE::BIG)
+	if (m_EnemyType == ENEMY_TYPE::BIG || m_EnemyType == ENEMY_TYPE::BOSS)
 	{
 		AddSP *= 5;
 

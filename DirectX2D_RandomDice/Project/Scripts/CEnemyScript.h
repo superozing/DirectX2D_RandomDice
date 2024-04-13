@@ -71,7 +71,7 @@ public: // Àü¿ª
     static CGameObject* Get02_electricPrefabInstantiate();
 
 public:
-    void SetDeadEnemy();
+    virtual void SetDeadEnemy();
     bool IsDeadEnemy() const { return m_IsDeadEnemy; }
 
     float GetMoveProgress() const { return m_MoveProgress; }
@@ -89,14 +89,17 @@ public:
     
     void TakeDamage(int _Dmg, bool _IsCriticalAttack = false);
 
+
+    void SetMoveSpeed(float _MoveSpeed) { m_EnemyInfo.MoveSpeed = _MoveSpeed; }
+    
+public:
+    virtual void BossSkill() {}
+
+
 protected:
     virtual void SetEnemyType(ENEMY_TYPE _Enemytype);
     virtual void SetEnemyInfo(ENEMY_INFO _EnemyInfo);
 
-
-public:
-    virtual void SaveToFile(FILE* _File) {}
-    virtual void LoadFromFile(FILE* _File) {}
 
 public:
     virtual void begin() override;
@@ -104,6 +107,7 @@ public:
 
 
 public:
+    FSAVELOAD_DISABLE;
     CLONE(CEnemyScript);
     CEnemyScript();
     CEnemyScript(SCRIPT_TYPE _ScriptType);
