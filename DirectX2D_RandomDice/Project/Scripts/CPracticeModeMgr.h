@@ -18,7 +18,7 @@ private:
 
     // 웨이브
     UINT                        m_CurWave = 1;
-    float                       m_MaxWaveTime = 45.f;
+    float                       m_MaxWaveTime = 30.f;
     float                       m_CurWaveTime;
 
     FONTINFO                    m_WaveFontInfo;
@@ -27,8 +27,6 @@ private:
     bool                        m_IsBossAppears;
     
     BOSS_TYPE                   m_CurBoss;
-
-    float                       m_TempBossTimer; // 나중에 바꿔주어야 한다...!
 
     // 라운드
     class CWaveTimer*           m_WaveTimer;
