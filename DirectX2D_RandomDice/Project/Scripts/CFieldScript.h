@@ -169,6 +169,11 @@ public:
     UINT GetCurDiceLevel(DICE _dice) const;
     void LoadDeckInfoFromFile();
 
+    void SpawnEnemy(ENEMY_TYPE _EnemyType)
+    {
+        m_SpawnEnemyCheck[(UINT)_EnemyType].EnemySpawnCount += 1;
+    }
+
 private:
     void SaveDeckInfoFromFile();
 
