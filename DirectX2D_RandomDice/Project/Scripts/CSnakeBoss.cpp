@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CSnakeBoss.h"
 
+#include "CFieldScript.h"
+
 CSnakeBoss::CSnakeBoss()
 	: CBossScript(SNAKEBOSS)
 {
@@ -120,18 +122,73 @@ CSnakeBoss::~CSnakeBoss()
 
 void CSnakeBoss::BossSkill()
 {
+	m_IsActivateSkill = true;
+	m_SkillTimer = 0.f;
+	m_SkillDelayTimer = 1.f;
+	
+	CFieldScript* field = GetField();
+
+	field->SpawnEnemy(ENEMY_TYPE::DEFAULT);
+	field->SpawnEnemy(ENEMY_TYPE::DEFAULT);
+	field->SpawnEnemy(ENEMY_TYPE::DEFAULT);
+	field->SpawnEnemy(ENEMY_TYPE::SPEED);
+	field->SpawnEnemy(ENEMY_TYPE::BIG);
+
+	// 스킬 사용시 딜레이 만큼 멈춰있기.
+
+	SetMoveSpeed(0.f);
+
+
+	// 능력은 이게 맞는데,
+	// 스킬을 사용할 때 나오는 보스 효과를 넣어주어야 한다.
+
 }
 
+void CSnakeBoss::EndBossSkill()
+{
+	m_IsActivateSkill = false;
+	m_SkillDelayTimer = 0.f;
+	m_SkillTimer = 10.f;
+
+	CFieldScript* field = GetField();
+
+	field->SpawnEnemy(ENEMY_TYPE::DEFAULT);
+	field->SpawnEnemy(ENEMY_TYPE::DEFAULT);
+	field->SpawnEnemy(ENEMY_TYPE::DEFAULT);
+	field->SpawnEnemy(ENEMY_TYPE::SPEED);
+	field->SpawnEnemy(ENEMY_TYPE::BIG);
+
+	// 스킬 사용시 딜레이 만큼 멈춰있기.
+
+	SetMoveSpeed(5.f);
+
+	// 능력은 이게 맞는데,
+	// 스킬을 사용할 때 나오는 보스 효과를 넣어주어야 한다.
+
+}
 
 void CSnakeBoss::begin()
 {
 	CEnemyScript::begin();
+	m_SkillTimer = 2.f;
 }
 
 void CSnakeBoss::tick()
 {
 	CEnemyScript::tick();
 
+	if (!m_IsActivateSkill)
+	{
+		m_SkillTimer -= DT;
 
+		if (m_SkillTimer < 0.f)
+			BossSkill();
+	}
+	else
+	{
+		m_SkillDelayTimer -= DT;
 
+		if (m_SkillDelayTimer < 0.f)
+			EndBossSkill();
+	}
 }

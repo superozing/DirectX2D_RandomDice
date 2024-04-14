@@ -13,6 +13,7 @@ private:
 
 public:
     virtual void BossSkill() override;
+    virtual void EndBossSkill() override;
 
 
 public:
