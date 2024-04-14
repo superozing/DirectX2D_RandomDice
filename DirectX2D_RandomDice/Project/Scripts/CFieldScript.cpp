@@ -12,6 +12,8 @@
 #include "CEnemyScript.h"
 #include "CEnemyGateScript.h"
 #include "CSnakeBoss.h"
+#include "CSilenceBoss.h"
+#include "CRandomKnightBoss.h"
 
 
 // Functor
@@ -209,21 +211,34 @@ void CFieldScript::tick()
 	}
 
 	///// BOSS
-	if (m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount > 0
+	if (m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount != 0
 		&& m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnableSpawn())
 	{
+		BOSS_TYPE CurBoss = (BOSS_TYPE)m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount;
 		// 1. 프리팹 객체화
-		SpawnEnemy.pObject = m_EnemyPrefab[(UINT)ENEMY_TYPE::BOSS]->Instantiate();
+		SpawnEnemy.pObject = m_BossPrefab[(UINT)CurBoss]->Instantiate();
+
 		SpawnEnemy.pObject->SetName(L"BossEnemy");
 
-		SpawnEnemy.pEnemyScript = SpawnEnemy.pObject->GetScript<CSnakeBoss>();
+		switch (CurBoss)
+		{
+		case BOSS_TYPE::SNAKE : 
+			SpawnEnemy.pEnemyScript = SpawnEnemy.pObject->GetScript<CSnakeBoss>();
+			break;
+		case BOSS_TYPE::SILENCE :
+			SpawnEnemy.pEnemyScript = SpawnEnemy.pObject->GetScript<CSilenceBoss>();
+			break;
+		case BOSS_TYPE::RANDOM_KNIGHT :
+			SpawnEnemy.pEnemyScript = SpawnEnemy.pObject->GetScript<CRandomKnightBoss>();
+			break;
+		}
 
 		// 시작 게이트 Pos
 		SpawnEnemy.pObject->begin();
 		SpawnEnemy.pObject->Transform()->SetRelativePos(Vec3(Line1StartPos.x, Line1StartPos.y, 599.f));
 
 		// 체력 설정
-		SpawnEnemy.pEnemyScript->SetEnemyHealth(10000);
+		SpawnEnemy.pEnemyScript->SetEnemyHealth(1000);
 		SpawnEnemy.pEnemyScript->SetField(this);
 
 		// 2. EnemyList에 삽입
@@ -232,9 +247,7 @@ void CFieldScript::tick()
 		// 3. SpawnObject로 게임에 생성
 		GamePlayStatic::SpawnGameObject(SpawnEnemy.pObject, 7);
 
-
-		m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].CoolDown = 0.5f;
-		--m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount;
+		m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount = 0;
 	}
 	
 	///////////////////
