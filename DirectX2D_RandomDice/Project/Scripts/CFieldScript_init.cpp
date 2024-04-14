@@ -316,12 +316,21 @@ void CFieldScript::begin()
 	m_EnemyPrefab[(UINT)ENEMY_TYPE::BIG] = CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath);
 
 	wstrPath = L"prefab\\SnakeBoss.pref";
-	m_EnemyPrefab[(UINT)ENEMY_TYPE::BOSS] = CAssetMgr::GetInst()->Load<CPrefab>(wstrPath, wstrPath);
+	m_BossPrefab[(UINT)BOSS_TYPE::SNAKE] = ASSET_MGR->Load<CPrefab>(wstrPath, wstrPath);
+
+	wstrPath = L"prefab\\SilenceBoss.pref";
+	m_BossPrefab[(UINT)BOSS_TYPE::SILENCE] = ASSET_MGR->Load<CPrefab>(wstrPath, wstrPath);
+
+	wstrPath = L"prefab\\RandomKnightBoss.pref";
+	m_BossPrefab[(UINT)BOSS_TYPE::RANDOM_KNIGHT] = ASSET_MGR->Load<CPrefab>(wstrPath, wstrPath);
 
 	assert(m_EnemyPrefab[(UINT)ENEMY_TYPE::DEFAULT].Get());
 	assert(m_EnemyPrefab[(UINT)ENEMY_TYPE::SPEED].Get());
 	assert(m_EnemyPrefab[(UINT)ENEMY_TYPE::BIG].Get());
-	assert(m_EnemyPrefab[(UINT)ENEMY_TYPE::BOSS].Get());
+
+	assert(m_BossPrefab[(UINT)BOSS_TYPE::SNAKE].Get());
+	assert(m_BossPrefab[(UINT)BOSS_TYPE::SILENCE].Get());
+	assert(m_BossPrefab[(UINT)BOSS_TYPE::RANDOM_KNIGHT].Get());
 
 
 

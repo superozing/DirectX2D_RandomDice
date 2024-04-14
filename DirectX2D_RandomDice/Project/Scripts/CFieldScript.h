@@ -43,6 +43,7 @@ private:
 
     // Àû ÇÁ¸®ÆÕ
     Ptr<CPrefab>            m_EnemyPrefab[(UINT)ENEMY_TYPE::END];
+    Ptr<CPrefab>            m_BossPrefab[(UINT)BOSS_TYPE::END];
     SPAWN_ENEMY_COOLDOWN    m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::END];
 
     float                   m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::END];
