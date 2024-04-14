@@ -33,7 +33,7 @@ void CPracticeModeMgr::BossAppears()
 
 	m_CurWaveTime = 0.f;
 	m_Field->ClearEnemyList();
-	m_Field->SpawnBoss(BOSS_TYPE::SNAKE);
+	m_Field->SpawnBoss(m_CurBoss);
 }
 
 void CPracticeModeMgr::WaveEnd()
@@ -54,15 +54,13 @@ void CPracticeModeMgr::WaveEnd()
 	switch (m_CurBoss)
 	{
 	case BOSS_TYPE::SNAKE :
-		m_CurBoss = BOSS_TYPE::SNAKE;
-		break;
-	case BOSS_TYPE::SILENCE :
-		//m_CurBoss = BOSS_TYPE::SNAKE;
 		m_CurBoss = BOSS_TYPE::SILENCE;
 		break;
-	case BOSS_TYPE::RANDOM_KNIGHT :
-		//m_CurBoss = BOSS_TYPE::SNAKE;
+	case BOSS_TYPE::SILENCE :
 		m_CurBoss = BOSS_TYPE::RANDOM_KNIGHT;
+		break;
+	case BOSS_TYPE::RANDOM_KNIGHT :
+		m_CurBoss = BOSS_TYPE::SNAKE;
 		break;
 	}
 
@@ -164,6 +162,10 @@ void CPracticeModeMgr::begin()
 	// 기본 정보 세팅
 	m_CurWave = 1;
 	m_CurWaveTime = m_MaxWaveTime;
+	
+	// 기본 보스 세팅
+	// 나중에 랜덤으로 구현할 지 생각해보자
+	m_CurBoss = BOSS_TYPE::RANDOM_KNIGHT;
 
 	m_Field->SetCurWave(m_CurWave);
 }
