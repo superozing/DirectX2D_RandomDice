@@ -7,6 +7,7 @@ class CBossScript :
 
 public:
     virtual void BossSkill() override {}
+    virtual void EndBossSkill() override {}
 
     virtual void SetDeadEnemy() override;
 

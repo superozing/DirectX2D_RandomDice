@@ -91,9 +91,11 @@ public:
 
 
     void SetMoveSpeed(float _MoveSpeed) { m_EnemyInfo.MoveSpeed = _MoveSpeed; }
+    float GetMoveSpeed() const { return m_EnemyInfo.MoveSpeed; }
     
 public:
     virtual void BossSkill() {}
+    virtual void EndBossSkill() {}
 
 
 protected:
