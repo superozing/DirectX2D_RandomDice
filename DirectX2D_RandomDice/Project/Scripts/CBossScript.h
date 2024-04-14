@@ -4,8 +4,6 @@
 class CBossScript :
     public CEnemyScript
 {
-private:
-    float m_Acctime;
 
 public:
     virtual void BossSkill() override {}
