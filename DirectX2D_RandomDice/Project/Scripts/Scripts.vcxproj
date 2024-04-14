@@ -184,8 +184,10 @@ call CodeGen.exe</Command>
     <ClInclude Include="CGameMemoryPool.h" />
     <ClInclude Include="CPlayerHP.h" />
     <ClInclude Include="CPracticeModeMgr.h" />
+    <ClInclude Include="CRandomKnightBoss.h" />
     <ClInclude Include="CRotateScript.h" />
     <ClInclude Include="CScriptMgr.h" />
+    <ClInclude Include="CSilenceBoss.h" />
     <ClInclude Include="CSnakeBoss.h" />
     <ClInclude Include="CSPBarScript.h" />
     <ClInclude Include="CSpeedEnemyScript.h" />
@@ -222,8 +224,10 @@ call CodeGen.exe</Command>
     <ClCompile Include="CGameMemoryPool.cpp" />
     <ClCompile Include="CPlayerHP.cpp" />
     <ClCompile Include="CPracticeModeMgr.cpp" />
+    <ClCompile Include="CRandomKnightBoss.cpp" />
     <ClCompile Include="CRotateScript.cpp" />
     <ClCompile Include="CScriptMgr.cpp" />
+    <ClCompile Include="CSilenceBoss.cpp" />
     <ClCompile Include="CSnakeBoss.cpp" />
     <ClCompile Include="CSPBarScript.cpp" />
     <ClCompile Include="CSpeedEnemyScript.cpp" />

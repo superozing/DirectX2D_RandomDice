@@ -22,7 +22,9 @@
 #include "CFieldScript.h"
 #include "CPlayerHP.h"
 #include "CPracticeModeMgr.h"
+#include "CRandomKnightBoss.h"
 #include "CRotateScript.h"
+#include "CSilenceBoss.h"
 #include "CSnakeBoss.h"
 #include "CSPBarScript.h"
 #include "CSpeedEnemyScript.h"
@@ -54,7 +56,9 @@ void CScriptMgr::GetScriptInfo(vector<wstring>& _vec)
 	_vec.push_back(L"CFieldScript");
 	_vec.push_back(L"CPlayerHP");
 	_vec.push_back(L"CPracticeModeMgr");
+	_vec.push_back(L"CRandomKnightBoss");
 	_vec.push_back(L"CRotateScript");
+	_vec.push_back(L"CSilenceBoss");
 	_vec.push_back(L"CSnakeBoss");
 	_vec.push_back(L"CSPBarScript");
 	_vec.push_back(L"CSpeedEnemyScript");
@@ -108,8 +112,12 @@ CScript * CScriptMgr::GetScript(const wstring& _strScriptName)
 		return new CPlayerHP;
 	if (L"CPracticeModeMgr" == _strScriptName)
 		return new CPracticeModeMgr;
+	if (L"CRandomKnightBoss" == _strScriptName)
+		return new CRandomKnightBoss;
 	if (L"CRotateScript" == _strScriptName)
 		return new CRotateScript;
+	if (L"CSilenceBoss" == _strScriptName)
+		return new CSilenceBoss;
 	if (L"CSnakeBoss" == _strScriptName)
 		return new CSnakeBoss;
 	if (L"CSPBarScript" == _strScriptName)
@@ -194,8 +202,14 @@ CScript * CScriptMgr::GetScript(UINT _iScriptType)
 	case (UINT)SCRIPT_TYPE::PRACTICEMODEMGR:
 		return new CPracticeModeMgr;
 		break;
+	case (UINT)SCRIPT_TYPE::RANDOMKNIGHTBOSS:
+		return new CRandomKnightBoss;
+		break;
 	case (UINT)SCRIPT_TYPE::ROTATESCRIPT:
 		return new CRotateScript;
+		break;
+	case (UINT)SCRIPT_TYPE::SILENCEBOSS:
+		return new CSilenceBoss;
 		break;
 	case (UINT)SCRIPT_TYPE::SNAKEBOSS:
 		return new CSnakeBoss;
@@ -310,8 +324,16 @@ const wchar_t * CScriptMgr::GetScriptName(CScript * _pScript)
 		return L"CPracticeModeMgr";
 		break;
 
+	case SCRIPT_TYPE::RANDOMKNIGHTBOSS:
+		return L"CRandomKnightBoss";
+		break;
+
 	case SCRIPT_TYPE::ROTATESCRIPT:
 		return L"CRotateScript";
+		break;
+
+	case SCRIPT_TYPE::SILENCEBOSS:
+		return L"CSilenceBoss";
 		break;
 
 	case SCRIPT_TYPE::SNAKEBOSS:

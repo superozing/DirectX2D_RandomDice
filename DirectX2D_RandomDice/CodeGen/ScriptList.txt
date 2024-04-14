@@ -19,7 +19,9 @@ CExternScript
 CFieldScript
 CPlayerHP
 CPracticeModeMgr
+CRandomKnightBoss
 CRotateScript
+CSilenceBoss
 CSnakeBoss
 CSPBarScript
 CSpeedEnemyScript

@@ -103,6 +103,12 @@
     <ClInclude Include="CSnakeBoss.h">
       <Filter>02. Enemy\Boss\Snake</Filter>
     </ClInclude>
+    <ClInclude Include="CSilenceBoss.h">
+      <Filter>02. Enemy\Boss\Silence</Filter>
+    </ClInclude>
+    <ClInclude Include="CRandomKnightBoss.h">
+      <Filter>02. Enemy\Boss\RandomKnight</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -210,6 +216,12 @@
     <ClCompile Include="CSnakeBoss.cpp">
       <Filter>02. Enemy\Boss\Snake</Filter>
     </ClCompile>
+    <ClCompile Include="CSilenceBoss.cpp">
+      <Filter>02. Enemy\Boss\Silence</Filter>
+    </ClCompile>
+    <ClCompile Include="CRandomKnightBoss.cpp">
+      <Filter>02. Enemy\Boss\RandomKnight</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="00. Default">
@@ -316,6 +328,12 @@
     </Filter>
     <Filter Include="02. Enemy\Boss\Snake">
       <UniqueIdentifier>{08879cde-b58b-44f3-ae17-6fd3f5265b6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Enemy\Boss\Silence">
+      <UniqueIdentifier>{459ecbc0-bd88-4f30-9eeb-fe2d598a706b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02. Enemy\Boss\RandomKnight">
+      <UniqueIdentifier>{c135a4cb-bd6d-42f6-afc2-3bc70ead5d91}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
