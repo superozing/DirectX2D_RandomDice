@@ -121,6 +121,31 @@ void CCamera::LayerCheck(const wstring& _strLayerName, bool _bCheck)
 	LayerCheck(idx, _bCheck);
 }
 
+// 오름차순
+bool CmpAscending(CGameObject* _First, CGameObject* _Second)
+{
+	return _First->Transform()->GetWorldPos().z < _Second->Transform()->GetWorldPos().z;
+}
+
+
+// 내림차순
+bool CmpDescending(CGameObject* _First, CGameObject* _Second)
+{
+	return _First->Transform()->GetWorldPos().z > _Second->Transform()->GetWorldPos().z;
+}
+
+
+void CCamera::DepthSort()
+{
+	std::sort(m_vecOpaque.begin(), m_vecOpaque.end(), CmpAscending);
+	std::sort(m_vecMasked.begin(), m_vecMasked.end(), CmpAscending);
+
+	//for (auto& it : m_vecTransparent)
+		//it->Transform()->finaltick();
+
+	//std::sort(m_vecTransparent.begin(), m_vecTransparent.end(), CmpDescending);
+}
+
 void CCamera::SortObject()
 {
 	CLevel* pCurLevel = CLevelMgr::GetInst()->GetCurrentLevel();
@@ -152,7 +177,7 @@ void CCamera::SortObject()
 				m_vecOpaque.push_back(vecObjects[j]);
 				break;
 			case SHADER_DOMAIN::DOMAIN_MASKED:
-				m_vecMaked.push_back(vecObjects[j]);
+				m_vecMasked.push_back(vecObjects[j]);
 				break;
 			case SHADER_DOMAIN::DOMAIN_TRANSPARENT:
 				m_vecTransparent.push_back(vecObjects[j]);
@@ -175,7 +200,7 @@ void CCamera::render()
 
 	// Domain 순서대로 렌더링
 	render(m_vecOpaque);	
-	render(m_vecMaked);
+	render(m_vecMasked);
 	render(m_vecTransparent);
 
 	// 후처리 작업
