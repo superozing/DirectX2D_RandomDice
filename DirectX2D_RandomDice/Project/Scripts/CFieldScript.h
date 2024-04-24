@@ -48,8 +48,10 @@ private:
 
     float                   m_AccSpawnCoolDown[(UINT)ENEMY_TYPE::END];
 
+    int                     m_AccEnemyHP;
 
 
+    // SP
     int                     m_SP;
 
     UINT                    m_SummonSP;
@@ -66,11 +68,6 @@ private:
     // 플레이어 HP
     int                     m_PlayerHP = 3;
 
-
-    // 보스가 살아있나요? 의 bool 값.
-    // 보스가 죽을 경우, bool 값을 false로 전환하면
-    // ModeMgr에서 이 값을 읽어서 라운드를 전환할 수 있도록 해준다.
-    bool                    m_IsBossAlive = false;
 
     // Debug
     bool                    AutoSpawnEnemy;
@@ -105,7 +102,8 @@ public:
     UINT GetSummonSP() const { return m_SummonSP; }
 
     UINT GetCurWave() const { return m_CurWave; }
-    void SetCurWave(UINT _Wave) { m_CurWave = _Wave; }
+    void SetCurWave(UINT _Wave);
+
 
     UINT GetDiceCount() const { return m_CurDiceCount; }
 
@@ -151,10 +149,7 @@ public:
     void SpawnBoss(BOSS_TYPE _BossType);
 
 
-    void ClearEnemyList();
-
-    bool IsBossAlive() const { return m_IsBossAlive; }
-    void SetBossAlive(bool _IsBossAlive) { m_IsBossAlive = _IsBossAlive; }
+    int ClearEnemyList();
 
 public:
 

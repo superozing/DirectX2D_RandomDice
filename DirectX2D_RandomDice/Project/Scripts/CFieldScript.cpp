@@ -15,6 +15,8 @@
 #include "CSilenceBoss.h"
 #include "CRandomKnightBoss.h"
 
+#include "CPracticeModeMgr.h"
+
 
 // Functor
 struct CompareEnemyPair
@@ -57,11 +59,12 @@ void CFieldScript::tick()
 	for (UINT i = 0; i < (UINT)ATTACK_PRIORITY::END; ++i)
 		m_AttackPriority[i] = ENEMY_PAIR();
 
-
 	for (UINT i = 0; i < (UINT)ENEMY_TYPE::END; ++i)
 	{
 		// Enemy Auto Spawn Timer
-		m_AccSpawnCoolDown[i] -= m_EnemySpawnRate[m_CurWave] * DT;
+		// 보스 웨이브일 때에는 Enemy Auto Spawn Timer가 멈춰야 한다.
+		if (m_CurWave != BOSS_WAVE)
+			m_AccSpawnCoolDown[i] -= m_EnemySpawnRate[m_CurWave] * DT;
 
 		// Enemy Spawn 간격
 		//	- 적이 겹쳐 소환되는걸 방지함.
@@ -115,13 +118,14 @@ void CFieldScript::tick()
 	Vec3 Line1StartPos(m_EnemyGate1->Transform()->GetWorldPos().x, m_EnemyGate1->Transform()->GetWorldPos().y, 600);
 	Vec3 Line2StartPos(m_EnemyGate1->Transform()->GetWorldPos().x, m_Line2->Transform()->GetWorldPos().y, 600);
 	Vec3 Line3StartPos(m_EnemyGate2->Transform()->GetWorldPos().x, m_Line2->Transform()->GetWorldPos().y, 600);
-	Vec3 LineEndPos	  (m_EnemyGate2->Transform()->GetWorldPos().x, m_EnemyGate2->Transform()->GetWorldPos().y, 600);
+	Vec3 LineEndPos(m_EnemyGate2->Transform()->GetWorldPos().x, m_EnemyGate2->Transform()->GetWorldPos().y, 600);
 
 	float YLineLen = Line2StartPos.y - Line1StartPos.y;
 	float XLineLen = Line3StartPos.x - Line2StartPos.x;
 
 	ENEMY_PAIR SpawnEnemy{};
 
+	// 현재 웨이브가 일반 웨이브
 	///// DEFAULT
 	if (m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnemySpawnCount > 0
 		&& m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::DEFAULT].EnableSpawn())
@@ -194,11 +198,11 @@ void CFieldScript::tick()
 		// 시작 게이트 Pos
 		SpawnEnemy.pObject->begin();
 		SpawnEnemy.pObject->Transform()->SetRelativePos(Vec3(Line1StartPos.x, Line1StartPos.y, 599.f));
-		
+
 		// 체력 설정
 		SpawnEnemy.pEnemyScript->SetEnemyHealth(m_MaxEnemyHP * 5);
 		SpawnEnemy.pEnemyScript->SetField(this);
-		
+
 		// 2. EnemyList에 삽입
 		m_EnemyList.push_back(SpawnEnemy);
 
@@ -210,46 +214,50 @@ void CFieldScript::tick()
 		--m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BIG].EnemySpawnCount;
 	}
 
-	///// BOSS
-	if (m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount != 0
-		&& m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnableSpawn())
+	// 현재 웨이브가 보스 웨이브
+	if (m_CurWave == BOSS_WAVE)
 	{
-		BOSS_TYPE CurBoss = (BOSS_TYPE)m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount;
-		// 1. 프리팹 객체화
-		SpawnEnemy.pObject = m_BossPrefab[(UINT)CurBoss]->Instantiate();
-
-		SpawnEnemy.pObject->SetName(L"BossEnemy");
-
-		switch (CurBoss)
+		///// BOSS
+		if (m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount != 0
+			&& m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnableSpawn())
 		{
-		case BOSS_TYPE::SNAKE : 
-			SpawnEnemy.pEnemyScript = SpawnEnemy.pObject->GetScript<CSnakeBoss>();
-			break;
-		case BOSS_TYPE::SILENCE :
-			SpawnEnemy.pEnemyScript = SpawnEnemy.pObject->GetScript<CSilenceBoss>();
-			break;
-		case BOSS_TYPE::RANDOM_KNIGHT :
-			SpawnEnemy.pEnemyScript = SpawnEnemy.pObject->GetScript<CRandomKnightBoss>();
-			break;
+			BOSS_TYPE CurBoss = (BOSS_TYPE)m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount;
+			// 1. 프리팹 객체화
+			SpawnEnemy.pObject = m_BossPrefab[(UINT)CurBoss]->Instantiate();
+
+			SpawnEnemy.pObject->SetName(L"BossEnemy");
+
+			switch (CurBoss)
+			{
+			case BOSS_TYPE::SNAKE : 
+				SpawnEnemy.pEnemyScript = SpawnEnemy.pObject->GetScript<CSnakeBoss>();
+				break;
+			case BOSS_TYPE::SILENCE :
+				SpawnEnemy.pEnemyScript = SpawnEnemy.pObject->GetScript<CSilenceBoss>();
+				break;
+			case BOSS_TYPE::RANDOM_KNIGHT :
+				SpawnEnemy.pEnemyScript = SpawnEnemy.pObject->GetScript<CRandomKnightBoss>();
+				break;
+			}
+
+			// 시작 게이트 Pos
+			SpawnEnemy.pObject->begin();
+			SpawnEnemy.pObject->Transform()->SetRelativePos(Vec3(Line1StartPos.x, Line1StartPos.y, 599.f));
+
+			// 체력 설정
+			SpawnEnemy.pEnemyScript->SetEnemyHealth(m_AccEnemyHP);
+			SpawnEnemy.pEnemyScript->SetField(this);
+
+			// 2. EnemyList에 삽입
+			m_EnemyList.push_back(SpawnEnemy);
+
+			// 3. SpawnObject로 게임에 생성
+			GamePlayStatic::SpawnGameObject(SpawnEnemy.pObject, 7);
+
+			m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount = 0;
 		}
-
-		// 시작 게이트 Pos
-		SpawnEnemy.pObject->begin();
-		SpawnEnemy.pObject->Transform()->SetRelativePos(Vec3(Line1StartPos.x, Line1StartPos.y, 599.f));
-
-		// 체력 설정
-		SpawnEnemy.pEnemyScript->SetEnemyHealth(1000);
-		SpawnEnemy.pEnemyScript->SetField(this);
-
-		// 2. EnemyList에 삽입
-		m_EnemyList.push_back(SpawnEnemy);
-
-		// 3. SpawnObject로 게임에 생성
-		GamePlayStatic::SpawnGameObject(SpawnEnemy.pObject, 7);
-
-		m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount = 0;
 	}
-	
+
 	///////////////////
 	///////////////////
 	///////////////////
@@ -306,6 +314,9 @@ void CFieldScript::tick()
 		if (pEScript->GetEnemyType() == ENEMY_TYPE::SPEED)
 			Pos.z -= 2;
 
+		if (pEScript->GetEnemyType() == ENEMY_TYPE::SPEED)
+			Pos.z -= 2;
+
 		pObject->Transform()->SetRelativePos(Pos);
 
 
@@ -351,7 +362,19 @@ void CFieldScript::tick()
 				m_AttackPriority[(UINT)ATTACK_PRIORITY::HIGH_HEALTH] = it;
 		}
 	}
+	else if (m_EnemyList.empty() && m_CurWave == BOSS_WAVE)
+	{
+		// 보스 웨이브 종료 시점
+		m_ModeMgr->WaveEnd();
+		
+		ClearEnemyList();
 
+		for (UINT i = 0; i < (UINT)ENEMY_TYPE::BOSS; ++i)
+		{
+			m_SpawnEnemyCheck[i].EnemySpawnCount = 0;
+			m_SpawnEnemyCheck[i].CoolDown = 0;
+		}
+	}
 
 }
 
@@ -405,27 +428,59 @@ void CFieldScript::SetDiceMergeState()
 	}
 }
 
+void CFieldScript::SetCurWave(UINT _Wave)
+{
+	m_AccEnemyHP = ClearEnemyList();
+
+	// 만약 현재 웨이브가 보스 웨이브일 경우, 모드 매니저로부터 보스 정보를 가져오고 소환.
+	if (_Wave == BOSS_WAVE)
+	{
+		m_AccEnemyHP = 10000 * m_CurWave + (m_AccEnemyHP / 2);
+		SpawnBoss(m_ModeMgr->GetCurBossType());
+
+		for (UINT i = 0; i < (UINT)ENEMY_TYPE::BOSS; ++i)
+		{
+			m_SpawnEnemyCheck[i].EnemySpawnCount = 0;
+			m_SpawnEnemyCheck[i].CoolDown = 0;
+		}
+	}
+
+	m_CurWave = _Wave;
+}
+
 
 void CFieldScript::SpawnBoss(BOSS_TYPE _BossType)
 {
-	m_IsBossAlive = true;
 	m_SpawnEnemyCheck[(UINT)ENEMY_TYPE::BOSS].EnemySpawnCount = (UINT)_BossType;
 }
 
-void CFieldScript::ClearEnemyList()
+int CFieldScript::ClearEnemyList()
 {
+	int AccEnemyHealth = 0;
+
 	auto it = m_EnemyList.begin();
-	float FieldZPos = Transform()->GetRelativePos().z;
+
+	float FieldZPos = 0.f;
+	
+	if (Transform())
+		FieldZPos = Transform()->GetRelativePos().z;
+	else
+		return 0;
 
 	for (;it != m_EnemyList.end();)
 	{
 		Vec3 pos = it->pObject->Transform()->GetRelativePos();
-		pos.z = FieldZPos + 100;
+		pos.z = FieldZPos + 150;
 		it->pObject->Transform()->SetRelativePos(pos);
+
+		AccEnemyHealth += max(it->pEnemyScript->GetEnemyHealth(), 0);
+
 		it->pEnemyScript->SetEnemyHealth(0);
 		it->pEnemyScript->SetDeadEnemy();
 		it = m_EnemyList.erase(it);
 	}
+
+	return AccEnemyHealth;
 }
 
 

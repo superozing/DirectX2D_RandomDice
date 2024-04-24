@@ -24,7 +24,7 @@ private:
     FONTINFO                    m_WaveFontInfo;
 
     // 보스
-    bool                        m_IsBossAppears;
+    bool                        m_IsBossAppears; // 현재 보스웨이브가 진행중인가요? 에 대한 bool 값
     
     BOSS_TYPE                   m_CurBoss;
 
@@ -41,9 +41,13 @@ public:
     bool IsBossAppears() const { return m_IsBossAppears; }
     float GetCurWaveTime() const { return m_CurWaveTime; }
 
+
+    BOSS_TYPE GetCurBossType() const { return m_CurBoss; }
+
+    void WaveEnd();
+
 private:
     void BossAppears();
-    void WaveEnd();
 
 public:
     virtual void begin() override;

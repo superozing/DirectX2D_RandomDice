@@ -7,7 +7,7 @@
 #include "CPlayerHP.h"
 #include "CWaveTimer.h"
 
-CPracticeModeMgr::CPracticeModeMgr()
+CPracticeModeMgr::CPracticeModeMgr() 
 	: CScript(PRACTICEMODEMGR)
 {
 }
@@ -28,12 +28,10 @@ void CPracticeModeMgr::BossAppears()
 	// 보스 등장
 	m_IsBossAppears = true;
 	
-	// 웨이브를 0으로 맟추어서 몬스터가 소환되지 않도록 해주기
-	m_Field->SetCurWave(0);
-
+	// 웨이브를 BOSS_WAVE로 설정
 	m_CurWaveTime = 0.f;
-	m_Field->ClearEnemyList();
-	m_Field->SpawnBoss(m_CurBoss);
+
+	m_Field->SetCurWave(BOSS_WAVE);
 }
 
 void CPracticeModeMgr::WaveEnd()
@@ -45,7 +43,7 @@ void CPracticeModeMgr::WaveEnd()
 	// 웨이브 시간 설정
 	m_CurWaveTime = m_MaxWaveTime;
 
-	// Wave Font Set
+	// Wave Font Set	
 	m_WaveFontInfo.WStr = wstring(L"WAVE ") + to_wstring(m_CurWave);
 
 	// Boss Set
@@ -165,7 +163,7 @@ void CPracticeModeMgr::begin()
 	
 	// 기본 보스 세팅
 	// 나중에 랜덤으로 구현할 지 생각해보자
-	m_CurBoss = BOSS_TYPE::RANDOM_KNIGHT;
+	m_CurBoss = BOSS_TYPE::SNAKE;
 
 	m_Field->SetCurWave(m_CurWave);
 }
@@ -175,7 +173,7 @@ void CPracticeModeMgr::tick()
 	CFontMgr::GetInst()->AddRenderFont(m_WaveFontInfo);
 
 	// 웨이브 진행
-	if (m_IsBossAppears == false)
+	if (!m_IsBossAppears)
 	{
 		m_CurWaveTime -= DT;
 
@@ -184,11 +182,6 @@ void CPracticeModeMgr::tick()
 			// 웨이브 시간이 지나갈 경우 보스 출현
 			BossAppears();
 		}
-	}
-	// 보스를 처치할 경우 웨이브 종료(다음 웨이브 시작)
-	else if (!m_Field->IsBossAlive())
-	{
-		WaveEnd();
 	}
 }
 

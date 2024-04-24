@@ -8,6 +8,9 @@
                             virtual void SaveToFile(FILE* _File) {}\
                             virtual void LoadFromFile(FILE* _File) {}
 
+
+constexpr auto BOSS_WAVE = 0;
+
 enum class BOSS_TYPE
 {
     NONE,

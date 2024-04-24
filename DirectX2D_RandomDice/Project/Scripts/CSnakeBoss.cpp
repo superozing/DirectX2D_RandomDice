@@ -132,7 +132,6 @@ void CSnakeBoss::BossSkill()
 	field->SpawnEnemy(ENEMY_TYPE::DEFAULT);
 	field->SpawnEnemy(ENEMY_TYPE::DEFAULT);
 	field->SpawnEnemy(ENEMY_TYPE::SPEED);
-	field->SpawnEnemy(ENEMY_TYPE::BIG);
 
 	// 스킬 사용시 딜레이 만큼 멈춰있기.
 
@@ -150,21 +149,7 @@ void CSnakeBoss::EndBossSkill()
 	m_SkillDelayTimer = 0.f;
 	m_SkillTimer = 10.f;
 
-	CFieldScript* field = GetField();
-
-	field->SpawnEnemy(ENEMY_TYPE::DEFAULT);
-	field->SpawnEnemy(ENEMY_TYPE::DEFAULT);
-	field->SpawnEnemy(ENEMY_TYPE::DEFAULT);
-	field->SpawnEnemy(ENEMY_TYPE::SPEED);
-	field->SpawnEnemy(ENEMY_TYPE::BIG);
-
-	// 스킬 사용시 딜레이 만큼 멈춰있기.
-
 	SetMoveSpeed(5.f);
-
-	// 능력은 이게 맞는데,
-	// 스킬을 사용할 때 나오는 보스 효과를 넣어주어야 한다.
-
 }
 
 void CSnakeBoss::begin()

@@ -25,7 +25,4 @@ CBossScript::~CBossScript()
 void CBossScript::SetDeadEnemy()
 {
 	CEnemyScript::SetDeadEnemy();
-
-	// 보스 사망 시, SetBossAlive를 false로 막아준다.
-	GetField()->SetBossAlive(false);
 }
